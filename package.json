@@ -16,7 +16,8 @@
     "config": "^3.3.6",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "recharts": "^2.0.8"
   },
   "devDependencies": {
     "concurrently": "^6.0.0",
