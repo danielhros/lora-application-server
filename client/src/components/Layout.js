@@ -13,8 +13,7 @@ import Container from "@material-ui/core/Container";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ListItems from "./ListItems";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import Badge from "@material-ui/core/Badge";
+import CachedIcon from "@material-ui/icons/Cached";
 
 import { useLocation } from "react-router-dom";
 
@@ -141,6 +140,8 @@ const Layout = ({ children }) => {
         return "Devices";
       case "/allMessages":
         return "All Messages";
+      case "/profile":
+        return "Profile";
       default:
         return "Unknown";
     }
@@ -176,10 +177,8 @@ const Layout = ({ children }) => {
             >
               {getPageName()}
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
+            <IconButton color="inherit" onClick={() => console.log("Refresh")}>
+              <CachedIcon />
             </IconButton>
           </Toolbar>
         </AppBar>

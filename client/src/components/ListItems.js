@@ -8,6 +8,8 @@ import ChatIcon from "@material-ui/icons/Chat";
 import SettingsInputAntennaIcon from "@material-ui/icons/SettingsInputAntenna";
 import MemoryIcon from "@material-ui/icons/Memory";
 import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import PersonIcon from "@material-ui/icons/Person";
 import { useHistory, useLocation } from "react-router-dom";
 
 const ListItems = () => {
@@ -20,70 +22,89 @@ const ListItems = () => {
     }
   };
   return (
-    <List>
-      <div>
-        <ListItem
-          button
-          selected={location.pathname === "/"}
-          onClick={() => {
-            changeLocation("/");
-          }}
-        >
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItem>
-        <ListItem
-          button
-          selected={location.pathname === "/applications"}
-          onClick={() => {
-            changeLocation("/applications");
-          }}
-        >
-          <ListItemIcon>
-            <AppsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Applications" />
-        </ListItem>
-        <ListItem
-          button
-          selected={location.pathname === "/gateways"}
-          onClick={() => {
-            changeLocation("/gateways");
-          }}
-        >
-          <ListItemIcon>
-            <SettingsInputAntennaIcon />
-          </ListItemIcon>
-          <ListItemText primary="Gateways" />
-        </ListItem>
-        <ListItem
-          button
-          selected={location.pathname === "/devices"}
-          onClick={() => {
-            changeLocation("/devices");
-          }}
-        >
-          <ListItemIcon>
-            <MemoryIcon />
-          </ListItemIcon>
-          <ListItemText primary="Devices" />
-        </ListItem>
-        <ListItem
-          button
-          selected={location.pathname === "/allMessages"}
-          onClick={() => {
-            changeLocation("/allMessages");
-          }}
-        >
-          <ListItemIcon>
-            <ChatIcon />
-          </ListItemIcon>
-          <ListItemText primary="All Messages" />
-        </ListItem>
-      </div>
-    </List>
+    <>
+      <List>
+        <div>
+          <ListItem
+            button
+            selected={location.pathname === "/"}
+            onClick={() => {
+              changeLocation("/");
+            }}
+          >
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+          <ListItem
+            button
+            selected={location.pathname === "/applications"}
+            onClick={() => {
+              changeLocation("/applications");
+            }}
+          >
+            <ListItemIcon>
+              <AppsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Applications" />
+          </ListItem>
+          <ListItem
+            button
+            selected={location.pathname === "/gateways"}
+            onClick={() => {
+              changeLocation("/gateways");
+            }}
+          >
+            <ListItemIcon>
+              <SettingsInputAntennaIcon />
+            </ListItemIcon>
+            <ListItemText primary="Gateways" />
+          </ListItem>
+          <ListItem
+            button
+            selected={location.pathname === "/devices"}
+            onClick={() => {
+              changeLocation("/devices");
+            }}
+          >
+            <ListItemIcon>
+              <MemoryIcon />
+            </ListItemIcon>
+            <ListItemText primary="Devices" />
+          </ListItem>
+          <ListItem
+            button
+            selected={location.pathname === "/allMessages"}
+            onClick={() => {
+              changeLocation("/allMessages");
+            }}
+          >
+            <ListItemIcon>
+              <ChatIcon />
+            </ListItemIcon>
+            <ListItemText primary="All Messages" />
+          </ListItem>
+        </div>
+      </List>
+      <Divider />
+      <List>
+        <div>
+          <ListItem
+            button
+            selected={location.pathname === "/profile"}
+            onClick={() => {
+              changeLocation("/profile");
+            }}
+          >
+            <ListItemIcon>
+              <PersonIcon />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItem>
+        </div>
+      </List>
+    </>
   );
 };
 
