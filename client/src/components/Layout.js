@@ -128,7 +128,6 @@ const Layout = ({ children }) => {
   const location = useLocation();
 
   const getPageName = () => {
-    // location.pathname === "/devices"
     switch (location.pathname) {
       case "/":
         return "Dashboard";
@@ -195,7 +194,7 @@ const Layout = ({ children }) => {
             </IconButton>
           </div>
           <Divider />
-          <ListItems />
+          <ListItems handleDrawerClose={handleDrawerClose} />
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />

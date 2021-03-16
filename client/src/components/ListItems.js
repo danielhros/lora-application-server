@@ -11,14 +11,18 @@ import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import PersonIcon from "@material-ui/icons/Person";
 import { useHistory, useLocation } from "react-router-dom";
+import withWidth from "@material-ui/core/withWidth";
 
-const ListItems = () => {
+const ListItems = ({ handleDrawerClose, width }) => {
   const history = useHistory();
   const location = useLocation();
 
   const changeLocation = (newPath) => {
     if (newPath !== location.pathname) {
       history.push(newPath);
+      if (width === "xs" || width === "sm") {
+        handleDrawerClose();
+      }
     }
   };
   return (
@@ -108,4 +112,4 @@ const ListItems = () => {
   );
 };
 
-export default ListItems;
+export default withWidth()(ListItems);
