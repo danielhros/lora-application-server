@@ -16,13 +16,9 @@ import ListItems from "./ListItems";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import Badge from "@material-ui/core/Badge";
 
-import {
-  orange,
-  lightBlue,
-  deepPurple,
-  deepOrange,
-} from "@material-ui/core/colors";
-import Switch from "@material-ui/core/Switch";
+import { useLocation } from "react-router-dom";
+
+import { orange, deepOrange } from "@material-ui/core/colors";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 const Copyright = () => {
@@ -111,31 +107,43 @@ const Layout = ({ children }) => {
   const [open, setOpen] = React.useState(true);
 
   //levelup.gitconnected.com/material-ui-how-to-implement-dark-mode-and-edit-theme-colors-effcfa0893b9
-  const [darkState, setDarkState] = React.useState(true);
-  const palletType = darkState ? "dark" : "light";
-  const mainPrimaryColor = darkState ? orange[500] : lightBlue[500];
-  const mainSecondaryColor = darkState ? deepOrange[900] : deepPurple[500];
   const darkTheme = createMuiTheme({
     palette: {
-      type: palletType,
+      type: "dark",
       primary: {
-        main: mainPrimaryColor,
+        main: orange[500],
       },
       secondary: {
-        main: mainSecondaryColor,
+        main: deepOrange[900],
       },
     },
   });
-
-  const handleThemeChange = () => {
-    setDarkState(!darkState);
-  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const location = useLocation();
+
+  const getPageName = () => {
+    // location.pathname === "/devices"
+    switch (location.pathname) {
+      case "/":
+        return "Dashboard";
+      case "/applications":
+        return "Applications";
+      case "/gateways":
+        return "Gateways";
+      case "/devices":
+        return "Devices";
+      case "/allMessages":
+        return "All Messages";
+      default:
+        return "Unknown";
+    }
   };
 
   return (
@@ -166,9 +174,8 @@ const Layout = ({ children }) => {
               noWrap
               className={classes.title}
             >
-              Dashboard
+              {getPageName()}
             </Typography>
-            <Switch checked={darkState} onChange={handleThemeChange} />
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
