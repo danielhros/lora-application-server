@@ -3,7 +3,7 @@ import { setAuthToken } from "../utils/setAuthToken";
 
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
-export const LOGIN_FAIL = "LOGIN_FAIL";
+export const LOGOUT = "LOGOUT";
 
 // Load User
 export const loadUser = () => async (dispatch) => {
@@ -18,7 +18,6 @@ export const loadUser = () => async (dispatch) => {
         payload: res.data,
       });
     } catch (err) {
-      console.log(err);
       dispatch({
         type: AUTH_ERROR,
       });
@@ -45,7 +44,13 @@ export const login = ({ userName, password }) => async (dispatch) => {
     dispatch(loadUser());
   } catch (err) {
     dispatch({
-      type: LOGIN_FAIL,
+      type: AUTH_ERROR,
     });
   }
+};
+
+export const logout = () => async (dispatch) => {
+  dispatch({
+    type: LOGOUT,
+  });
 };

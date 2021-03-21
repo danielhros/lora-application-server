@@ -1,6 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
+import { connect } from "react-redux";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { orange, deepOrange } from "@material-ui/core/colors";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+
 import Dashboard from "./components/Dashboard";
 import Applications from "./components/Applications";
 import Gateways from "./components/Gateways";
@@ -8,43 +12,38 @@ import Devices from "./components/Devices";
 import AllMessages from "./components/AllMessages";
 import Profile from "./components/Profile";
 import SignIn from "./components/SignIn";
+import Loading from "./components/Loading";
 import PrivateRoute from "./components/PrivateRoute";
 import NotFound from "./components/NotFound";
-import { connect } from "react-redux";
-
-import { setBaseUrl } from "../src/utils/setAuthToken";
-
-import { orange, deepOrange } from "@material-ui/core/colors";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 import { loadUser } from "./actions/auth";
+import { setBaseUrl } from "../src/utils/setAuthToken";
 
 setBaseUrl(process.env.REACT_APP_BASE_URL);
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: "dark",
+    primary: {
+      main: orange[500],
+    },
+    secondary: {
+      main: deepOrange[900],
+    },
+  },
+});
 
 function App({ loadUser, loading }) {
   React.useEffect(() => {
     loadUser();
   }, []);
 
-  //levelup.gitconnected.com/material-ui-how-to-implement-dark-mode-and-edit-theme-colors-effcfa0893b9
-  const darkTheme = createMuiTheme({
-    palette: {
-      type: "dark",
-      primary: {
-        main: orange[500],
-      },
-      secondary: {
-        main: deepOrange[900],
-      },
-    },
-  });
-
   return (
-    <>
-      {loading ? (
-        <p>Loading</p>
-      ) : (
-        <ThemeProvider theme={darkTheme}>
+    <React.Fragment>
+      <ThemeProvider theme={darkTheme}>
+        {loading ? (
+          <Loading />
+        ) : (
           <BrowserRouter>
             <Switch>
               <PrivateRoute exact path="/" component={Dashboard} />
@@ -61,9 +60,9 @@ function App({ loadUser, loading }) {
               <Route component={NotFound} />
             </Switch>
           </BrowserRouter>
-        </ThemeProvider>
-      )}
-    </>
+        )}
+      </ThemeProvider>
+    </React.Fragment>
   );
 }
 

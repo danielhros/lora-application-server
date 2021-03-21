@@ -12,8 +12,11 @@ import Divider from "@material-ui/core/Divider";
 import PersonIcon from "@material-ui/icons/Person";
 import { useHistory, useLocation } from "react-router-dom";
 import withWidth from "@material-ui/core/withWidth";
+import { logout } from "../actions/auth";
+import { connect } from "react-redux";
+import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 
-const ListItems = ({ handleDrawerClose, width }) => {
+const ListItems = ({ handleDrawerClose, width, logout }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -106,10 +109,17 @@ const ListItems = ({ handleDrawerClose, width }) => {
             </ListItemIcon>
             <ListItemText primary="Profile" />
           </ListItem>
+
+          <ListItem button onClick={logout}>
+            <ListItemIcon>
+              <MeetingRoomIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
         </div>
       </List>
     </>
   );
 };
 
-export default withWidth()(ListItems);
+export default connect(undefined, { logout })(withWidth()(ListItems));
