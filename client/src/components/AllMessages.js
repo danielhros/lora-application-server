@@ -1,7 +1,12 @@
 import React from "react";
+import Layout from "./Layout";
 
 export const AllMessages = () => {
-  return <React.Fragment>AllMessages</React.Fragment>;
+  return (
+    <Layout>
+      <React.Fragment>All Messages</React.Fragment>
+    </Layout>
+  );
 };
 
 export default AllMessages;

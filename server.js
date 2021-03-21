@@ -1,9 +1,9 @@
 const express = require("express");
-const path = require("path");
-
-const db = require("./db");
+var cors = require("cors");
 
 const app = express();
+
+app.use(cors());
 
 // Middleware
 app.use(express.json({ extended: false }));

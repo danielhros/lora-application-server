@@ -12,12 +12,18 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1",
-    "recharts": "^2.0.8"
+    "react-redux": "^7.2.2",
+    "recharts": "^2.0.8",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "concurrently": "^6.0.0",

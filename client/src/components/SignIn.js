@@ -11,6 +11,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Copyright from "./Copyright";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { login } from "../actions/auth";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,8 +35,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+const SignIn = ({ isAuthenticated, login }) => {
   const classes = useStyles();
+
+  const [formData, setFormData] = React.useState({
+    userName: "",
+    password: "",
+  });
+
+  const { userName, password } = formData;
+
+  const onChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    login({ userName, password });
+  };
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -45,7 +71,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={onSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -54,7 +80,9 @@ export default function SignIn() {
             id="userName"
             label="User Name"
             name="userName"
+            value={userName}
             autoFocus
+            onChange={onChange}
           />
           <TextField
             variant="outlined"
@@ -66,6 +94,8 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={onChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -87,4 +117,12 @@ export default function SignIn() {
       </Box>
     </Container>
   );
-}
+};
+
+const mapStateToProps = ({ auth }) => ({
+  isAuthenticated: auth.isAuthenticated,
+});
+
+const mapDispatchToProps = { login };
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

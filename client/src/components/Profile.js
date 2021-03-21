@@ -1,7 +1,12 @@
 import React from "react";
+import Layout from "./Layout";
 
 export const Profile = () => {
-  return <React.Fragment>Profile</React.Fragment>;
+  return (
+    <Layout>
+      <React.Fragment>Profile</React.Fragment>
+    </Layout>
+  );
 };
 
 export default Profile;

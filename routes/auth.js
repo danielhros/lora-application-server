@@ -4,6 +4,29 @@ const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const db = require("../db");
+const auth = require("../middleware/auth");
+
+// @route   GET api/auth
+// @desc    Get user object
+// @access  Public
+router.get("/", auth, async (req, res) => {
+  try {
+    let {
+      rows: [user],
+    } = await db.query(
+      "SELECT id, user_name FROM users WHERE id = $1 LIMIT 1",
+      [req.user.id]
+    );
+
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+    }
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
 
 // @route   POST api/auth
 // @desc    Authenticate user & get token
