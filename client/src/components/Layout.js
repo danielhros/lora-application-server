@@ -15,6 +15,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ListItems from "./ListItems";
 import CachedIcon from "@material-ui/icons/Cached";
 import Copyright from "./Copyright";
+import withWidth from "@material-ui/core/withWidth";
 
 import { useLocation } from "react-router-dom";
 
@@ -90,9 +91,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Layout = ({ children }) => {
+const Layout = ({ children, width }) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+
+  const [open, setOpen] = React.useState(width !== "xs" && width !== "sm");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -184,4 +186,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout;
+export default withWidth()(Layout);

@@ -43,8 +43,8 @@ function App({ loadUser, loading }) {
         ) : (
           <BrowserRouter>
             <Switch>
-              <PrivateRoute exact path="/" component={Dashboard} />
               <Route exact path="/login" component={SignIn} />
+              <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute
                 exact
                 path="/applications"
