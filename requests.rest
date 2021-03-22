@@ -8,14 +8,14 @@ Content-Type: application/json
 
 ###
 GET http://localhost:5000/api/auth
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDE4MTcwLCJleHAiOjE2MTY0MTgyMzB9.zKLFh5nO9tqtXqamZbqTVJvxFN0LH9FVama3xYL7n10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDM1OTg1LCJleHAiOjE2MTY0MzYwNDV9.taP0m6iu73eUdgrjaEOsXdvDd49o0XJ_MYvcgSDiONU
 
 ###
 POST http://localhost:5000/api/auth/token
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDE4MTQ5LCJleHAiOjE2MTY1MDQ1NDl9.ZasdrU9BNsqrH8C4fVczImQMaxQk7yLQGRjuqyPlq84"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDM1OTg1fQ.hQ0z8psQzNoIZo8FZf-RJBuQTTbn8zDq7X5WL2wOU48"
 }
 
 ###
@@ -23,7 +23,7 @@ POST http://localhost:5000/api/auth/logout
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDE4MTQ5LCJleHAiOjE2MTY1MDQ1NDl9.ZasdrU9BNsqrH8C4fVczImQMaxQk7yLQGRjuqyPlq84"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDM1OTg1fQ.hQ0z8psQzNoIZo8FZf-RJBuQTTbn8zDq7X5WL2wOU48"
 }
 
 

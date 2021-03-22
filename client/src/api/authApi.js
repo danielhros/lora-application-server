@@ -9,7 +9,6 @@ export default {
    *
    * @function getAuthTokens
    * @param {object} payload data to send
-   * @returns {tokens} response from server
    */
   getAuthTokens(payload) {
     devConsole.log("Sending request to get tokens from server..");
@@ -20,13 +19,18 @@ export default {
    * Get user object from server.
    *
    * @function getUser
-   * @returns {user} response from server
    */
   getUser() {
     devConsole.log("Sending request to get user object from server..");
     return appApi.get(LOGIN);
   },
 
+  /**
+   * Remove `refreshToken` from server database.
+   *
+   * @function removeRefreshToken
+   * @param {object} payload refreshToken to send
+   */
   removeRefreshToken(payload) {
     devConsole.log("Sending request to remove refreshToken from database..");
     return appApi.post(LOGOUT, payload);

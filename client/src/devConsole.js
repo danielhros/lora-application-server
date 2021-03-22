@@ -15,7 +15,7 @@ const devConsole = {
    * @returns {undefined}
    */
   log: (message) => {
-    if (process.env.NODE_ENV) {
+    if (process.env.NODE_ENV === "development") {
       console.log(message);
     }
   },

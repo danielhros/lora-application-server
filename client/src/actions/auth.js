@@ -1,5 +1,3 @@
-// import axios from "axios";
-import { setAuthToken } from "../utils/setAuthToken";
 import authApi from "../api/authApi";
 
 export const USER_LOADED = "USER_LOADED";
@@ -9,11 +7,7 @@ export const LOGOUT = "LOGOUT";
 // Load User
 export const loadUser = () => async (dispatch) => {
   if (localStorage.accessToken) {
-    setAuthToken(localStorage.accessToken);
-
     try {
-      // const res = await axios.get("/api/auth");
-
       const res = await authApi.getUser();
 
       dispatch({
@@ -34,17 +28,8 @@ export const loadUser = () => async (dispatch) => {
 };
 
 export const login = ({ userName, password }) => async (dispatch) => {
-  // const config = {
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // };
-
-  // const body = JSON.stringify({ username: userName, password });
-
   try {
     const res = await authApi.getAuthTokens({ username: userName, password });
-    // const res = await axios.post("/api/auth", body, config);
     localStorage.setItem("accessToken", res.data.accessToken);
     localStorage.setItem("refreshToken", res.data.refreshToken);
     dispatch(loadUser());
