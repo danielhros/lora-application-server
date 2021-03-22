@@ -1,20 +1,22 @@
-const { compare } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
   // Get token from header
-  const token = req.header("x-auth-token");
+  const header = req.header("Authorization");
+  const token = header && header.split(" ")[1];
+
   // check if no token
   if (!token) {
-    return res.status(401).json({ msg: "No token, authorization denied" });
+    return res.status(403).json({ msg: "No token, authorization denied" });
   }
 
   // Verify token
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     req.user = decoded.user;
     next();
   } catch (err) {
-    res.status(401).json({ msg: "Token is not valid" });
+    console.log(err);
+    res.status(403).json({ msg: "Authorization denied" });
   }
 };

@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const db = require("../db");
 const auth = require("../middleware/auth");
 
+let refreshTokens = [];
+
 // @route   GET api/auth
 // @desc    Get user object
 // @access  Public
@@ -48,7 +50,7 @@ router.post(
 
     try {
       // See if user exists
-      let {
+      const {
         rows: [user],
       } = await db.query(
         "SELECT id, password FROM users WHERE user_name = $1 LIMIT 1",
@@ -75,22 +77,70 @@ router.post(
         },
       };
 
-      jwt.sign(
-        payload,
-        process.env.JWT_SECRET,
-        { expiresIn: 360000 },
-        (err, token) => {
-          if (err) {
-            throw err;
-          }
-          res.json({ token });
-        }
-      );
+      const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: parseInt(process.env.ACCESS_TOKEN_LIFE),
+      });
+      const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
+      refreshTokens.push(refreshToken);
+
+      await db.query("INSERT INTO tokens (refresh_token) VALUES ($1)", [
+        refreshToken,
+      ]);
+
+      res.json({ accessToken, refreshToken });
     } catch (error) {
-      console.error(error.message);
-      res.status(500).send("Server error");
+      console.error(error);
+      res.sendStatus(500);
     }
   }
 );
+
+router.post("/token", async (req, res) => {
+  const {
+    body: { refreshToken },
+  } = req;
+
+  if (!refreshToken) {
+    return res.sendStatus(401);
+  }
+
+  try {
+    const {
+      rows: [{ count: refreshTokenExists }],
+    } = await db.query("SELECT COUNT(1) FROM tokens WHERE refresh_token = $1", [
+      refreshToken,
+    ]);
+
+    if (!parseInt(refreshTokenExists)) {
+      return res.sendStatus(403);
+    }
+
+    const { user } = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: parseInt(process.env.ACCESS_TOKEN_LIFE),
+    });
+    res.json({ accessToken });
+  } catch (err) {
+    res.sendStatus(500);
+  }
+});
+
+router.delete("/logout", async (req, res) => {
+  try {
+    const {
+      rowCount,
+    } = await db.query("DELETE FROM tokens WHERE refresh_token = $1", [
+      req.body.refreshToken,
+    ]);
+
+    if (rowCount === 0) {
+      return res.sendStatus(403);
+    }
+
+    return res.sendStatus(204);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
 
 module.exports = router;
