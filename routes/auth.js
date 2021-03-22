@@ -112,7 +112,7 @@ router.post("/token", async (req, res) => {
     ]);
 
     if (!parseInt(refreshTokenExists)) {
-      return res.sendStatus(403);
+      return res.sendStatus(401);
     }
 
     const { user } = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
@@ -125,7 +125,7 @@ router.post("/token", async (req, res) => {
   }
 });
 
-router.delete("/logout", async (req, res) => {
+router.post("/logout", async (req, res) => {
   try {
     const {
       rowCount,
@@ -134,7 +134,7 @@ router.delete("/logout", async (req, res) => {
     ]);
 
     if (rowCount === 0) {
-      return res.sendStatus(403);
+      return res.sendStatus(401);
     }
 
     return res.sendStatus(204);

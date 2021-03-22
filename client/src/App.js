@@ -17,9 +17,6 @@ import PrivateRoute from "./components/PrivateRoute";
 import NotFound from "./components/NotFound";
 
 import { loadUser } from "./actions/auth";
-import { setBaseUrl } from "../src/utils/setAuthToken";
-
-setBaseUrl(process.env.REACT_APP_BASE_URL);
 
 const darkTheme = createMuiTheme({
   palette: {

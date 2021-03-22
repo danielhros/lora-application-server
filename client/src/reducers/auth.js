@@ -1,8 +1,6 @@
-/* eslint-disable import/no-anonymous-default-export */
 import { AUTH_ERROR, USER_LOADED } from "../actions/auth";
 
 export const initialState = {
-  token: localStorage.getItem("token"),
   isAuthenticated: false,
   loading: true,
   user: null,
@@ -20,9 +18,9 @@ export default (state = initialState, action) => {
       };
     case AUTH_ERROR:
       localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
       return {
-        ...state,
-        token: null,
+        ...initialState,
         isAuthenticated: false,
         loading: false,
         user: null,

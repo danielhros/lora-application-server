@@ -39,8 +39,8 @@ const SignIn = ({ isAuthenticated, login }) => {
   const classes = useStyles();
 
   const [formData, setFormData] = React.useState({
-    userName: "",
-    password: "",
+    userName: "admin",
+    password: "admin",
   });
 
   const { userName, password } = formData;
