@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BASE_URL, TOKEN } from "../services/URLs";
 import { LOGOUT } from "../actions/auth";
+import devConsole from "../devConsole";
 
 /**
  * @type {?object} store of redux-store instance
@@ -87,7 +88,7 @@ export const getHeadersFormat = (headers = {}) => {
 export const handleError = async (err, callback) => {
   if (err.response && err.response.status === 401) {
     try {
-      console.log(
+      devConsole.log(
         "User is UNAUTHORIZED! Refreshing access token with refreshToken"
       );
 
@@ -100,7 +101,7 @@ export const handleError = async (err, callback) => {
         },
       };
 
-      console.log("Getting new accessToken from server");
+      devConsole.log("Getting new accessToken from server");
 
       const res = await appApi.post(TOKEN, _payload);
       localStorage.setItem("accessToken", res.data.accessToken);
@@ -108,14 +109,14 @@ export const handleError = async (err, callback) => {
     } catch (e) {
       // Check if refresh_token is expired as well
       if (e.response && e.response.status === 401) {
-        console.log(
+        devConsole.log(
           "Both tokens (accessToken, refreshToken) expired. Automatic logout."
         );
         store.dispatch({
           type: LOGOUT,
         });
       } else {
-        console.log("Something went wrong with refreshing token");
+        devConsole.log("Something went wrong with refreshing token");
       }
       throw e;
     }
@@ -132,7 +133,7 @@ export const handleError = async (err, callback) => {
 /**
  * Call callback given as argument.
  *
- * If error is catched, call then handleError function.
+ * If error is caught, call then handleError function.
  *
  * @param {requestCallback} _request request
  * @returns {object} response from server

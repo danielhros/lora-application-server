@@ -1,3 +1,4 @@
+### Get tokens/login
 POST http://localhost:5000/api/auth
 Content-Type: application/json
 
@@ -6,24 +7,35 @@ Content-Type: application/json
     "password": "admin"
 }
 
-###
+### Get user
 GET http://localhost:5000/api/auth
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDM1OTg1LCJleHAiOjE2MTY0MzYwNDV9.taP0m6iu73eUdgrjaEOsXdvDd49o0XJ_MYvcgSDiONU
 
-###
+### Refresh token
 POST http://localhost:5000/api/auth/token
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDM1OTg1fQ.hQ0z8psQzNoIZo8FZf-RJBuQTTbn8zDq7X5WL2wOU48"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyfSwiaWF0IjoxNjE2NDM4ODk3fQ.GYNsBjzcJUIl-emA3kseMkMigfMubwx2sXYvcN1hg5g"
 }
 
-###
+### Logout
 POST http://localhost:5000/api/auth/logout
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDM1OTg1fQ.hQ0z8psQzNoIZo8FZf-RJBuQTTbn8zDq7X5WL2wOU48"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDM5ODEwfQ.efHvU-lztHhGWfsmpjBqf7YZ-4qY1xZANwoUHHgHTBU"
+}
+
+### Change credentials
+POST http://localhost:5000/api/auth/updateCredentials
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDM5ODEwLCJleHAiOjE2MTcwMzk4MTB9.bn7cVPhOe9Yvd0A_MQA9saKdpbvSzFPFUkTcV_2Sp2I
+Content-Type: application/json
+
+{
+    "newUsername": "admin",
+    "oldPassword": "admin",
+    "newPassword": "admin"
 }
 
 

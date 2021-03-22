@@ -5,8 +5,7 @@ const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const db = require("../db");
 const auth = require("../middleware/auth");
-
-let refreshTokens = [];
+const { response } = require("express");
 
 // @route   GET api/auth
 // @desc    Get user object
@@ -25,7 +24,6 @@ router.get("/", auth, async (req, res) => {
     }
     res.json(user);
   } catch (err) {
-    console.log(err);
     res.status(500).send("Server error");
   }
 });
@@ -81,7 +79,6 @@ router.post(
         expiresIn: parseInt(process.env.ACCESS_TOKEN_LIFE),
       });
       const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
-      refreshTokens.push(refreshToken);
 
       await db.query("INSERT INTO tokens (refresh_token) VALUES ($1)", [
         refreshToken,
@@ -143,6 +140,64 @@ router.post("/logout", async (req, res) => {
   }
 });
 
-// router.post("/")
+router.post(
+  "/updateCredentials",
+  auth,
+  [
+    check("newUsername", "Username is required ").exists(),
+    check("oldPassword", "Old password is required ").exists(),
+    check("newPassword", "New password is required").exists(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { newUsername, oldPassword, newPassword } = req.body;
+
+    try {
+      const {
+        rows: [user],
+      } = await db.query("SELECT password FROM users WHERE id = $1 LIMIT 1", [
+        req.user.id,
+      ]);
+
+      if (!user) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
+      }
+
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+
+      if (!isMatch) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
+      }
+
+      // Encrypt password
+      const salt = await bcrypt.genSalt(10);
+      const _newPassword = await bcrypt.hash(newPassword, salt);
+
+      const {
+        rowCount,
+      } = await db.query(
+        "UPDATE users SET user_name = $1, password= $2 WHERE id = $3",
+        [newUsername, _newPassword, req.user.id]
+      );
+
+      if (rowCount === 0) {
+        throw "No row updated";
+      }
+
+      res.sendStatus(204);
+    } catch (error) {
+      res.sendStatus(500);
+    }
+  }
+);
 
 module.exports = router;
