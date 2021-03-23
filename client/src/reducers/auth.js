@@ -4,6 +4,8 @@ import {
   UPDATE_CREDENTIALS_LOADING,
   UPDATE_CREDENTIALS_SUCCESS,
   UPDATE_CREDENTIALS_FAIL,
+  UPDATE_CREDENTIALS_ERRORS,
+  RESET_UPDATE_CREDENTIALS,
 } from "../actions/auth";
 
 export const initialState = {
@@ -11,6 +13,7 @@ export const initialState = {
   loading: true,
   user: null,
   updateCredentialsLoading: false,
+  updateCredentialsErrors: [],
 };
 
 export default (state = initialState, action) => {
@@ -41,12 +44,24 @@ export default (state = initialState, action) => {
       return {
         ...state,
         updateCredentialsLoading: false,
+        user: { ...state.user, user_name: payload },
       };
-    // TODO: show some errors
     case UPDATE_CREDENTIALS_FAIL:
       return {
         ...state,
         updateCredentialsLoading: false,
+      };
+    case UPDATE_CREDENTIALS_ERRORS:
+      return {
+        ...state,
+        updateCredentialsLoading: false,
+        updateCredentialsErrors: payload,
+      };
+    case RESET_UPDATE_CREDENTIALS:
+      return {
+        ...state,
+        updateCredentialsLoading: false,
+        updateCredentialsErrors: [],
       };
     default:
       return state;

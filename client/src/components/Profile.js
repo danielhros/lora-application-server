@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,7 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import { changeCredentials } from "../actions/auth";
+import { changeCredentials, resetUpdateCredentials } from "../actions/auth";
 import { connect } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -44,15 +45,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Profile = ({ changeCredentials, updateCredentialsLoading }) => {
+export const Profile = ({
+  changeCredentials,
+  updateCredentialsLoading,
+  updateCredentialsErrors,
+  resetUpdateCredentials,
+  user_name,
+}) => {
   const classes = useStyles();
+  const [passwordMatch, setPasswordMatch] = React.useState(true);
 
   const [formData, setFormData] = React.useState({
-    userName: process.env.NODE_ENV === "development" ? "admin" : "",
+    userName: user_name,
     currentPassword: process.env.NODE_ENV === "development" ? "admin" : "",
     newPassword: process.env.NODE_ENV === "development" ? "admin" : "",
     confirmNewPassword: process.env.NODE_ENV === "development" ? "admin" : "",
   });
+
+  React.useEffect(() => {
+    resetUpdateCredentials();
+  }, []);
 
   const {
     userName,
@@ -69,12 +81,25 @@ export const Profile = ({ changeCredentials, updateCredentialsLoading }) => {
   };
 
   const onSubmit = async (e) => {
+    setPasswordMatch(true);
     e.preventDefault();
 
-    if (newPassword === confirmNewPassword) {
+    if (newPassword === confirmNewPassword && newPassword !== "") {
       changeCredentials(formData);
+    } else {
+      setPasswordMatch(false);
     }
   };
+
+  const userNameError = updateCredentialsErrors.find(
+    (e) => e.param === "newUsername"
+  );
+  const oldPassword = updateCredentialsErrors.find(
+    (e) => e.param === "oldPassword"
+  );
+  const newPasswordError = updateCredentialsErrors.find(
+    (e) => e.param === "newPassword"
+  );
 
   return (
     <Grid container justify="center">
@@ -100,6 +125,8 @@ export const Profile = ({ changeCredentials, updateCredentialsLoading }) => {
               autoFocus
               onChange={onChange}
               disabled={updateCredentialsLoading}
+              error={!!userNameError}
+              helperText={!!userNameError ? userNameError.msg : ""}
             />
             <TextField
               variant="outlined"
@@ -113,6 +140,8 @@ export const Profile = ({ changeCredentials, updateCredentialsLoading }) => {
               value={currentPassword}
               onChange={onChange}
               disabled={updateCredentialsLoading}
+              error={!!oldPassword}
+              helperText={!!oldPassword ? oldPassword.msg : ""}
             />
             <TextField
               variant="outlined"
@@ -126,6 +155,8 @@ export const Profile = ({ changeCredentials, updateCredentialsLoading }) => {
               value={newPassword}
               onChange={onChange}
               disabled={updateCredentialsLoading}
+              error={!passwordMatch || newPasswordError}
+              helperText={!!newPasswordError ? newPasswordError.msg : ""}
             />
             <TextField
               variant="outlined"
@@ -139,6 +170,12 @@ export const Profile = ({ changeCredentials, updateCredentialsLoading }) => {
               value={confirmNewPassword}
               onChange={onChange}
               disabled={updateCredentialsLoading}
+              error={!passwordMatch}
+              helperText={
+                passwordMatch
+                  ? ""
+                  : "Password confirmation must match New Password"
+              }
             />
             <div className={classes.wrapper}>
               <Button
@@ -167,10 +204,13 @@ export const Profile = ({ changeCredentials, updateCredentialsLoading }) => {
 
 const mapStateToProps = ({ auth }) => ({
   updateCredentialsLoading: auth.updateCredentialsLoading,
+  updateCredentialsErrors: auth.updateCredentialsErrors,
+  user_name: auth.user.user_name,
 });
 
 const mapDispatchToProps = {
   changeCredentials,
+  resetUpdateCredentials,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

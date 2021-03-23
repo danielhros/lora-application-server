@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { connect } from "react-redux";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route, Router } from "react-router-dom";
 import { orange, deepOrange } from "@material-ui/core/colors";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
@@ -17,6 +17,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import NotFound from "./components/NotFound";
 
 import { loadUser } from "./actions/auth";
+import history from "./history";
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -41,7 +42,7 @@ function App({ loadUser, loading }) {
         {loading ? (
           <Loading />
         ) : (
-          <BrowserRouter>
+          <Router history={history}>
             <Switch>
               <Route exact path="/login" component={SignIn} />
               <PrivateRoute exact path="/" component={Dashboard} />
@@ -56,7 +57,7 @@ function App({ loadUser, loading }) {
               <PrivateRoute exact path="/profile" component={Profile} />
               <Route component={NotFound} />
             </Switch>
-          </BrowserRouter>
+          </Router>
         )}
       </ThemeProvider>
     </React.Fragment>

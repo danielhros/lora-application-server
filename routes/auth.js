@@ -33,8 +33,8 @@ router.get("/", auth, async (req, res) => {
 router.post(
   "/",
   [
-    check("username", "Username is required ").exists(),
-    check("password", "Password is required").exists(),
+    check("username", "Username is required ").not().isEmpty().exists(), // TODO: check length (max 50)
+    check("password", "Password is required").not().isEmpty().exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -143,9 +143,9 @@ router.post(
   "/updateCredentials",
   auth,
   [
-    check("newUsername", "Username is required ").exists(),
-    check("oldPassword", "Old password is required ").exists(),
-    check("newPassword", "New password is required").exists(),
+    check("newUsername", "Username is required ").not().isEmpty().exists(),
+    check("oldPassword", "Old password is required ").not().isEmpty().exists(),
+    check("newPassword", "New password is required").not().isEmpty().exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -172,9 +172,9 @@ router.post(
       const isMatch = await bcrypt.compare(oldPassword, user.password);
 
       if (!isMatch) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Invalid Credentials" }] });
+        return res.status(400).json({
+          errors: [{ msg: "Wrong password provided", param: "oldPassword" }],
+        });
       }
 
       // Encrypt password

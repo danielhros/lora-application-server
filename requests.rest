@@ -34,8 +34,8 @@ Content-Type: application/json
 
 {
     "newUsername": "admin",
-    "oldPassword": "admin1",
-    "newPassword": "admin"
+    "oldPassword": "admin",
+    "oldPassword": "admin",
 }
 
 
