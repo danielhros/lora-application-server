@@ -5,7 +5,6 @@ const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const db = require("../db");
 const auth = require("../middleware/auth");
-const { response } = require("express");
 
 // @route   GET api/auth
 // @desc    Get user object
@@ -166,7 +165,7 @@ router.post(
 
       if (!user) {
         return res
-          .status(400)
+          .status(401)
           .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 

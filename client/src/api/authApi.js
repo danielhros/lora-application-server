@@ -1,6 +1,6 @@
 import appApi from "./index";
 import devConsole from "../devConsole";
-import { LOGIN, LOGOUT } from "../services/URLs";
+import { LOGIN, LOGOUT, CREDENTIALS } from "../services/URLs";
 
 export default {
   /**
@@ -34,5 +34,16 @@ export default {
   removeRefreshToken(payload) {
     devConsole.log("Sending request to remove refreshToken from database..");
     return appApi.post(LOGOUT, payload);
+  },
+
+  /**
+   * Change login credentials.
+   *
+   * @function changeCredentials
+   * @param {object} payload accessToken
+   */
+  changeCredentials(payload) {
+    devConsole.log("Sending request to change login credentials");
+    return appApi.post(CREDENTIALS, payload);
   },
 };

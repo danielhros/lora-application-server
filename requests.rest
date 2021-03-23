@@ -9,14 +9,14 @@ Content-Type: application/json
 
 ### Get user
 GET http://localhost:5000/api/auth
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDM1OTg1LCJleHAiOjE2MTY0MzYwNDV9.taP0m6iu73eUdgrjaEOsXdvDd49o0XJ_MYvcgSDiONU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDg3NjYyLCJleHAiOjE2MTcwODc2NjJ9.YYqkdcgCAUKWBrV3wixbHNaHLkF8EA3wzppXGEnkUeg
 
 ### Refresh token
 POST http://localhost:5000/api/auth/token
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyfSwiaWF0IjoxNjE2NDM4ODk3fQ.GYNsBjzcJUIl-emA3kseMkMigfMubwx2sXYvcN1hg5g"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDg3NTc3fQ.Wgpxe4cNbZVTwrn6Gh4e3HW6w4PS8xD7Zai94dWZElU"
 }
 
 ### Logout
@@ -24,17 +24,17 @@ POST http://localhost:5000/api/auth/logout
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDM5ODEwfQ.efHvU-lztHhGWfsmpjBqf7YZ-4qY1xZANwoUHHgHTBU"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDg3NTc3fQ.Wgpxe4cNbZVTwrn6Gh4e3HW6w4PS8xD7Zai94dWZElU"
 }
 
 ### Change credentials
 POST http://localhost:5000/api/auth/updateCredentials
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDM5ODEwLCJleHAiOjE2MTcwMzk4MTB9.bn7cVPhOe9Yvd0A_MQA9saKdpbvSzFPFUkTcV_2Sp2I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDg3NzgwLCJleHAiOjE2MTcwODc3ODB9.7JmSBoQ_XulUWIGjNbdlXoFTfw3dECeQbG9I8JyKJdo
 Content-Type: application/json
 
 {
     "newUsername": "admin",
-    "oldPassword": "admin",
+    "oldPassword": "admin1",
     "newPassword": "admin"
 }
 
