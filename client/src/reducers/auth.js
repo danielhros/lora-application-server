@@ -1,11 +1,14 @@
 import {
-  AUTH_ERROR,
   USER_LOADED,
-  UPDATE_CREDENTIALS_LOADING,
   UPDATE_CREDENTIALS_SUCCESS,
   UPDATE_CREDENTIALS_FAIL,
   UPDATE_CREDENTIALS_ERRORS,
+  UPDATE_CREDENTIALS_LOADING,
   RESET_UPDATE_CREDENTIALS,
+  SIGN_IN_FAIL,
+  SIGN_IN_ERRORS,
+  SIGN_IN_LOADING,
+  RESET_SIGN_IN,
 } from "../actions/auth";
 
 export const initialState = {
@@ -14,27 +17,13 @@ export const initialState = {
   user: null,
   updateCredentialsLoading: false,
   updateCredentialsErrors: [],
+  signInLoading: false,
+  signInErrors: [],
 };
 
 export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case USER_LOADED:
-      return {
-        ...state,
-        isAuthenticated: true,
-        loading: false,
-        user: payload,
-      };
-    case AUTH_ERROR:
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
-      return {
-        ...initialState,
-        isAuthenticated: false,
-        loading: false,
-        user: null,
-      };
     case UPDATE_CREDENTIALS_LOADING:
       return {
         ...state,
@@ -45,6 +34,7 @@ export default (state = initialState, action) => {
         ...state,
         updateCredentialsLoading: false,
         user: { ...state.user, user_name: payload },
+        updateCredentialsErrors: [],
       };
     case UPDATE_CREDENTIALS_FAIL:
       return {
@@ -62,6 +52,40 @@ export default (state = initialState, action) => {
         ...state,
         updateCredentialsLoading: false,
         updateCredentialsErrors: [],
+      };
+    case SIGN_IN_LOADING:
+      return {
+        ...state,
+        signInLoading: true,
+      };
+    case USER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        user: payload,
+        signInLoading: false,
+        signInErrors: [],
+      };
+    case SIGN_IN_FAIL:
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+      return {
+        ...initialState,
+        isAuthenticated: false,
+        loading: false,
+      };
+    case SIGN_IN_ERRORS:
+      return {
+        ...state,
+        signInLoading: false,
+        signInErrors: payload,
+      };
+    case RESET_SIGN_IN:
+      return {
+        ...state,
+        signInLoading: false,
+        signInErrors: [],
       };
     default:
       return state;

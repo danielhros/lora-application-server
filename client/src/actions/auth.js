@@ -12,6 +12,12 @@ export const UPDATE_CREDENTIALS_FAIL = "UPDATE_CREDENTIALS_FAIL";
 export const UPDATE_CREDENTIALS_ERRORS = "UPDATE_CREDENTIALS_ERRORS";
 export const RESET_UPDATE_CREDENTIALS = "RESET_UPDATE_CREDENTIALS";
 
+export const SIGN_IN_LOADING = "SIGN_IN_LOADING";
+export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
+export const SIGN_IN_FAIL = "SIGN_IN_FAIL";
+export const SIGN_IN_ERRORS = "SIGN_IN_ERRORS";
+export const RESET_SIGN_IN = "RESET_SIGN_IN";
+
 // Load User
 export const loadUser = () => async (dispatch) => {
   if (localStorage.accessToken) {
@@ -23,27 +29,44 @@ export const loadUser = () => async (dispatch) => {
         payload: res.data,
       });
     } catch (err) {
+      // TODO: call notification
       dispatch({
-        type: AUTH_ERROR,
+        type: SIGN_IN_FAIL,
       });
     }
   } else {
+    // TODO: call notification
     dispatch({
-      type: AUTH_ERROR,
+      type: SIGN_IN_FAIL,
     });
   }
 };
 
 export const login = ({ userName, password }) => async (dispatch) => {
+  dispatch({
+    type: SIGN_IN_LOADING,
+  });
+
   try {
     const res = await authApi.getAuthTokens({ username: userName, password });
     localStorage.setItem("accessToken", res.data.accessToken);
     localStorage.setItem("refreshToken", res.data.refreshToken);
     dispatch(loadUser());
   } catch (err) {
-    dispatch({
-      type: AUTH_ERROR,
-    });
+    if (
+      err.response.data.errors != null &&
+      err.response.data.errors.length >= 0
+    ) {
+      dispatch({
+        type: SIGN_IN_ERRORS,
+        payload: err.response.data.errors,
+      });
+    } else {
+      // TODO: call notification
+      dispatch({
+        type: SIGN_IN_FAIL,
+      });
+    }
   }
 };
 
@@ -95,6 +118,7 @@ export const changeCredentials = (formData) => async (dispatch) => {
         payload: err.response.data.errors,
       });
     } else {
+      // TODO: call notification
       dispatch({
         type: UPDATE_CREDENTIALS_FAIL,
       });
@@ -105,5 +129,11 @@ export const changeCredentials = (formData) => async (dispatch) => {
 export const resetUpdateCredentials = () => (dispatch) => {
   dispatch({
     type: RESET_UPDATE_CREDENTIALS,
+  });
+};
+
+export const resetSignIn = () => (dispatch) => {
+  dispatch({
+    type: RESET_SIGN_IN,
   });
 };

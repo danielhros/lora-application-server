@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -13,7 +14,8 @@ import Container from "@material-ui/core/Container";
 import Copyright from "./Copyright";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { login } from "../actions/auth";
+import { login, resetSignIn } from "../actions/auth";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,15 +35,36 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  buttonProgress: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -8,
+    marginLeft: -12,
+  },
+  wrapper: {
+    position: "relative",
+  },
 }));
 
-const SignIn = ({ isAuthenticated, login }) => {
+const SignIn = ({
+  isAuthenticated,
+  login,
+  resetSignIn,
+  signInErrors,
+  signInLoading,
+}) => {
   const classes = useStyles();
 
   const [formData, setFormData] = React.useState({
     userName: process.env.NODE_ENV === "development" ? "admin" : "",
     password: process.env.NODE_ENV === "development" ? "admin" : "",
   });
+  const [rememberMe, setRememberMe] = React.useState(true);
+
+  React.useEffect(() => {
+    resetSignIn();
+  }, []);
 
   const { userName, password } = formData;
 
@@ -61,6 +84,10 @@ const SignIn = ({ isAuthenticated, login }) => {
     return <Redirect to="/" />;
   }
 
+  const userNameError = signInErrors.find((e) => e.param === "username");
+  const passwordError = signInErrors.find((e) => e.param === "password");
+  const credentialsError = signInErrors.find((e) => e.param === "credentials");
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -72,6 +99,9 @@ const SignIn = ({ isAuthenticated, login }) => {
           Sign in
         </Typography>
         <form className={classes.form} noValidate onSubmit={onSubmit}>
+          {!!credentialsError && (
+            <Typography color={"error"}>{credentialsError.msg}</Typography>
+          )}
           <TextField
             variant="outlined"
             margin="normal"
@@ -83,6 +113,9 @@ const SignIn = ({ isAuthenticated, login }) => {
             value={userName}
             autoFocus
             onChange={onChange}
+            disabled={signInLoading}
+            error={!!userNameError}
+            helperText={!!userNameError ? userNameError.msg : ""}
           />
           <TextField
             variant="outlined"
@@ -96,20 +129,32 @@ const SignIn = ({ isAuthenticated, login }) => {
             autoComplete="current-password"
             value={password}
             onChange={onChange}
+            disabled={signInLoading}
+            error={!!passwordError}
+            helperText={!!passwordError ? passwordError.msg : ""}
           />
+
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
+            checked={rememberMe}
+            onChange={() => setRememberMe(!rememberMe)}
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
+          <div className={classes.wrapper}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={signInLoading}
+              className={classes.submit}
+            >
+              Sign In
+            </Button>
+            {signInLoading && (
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            )}
+          </div>
         </form>
       </div>
       <Box mt={8}>
@@ -120,9 +165,11 @@ const SignIn = ({ isAuthenticated, login }) => {
 };
 
 const mapStateToProps = ({ auth }) => ({
+  signInLoading: auth.signInLoading,
   isAuthenticated: auth.isAuthenticated,
+  signInErrors: auth.signInErrors,
 });
 
-const mapDispatchToProps = { login };
+const mapDispatchToProps = { login, resetSignIn };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
