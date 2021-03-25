@@ -29,13 +29,11 @@ export const loadUser = () => async (dispatch) => {
         payload: res.data,
       });
     } catch (err) {
-      // TODO: call notification
       dispatch({
         type: SIGN_IN_FAIL,
       });
     }
   } else {
-    // TODO: call notification
     dispatch({
       type: SIGN_IN_FAIL,
     });
@@ -62,7 +60,6 @@ export const login = ({ userName, password }) => async (dispatch) => {
         payload: err.response.data.errors,
       });
     } else {
-      // TODO: call notification
       dispatch({
         type: SIGN_IN_FAIL,
       });
@@ -118,7 +115,6 @@ export const changeCredentials = (formData) => async (dispatch) => {
         payload: err.response.data.errors,
       });
     } else {
-      // TODO: call notification
       dispatch({
         type: UPDATE_CREDENTIALS_FAIL,
       });

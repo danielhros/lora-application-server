@@ -17,6 +17,9 @@ import { Redirect } from "react-router-dom";
 import { login, resetSignIn } from "../actions/auth";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import { useFormik } from "formik";
+import * as yup from "yup";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -56,29 +59,34 @@ const SignIn = ({
 }) => {
   const classes = useStyles();
 
-  const [formData, setFormData] = React.useState({
-    userName: process.env.NODE_ENV === "development" ? "admin" : "",
-    password: process.env.NODE_ENV === "development" ? "admin" : "",
+  const validationSchema = yup.object({
+    userName: yup
+      .string("User Name*")
+      .max(50, "User Name shouldn't be more then 50 characters length")
+      .required("User Name is required"),
+    password: yup
+      .string("Password*")
+      .min(5, "Password should be of minimum 5 characters length")
+      .required("Password is required"),
   });
+
+  const formik = useFormik({
+    initialValues: {
+      userName: process.env.NODE_ENV === "development" ? "admin" : "",
+      password: process.env.NODE_ENV === "development" ? "admin" : "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      const { userName, password } = values;
+      login({ userName, password });
+    },
+  });
+
   const [rememberMe, setRememberMe] = React.useState(true);
 
   React.useEffect(() => {
     resetSignIn();
   }, []);
-
-  const { userName, password } = formData;
-
-  const onChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    login({ userName, password });
-  };
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
@@ -98,7 +106,11 @@ const SignIn = ({
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={onSubmit}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={formik.handleSubmit}
+        >
           {!!credentialsError && (
             <Typography color={"error"}>{credentialsError.msg}</Typography>
           )}
@@ -110,12 +122,18 @@ const SignIn = ({
             id="userName"
             label="User Name"
             name="userName"
-            value={userName}
+            value={formik.values.userName}
             autoFocus
-            onChange={onChange}
+            onChange={formik.handleChange}
             disabled={signInLoading}
-            error={!!userNameError}
-            helperText={!!userNameError ? userNameError.msg : ""}
+            error={
+              (formik.touched.userName && Boolean(formik.errors.userName)) ||
+              !!userNameError
+            }
+            helperText={
+              (formik.touched.userName && formik.errors.userName) ||
+              (userNameError && userNameError.msg)
+            }
           />
           <TextField
             variant="outlined"
@@ -127,11 +145,17 @@ const SignIn = ({
             type="password"
             id="password"
             autoComplete="current-password"
-            value={password}
-            onChange={onChange}
+            value={formik.values.password}
+            onChange={formik.handleChange}
             disabled={signInLoading}
-            error={!!passwordError}
-            helperText={!!passwordError ? passwordError.msg : ""}
+            error={
+              (formik.touched.password && Boolean(formik.errors.password)) ||
+              !!passwordError
+            }
+            helperText={
+              (formik.touched.password && formik.errors.password) ||
+              (!!passwordError && passwordError.msg)
+            }
           />
 
           <FormControlLabel
