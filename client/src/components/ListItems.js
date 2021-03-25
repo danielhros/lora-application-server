@@ -16,9 +16,26 @@ import { logout } from "../actions/auth";
 import { connect } from "react-redux";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+
 const ListItems = ({ handleDrawerClose, width, logout }) => {
   const history = useHistory();
   const location = useLocation();
+
+  const [openLeaveDialog, setOpenLeaveDialog] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenLeaveDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenLeaveDialog(false);
+  };
 
   const changeLocation = (newPath) => {
     if (newPath !== location.pathname) {
@@ -30,6 +47,28 @@ const ListItems = ({ handleDrawerClose, width, logout }) => {
   };
   return (
     <>
+      <Dialog
+        open={openLeaveDialog}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirm Logout"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to Logout?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Stay
+          </Button>
+          <Button onClick={logout} color="primary" autoFocus>
+            Leave
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <List>
         <div>
           <ListItem
@@ -110,7 +149,7 @@ const ListItems = ({ handleDrawerClose, width, logout }) => {
             <ListItemText primary="Profile" />
           </ListItem>
 
-          <ListItem button onClick={logout}>
+          <ListItem button onClick={handleClickOpen}>
             <ListItemIcon>
               <MeetingRoomIcon />
             </ListItemIcon>

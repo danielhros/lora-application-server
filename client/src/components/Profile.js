@@ -61,7 +61,8 @@ export const Profile = ({
     userName: yup
       .string("User Name*")
       .max(50, "User Name shouldn't be more then 50 characters length")
-      .required("User Name is required"),
+      .required("User Name is required")
+      .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed for this field "),
     currentPassword: yup
       .string("Current Password*")
       .min(5, "Current Password should be of minimum 5 characters length")
