@@ -12,6 +12,9 @@ import { changeCredentials, resetUpdateCredentials } from "../actions/auth";
 import { connect } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import { useFormik } from "formik";
+import * as yup from "yup";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(4),
@@ -53,43 +56,48 @@ export const Profile = ({
   user_name,
 }) => {
   const classes = useStyles();
-  const [passwordMatch, setPasswordMatch] = React.useState(true);
 
-  const [formData, setFormData] = React.useState({
-    userName: user_name,
-    currentPassword: process.env.NODE_ENV === "development" ? "admin" : "",
-    newPassword: process.env.NODE_ENV === "development" ? "admin" : "",
-    confirmNewPassword: process.env.NODE_ENV === "development" ? "admin" : "",
+  const validationSchema = yup.object({
+    userName: yup
+      .string("User Name*")
+      .max(50, "User Name shouldn't be more then 50 characters length")
+      .required("User Name is required"),
+    currentPassword: yup
+      .string("Current Password*")
+      .min(5, "Current Password should be of minimum 5 characters length")
+      .required("Current Password is required"),
+    newPassword: yup
+      .string("New Password")
+      .min(5, "Password should be of minimum 5 characters length")
+      .required("This field is required"),
+    confirmNewPassword: yup
+      .string()
+      .min(5, "Password should be of minimum 5 characters length")
+      .when("newPassword", {
+        is: (val) => (val && val.length > 0 ? true : false),
+        then: yup
+          .string()
+          .oneOf([yup.ref("newPassword")], "Both password need to be the same"),
+      }),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      userName: user_name || "",
+      currentPassword: process.env.NODE_ENV === "development" ? "admin" : "",
+      newPassword: process.env.NODE_ENV === "development" ? "admin" : "",
+      confirmNewPassword: process.env.NODE_ENV === "development" ? "admin" : "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+      changeCredentials(values);
+    },
   });
 
   React.useEffect(() => {
     resetUpdateCredentials();
   }, []);
-
-  const {
-    userName,
-    currentPassword,
-    newPassword,
-    confirmNewPassword,
-  } = formData;
-
-  const onChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const onSubmit = async (e) => {
-    setPasswordMatch(true);
-    e.preventDefault();
-
-    if (newPassword === confirmNewPassword && newPassword !== "") {
-      changeCredentials(formData);
-    } else {
-      setPasswordMatch(false);
-    }
-  };
 
   const userNameError = updateCredentialsErrors.find(
     (e) => e.param === "newUsername"
@@ -112,7 +120,11 @@ export const Profile = ({
           <Typography component="h1" variant="h5" className={classes.title}>
             Change your credentials
           </Typography>
-          <form className={classes.form} noValidate onSubmit={onSubmit}>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={formik.handleSubmit}
+          >
             <TextField
               variant="outlined"
               margin="normal"
@@ -121,12 +133,18 @@ export const Profile = ({
               id="userName"
               label="User Name"
               name="userName"
-              value={userName}
+              value={formik.values.userName}
               autoFocus
-              onChange={onChange}
+              onChange={formik.handleChange}
               disabled={updateCredentialsLoading}
-              error={!!userNameError}
-              helperText={!!userNameError ? userNameError.msg : ""}
+              error={
+                (formik.touched.userName && Boolean(formik.errors.userName)) ||
+                !!userNameError
+              }
+              helperText={
+                (formik.touched.userName && formik.errors.userName) ||
+                (!!userNameError && userNameError.msg)
+              }
             />
             <TextField
               variant="outlined"
@@ -137,11 +155,19 @@ export const Profile = ({
               label="Current Password"
               type="password"
               id="currentPassword"
-              value={currentPassword}
-              onChange={onChange}
+              value={formik.values.currentPassword}
+              onChange={formik.handleChange}
               disabled={updateCredentialsLoading}
-              error={!!oldPassword}
-              helperText={!!oldPassword ? oldPassword.msg : ""}
+              error={
+                (formik.touched.currentPassword &&
+                  Boolean(formik.errors.currentPassword)) ||
+                !!oldPassword
+              }
+              helperText={
+                (formik.touched.currentPassword &&
+                  formik.errors.currentPassword) ||
+                (!!oldPassword && oldPassword.msg)
+              }
             />
             <TextField
               variant="outlined"
@@ -152,11 +178,18 @@ export const Profile = ({
               label="New Password"
               type="password"
               id="newPassword"
-              value={newPassword}
-              onChange={onChange}
+              value={formik.values.newPassword}
+              onChange={formik.handleChange}
               disabled={updateCredentialsLoading}
-              error={!passwordMatch || newPasswordError}
-              helperText={!!newPasswordError ? newPasswordError.msg : ""}
+              error={
+                (formik.touched.newPassword &&
+                  Boolean(formik.errors.newPassword)) ||
+                !!newPasswordError
+              }
+              helperText={
+                (formik.touched.newPassword && formik.errors.newPassword) ||
+                (!!newPasswordError && newPasswordError.msg)
+              }
             />
             <TextField
               variant="outlined"
@@ -167,14 +200,16 @@ export const Profile = ({
               label="Confirm new Password"
               type="password"
               id="confirmNewPassword"
-              value={confirmNewPassword}
-              onChange={onChange}
+              value={formik.values.confirmNewPassword}
+              onChange={formik.handleChange}
               disabled={updateCredentialsLoading}
-              error={!passwordMatch}
+              error={
+                formik.touched.confirmNewPassword &&
+                Boolean(formik.errors.confirmNewPassword)
+              }
               helperText={
-                passwordMatch
-                  ? ""
-                  : "Password confirmation must match New Password"
+                formik.touched.confirmNewPassword &&
+                formik.errors.confirmNewPassword
               }
             />
             <div className={classes.wrapper}>

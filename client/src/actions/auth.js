@@ -52,12 +52,12 @@ export const login = ({ userName, password }) => async (dispatch) => {
     dispatch(loadUser());
   } catch (err) {
     if (
-      err.response.data.errors != null &&
-      err.response.data.errors.length >= 0
+      err.response?.data?.errors != null &&
+      err.response?.data?.errors.length >= 0
     ) {
       dispatch({
         type: SIGN_IN_ERRORS,
-        payload: err.response.data.errors,
+        payload: err.response?.data?.errors,
       });
     } else {
       dispatch({
@@ -107,12 +107,12 @@ export const changeCredentials = (formData) => async (dispatch) => {
     history.push("/");
   } catch (err) {
     if (
-      err.response.data.errors != null &&
-      err.response.data.errors.length >= 0
+      err.response?.data?.errors != null &&
+      err.response?.data?.errors.length >= 0
     ) {
       dispatch({
         type: UPDATE_CREDENTIALS_ERRORS,
-        payload: err.response.data.errors,
+        payload: err.response?.data?.errors,
       });
     } else {
       dispatch({
