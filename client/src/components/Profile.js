@@ -90,7 +90,6 @@ export const Profile = ({
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
       changeCredentials(values);
     },
   });
