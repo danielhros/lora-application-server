@@ -9,21 +9,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 
-const headCells = [
-  {
-    id: "id",
-    label: "id",
-  },
-  { id: "name", label: "Name" },
-  { id: "stiot", label: "STIOT" },
-  { id: "lora", label: "LoRa" },
-  { id: "firmware", label: "Firmware" },
-  {
-    id: "dcRefresh",
-    label: "DC_refresh",
-  },
-];
-
 export const Gateways = ({ gateways, getGateways }) => {
   const classes = useStyles();
 
@@ -31,15 +16,34 @@ export const Gateways = ({ gateways, getGateways }) => {
     getGateways();
   }, [getGateways]);
 
+  const headCells = ["id", "Name", "STIOT", "LoRa", "Firmware", "DC_refresh"];
   const rows = gateways.map((e, i) => {
-    return {
-      id: e.id,
-      name: "ToDo Name " + i,
-      stiot: e.protocol_ver,
-      lora: e.lora_protocol_ver,
-      firmware: "ToDo firmware",
-      dcRefresh: e.duty_cycle_refresh,
-    };
+    return [
+      {
+        name: e.id,
+        content: e.id,
+      },
+      {
+        name: "ToDo Name " + i,
+        content: "ToDo Name " + i,
+      },
+      {
+        name: e.protocol_ver,
+        content: e.protocol_ver,
+      },
+      {
+        name: e.lora_protocol_ver,
+        content: e.lora_protocol_ver,
+      },
+      {
+        name: "ToDo firmware",
+        content: "ToDo firmware",
+      },
+      {
+        name: e.duty_cycle_refresh,
+        content: e.duty_cycle_refresh,
+      },
+    ];
   });
 
   return (
@@ -50,6 +54,7 @@ export const Gateways = ({ gateways, getGateways }) => {
             rows={rows}
             headCells={headCells}
             tableTitle={"List of gateways"}
+            onRowClick={(rowIndex) => console.log(rowIndex)}
             rightNode={
               <Tooltip title="Add gateway">
                 <Button

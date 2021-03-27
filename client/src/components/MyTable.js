@@ -12,10 +12,10 @@ import MyTableHead from "./MyTableHead";
 import MyToolBar from "./MyToolBar";
 
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
+  if (b[orderBy].name < a[orderBy].name) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (b[orderBy].name > a[orderBy].name) {
     return 1;
   }
   return 0;
@@ -29,6 +29,7 @@ function getComparator(order, orderBy) {
 
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
+
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
@@ -61,21 +62,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MyTable = ({ rows, headCells, tableTitle = "No title", rightNode }) => {
+const MyTable = ({
+  rows,
+  headCells,
+  tableTitle = "No title",
+  rightNode,
+  onRowClick,
+}) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("id");
+  const [orderBy, setOrderBy] = React.useState(0);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
+  const handleRequestSort = (event, index) => {
+    const isAsc = orderBy === index && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
-
-  const handleClick = (index) => {
-    console.log(index);
+    setOrderBy(index);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -109,29 +112,30 @@ const MyTable = ({ rows, headCells, tableTitle = "No title", rightNode }) => {
           <TableBody>
             {stableSort(rows, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                const values = Object.values(row);
-                const valuesLength = values.length;
+              .map((arr, index) => {
+                const arrLength = arr.length;
+
                 return (
                   <TableRow
                     hover
-                    onClick={() => handleClick(index + page * rowsPerPage)}
                     tabIndex={-1}
-                    key={row.id}
+                    key={index}
+                    onClick={() => onRowClick(index + page * rowsPerPage)}
                   >
-                    {values.map((value, index) => {
+                    {arr.map((el, index) => {
                       return (
                         <TableCell
-                          align={index + 1 === valuesLength ? "right" : "left"}
+                          align={index + 1 === arrLength ? "right" : "left"}
                           key={index}
                         >
-                          {value}
+                          {el.content}
                         </TableCell>
                       );
                     })}
                   </TableRow>
                 );
               })}
+
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
                 <TableCell colSpan={6} />
