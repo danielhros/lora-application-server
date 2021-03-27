@@ -8,6 +8,7 @@ import { getGateways } from "../actions/gateway";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 export const Gateways = ({ gateways, getGateways }) => {
   const classes = useStyles();
@@ -41,7 +42,16 @@ export const Gateways = ({ gateways, getGateways }) => {
       },
       {
         name: e.duty_cycle_refresh,
-        content: e.duty_cycle_refresh,
+        content: (
+          <div className={classes.progressBarWrapper}>
+            <LinearProgress
+              className={classes.progressBar}
+              variant="determinate"
+              value={12}
+            />{" "}
+            {e.duty_cycle_refresh}
+          </div>
+        ),
       },
     ];
   });
@@ -81,6 +91,18 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     overflow: "auto",
     flexDirection: "column",
+  },
+  progressBarWrapper: {
+    display: "flex",
+    flex: "1",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  progressBar: {
+    height: 5,
+    maxWidth: 70,
+    width: "100%",
+    marginRight: theme.spacing(1),
   },
 }));
 

@@ -4,6 +4,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
@@ -127,6 +128,7 @@ const MyTable = ({
                         <TableCell
                           align={index + 1 === arrLength ? "right" : "left"}
                           key={index}
+                          title={el.name}
                         >
                           {el.content}
                         </TableCell>
