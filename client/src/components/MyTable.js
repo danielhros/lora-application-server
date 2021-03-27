@@ -4,7 +4,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import Tooltip from "@material-ui/core/Tooltip";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
@@ -110,38 +110,57 @@ const MyTable = ({
             onRequestSort={handleRequestSort}
             headCells={headCells}
           />
-          <TableBody>
-            {stableSort(rows, getComparator(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((arr, index) => {
-                const arrLength = arr.length;
 
+          <TableBody>
+            {rows.length === 0 ? (
+              Array.from(Array(rowsPerPage)).map((x, i) => {
                 return (
-                  <TableRow
-                    hover
-                    tabIndex={-1}
-                    key={index}
-                    onClick={() => onRowClick(index + page * rowsPerPage)}
-                  >
-                    {arr.map((el, index) => {
+                  <TableRow key={i} hover>
+                    {headCells.map((name) => {
                       return (
-                        <TableCell
-                          align={index + 1 === arrLength ? "right" : "left"}
-                          key={index}
-                          title={el.name}
-                        >
-                          {el.content}
+                        <TableCell key={name}>
+                          <Skeleton />
                         </TableCell>
                       );
                     })}
                   </TableRow>
                 );
-              })}
+              })
+            ) : (
+              <React.Fragment>
+                {stableSort(rows, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((arr, index) => {
+                    const arrLength = arr.length;
 
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
+                    return (
+                      <TableRow
+                        hover
+                        tabIndex={-1}
+                        key={index}
+                        onClick={() => onRowClick(index + page * rowsPerPage)}
+                      >
+                        {arr.map((el, index) => {
+                          return (
+                            <TableCell
+                              align={index + 1 === arrLength ? "right" : "left"}
+                              key={index}
+                              title={el.name}
+                            >
+                              {el.content}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 53 * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </React.Fragment>
             )}
           </TableBody>
         </Table>
