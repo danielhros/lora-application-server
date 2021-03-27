@@ -7,3 +7,4 @@ export const TOKEN = `${API}/auth/token`;
 export const LOGIN = `${API}/auth`;
 export const LOGOUT = `${API}/auth/logout`;
 export const CREDENTIALS = `${API}/auth/updateCredentials`;
+export const GATEWAY = `${API}/gateway`;

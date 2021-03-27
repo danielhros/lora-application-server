@@ -38,4 +38,7 @@ Content-Type: application/json
     "oldPassword": "admin",
 }
 
+### Get gateways
+GET http://localhost:5000/api/gateway
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDg3NzgwLCJleHAiOjE2MTcwODc3ODB9.7JmSBoQ_XulUWIGjNbdlXoFTfw3dECeQbG9I8JyKJdo
 

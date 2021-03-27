@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import auth from "./auth";
+import gateway from "./gateway";
 import { LOGOUT } from "../actions/auth";
 import { initialState } from "../reducers/auth";
 
 const appReducer = combineReducers({
   auth,
+  gateway,
 });
 
 export default function rootReducer(state, action) {
