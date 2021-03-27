@@ -5,16 +5,16 @@ import { Switch, Route, Router } from "react-router-dom";
 import { orange, deepOrange } from "@material-ui/core/colors";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-import Dashboard from "./components/Dashboard";
-import Applications from "./components/Applications";
-import Gateways from "./components/Gateways";
-import Devices from "./components/Devices";
-import AllMessages from "./components/AllMessages";
-import Profile from "./components/Profile";
-import SignIn from "./components/SignIn";
-import Loading from "./components/Loading";
+import Dashboard from "./views/Dashboard";
+import Applications from "./views/Applications";
+import Gateways from "./views/Gateways";
+import Devices from "./views/Devices";
+import AllMessages from "./views/AllMessages";
+import Profile from "./views/Profile";
+import SignIn from "./views/SignIn";
+import Loading from "./views/Loading";
 import PrivateRoute from "./components/PrivateRoute";
-import NotFound from "./components/NotFound";
+import NotFound from "./views/NotFound";
 
 import { loadUser } from "./actions/auth";
 import history from "./history";
