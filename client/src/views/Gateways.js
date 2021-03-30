@@ -27,20 +27,47 @@ const getColumnName = (column) => {
   }
 };
 
+const headCells = ["id", "Name", "STIOT", "LoRa", "Firmware", "DC_refresh"];
+
 export const Gateways = ({
   gateways,
   getGateways,
   getCountOfGateways,
   countOfGateways,
+  refresh,
 }) => {
   const classes = useStyles();
+
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = React.useState(0);
+  const [orderBy, setOrderBy] = React.useState(0);
+  const [order, setOrder] = React.useState("asc");
+
+  React.useEffect(() => {
+    if (refresh) {
+      getCountOfGateways();
+      getGateways({
+        order,
+        rowsPerPage,
+        page: 1,
+        column: getColumnName(headCells[orderBy]),
+      });
+      setPage(0);
+    }
+  }, [
+    getCountOfGateways,
+    getGateways,
+    order,
+    orderBy,
+    page,
+    refresh,
+    rowsPerPage,
+  ]);
 
   React.useEffect(() => {
     getCountOfGateways();
     getGateways({ order: "asc", rowsPerPage: 5, page: 1, column: "id" });
   }, [getCountOfGateways, getGateways]);
-
-  const headCells = ["id", "Name", "STIOT", "LoRa", "Firmware", "DC_refresh"];
 
   const rows = gateways.map((e, i) => {
     return [
@@ -90,6 +117,16 @@ export const Gateways = ({
             tableTitle={"List of gateways"}
             onRowClick={(rowIndex) => console.log(rowIndex)}
             countOfGateways={countOfGateways}
+            showPagination={true}
+            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
+            page={page}
+            setPage={setPage}
+            orderBy={orderBy}
+            setOrderBy={setOrderBy}
+            order={order}
+            setOrder={setOrder}
             fetchRecords={({ order, rowsPerPage, page, column }) => {
               getGateways({
                 order,

@@ -40,4 +40,13 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+router.post("/create", auth, async (req, res) => {
+  try {
+    // TODO: create record of gateway
+    res.statusCode(200);
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;

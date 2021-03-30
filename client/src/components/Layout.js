@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Layout = ({ children, width }) => {
+const Layout = ({ children, width, setRefresh }) => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(width !== "xs" && width !== "sm");
@@ -153,7 +153,7 @@ const Layout = ({ children, width }) => {
           >
             {getPageName()}
           </Typography>
-          <IconButton color="inherit" onClick={() => console.log("Refresh")}>
+          <IconButton color="inherit" onClick={setRefresh}>
             <CachedIcon />
           </IconButton>
         </Toolbar>

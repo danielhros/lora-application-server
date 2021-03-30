@@ -44,12 +44,18 @@ const MyTable = ({
   onRowClick,
   countOfGateways,
   fetchRecords,
+  showPagination,
+  rowsPerPageOptions,
+  rowsPerPage,
+  setRowsPerPage,
+  page,
+  setPage,
+  orderBy,
+  setOrderBy,
+  order,
+  setOrder,
 }) => {
   const classes = useStyles();
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState(0);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, index) => {
     const isAsc = orderBy === index && order === "asc";
@@ -158,15 +164,17 @@ const MyTable = ({
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={parseInt(countOfGateways) || 0}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
+      {showPagination ? (
+        <TablePagination
+          rowsPerPageOptions={rowsPerPageOptions}
+          component="div"
+          count={parseInt(countOfGateways) || 0}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      ) : null}
     </React.Fragment>
   );
 };

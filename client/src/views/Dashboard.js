@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Dashboard = () => {
+export const Dashboard = ({ test }) => {
   return <React.Fragment>Dashboard</React.Fragment>;
 };
 

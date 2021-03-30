@@ -8,6 +8,14 @@ const PrivateRoute = ({
   auth: { isAuthenticated },
   ...rest
 }) => {
+  const [refresh, setRefresh] = React.useState(false);
+
+  React.useEffect(() => {
+    if (refresh) {
+      setRefresh(false);
+    }
+  }, [refresh]);
+
   return (
     <Route
       {...rest}
@@ -15,8 +23,8 @@ const PrivateRoute = ({
         !isAuthenticated ? (
           <Redirect to="login" />
         ) : (
-          <Layout>
-            <Component {...props} />
+          <Layout setRefresh={() => setRefresh(true)}>
+            <Component {...props} refresh={refresh} />
           </Layout>
         )
       }
