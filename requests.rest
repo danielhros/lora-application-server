@@ -44,9 +44,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxf
 Content-Type: application/json
 
 {
-    "order": "desc",
+    "order": "asc",
     "rowsPerPage": 5,
-    "page": 2,
-    "column": "id"
+    "page": 1,
+    "column": "protocol_ver"
 }
+
+### Get count of gateways
+GET http://localhost:5000/api/gateway
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3MTEzNDA3LCJleHAiOjE2MTcxMjg0MDd9.EnubMcYLmtrITq_hSvcaK-n3Iur44giyQA0TsfiMEmw
+Content-Type: application/json
 

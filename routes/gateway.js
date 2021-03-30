@@ -8,10 +8,9 @@ router.post("/", auth, async (req, res) => {
     const { order, rowsPerPage, column, page } = req.body;
 
     const select =
-      "id, protocol_ver, max_power, duty_cycle_refresh, lora_protocol_ver";
+      "id, protocol_ver, max_power, duty_cycle_refresh, lora_protocol_ver, name, firmware";
 
     const query = {
-      name: "get gateways",
       text:
         `SELECT ${select} ` +
         "FROM aps " +
@@ -19,9 +18,7 @@ router.post("/", auth, async (req, res) => {
         `LIMIT ${rowsPerPage} OFFSET ${rowsPerPage * page - rowsPerPage}`,
     };
 
-    console.log(query.text);
-
-    let { rows } = await db.query(query);
+    let { rows } = await db.query(query.text);
     res.json(rows);
   } catch (err) {
     console.log(err);
@@ -37,9 +34,8 @@ router.get("/", auth, async (req, res) => {
     };
 
     let { rows } = await db.query(query);
-    res.json(rows);
+    res.json(rows[0]);
   } catch (err) {
-    console.log(err);
     res.status(500).send("Server error");
   }
 });

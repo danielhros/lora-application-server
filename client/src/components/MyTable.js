@@ -12,33 +12,6 @@ import TableRow from "@material-ui/core/TableRow";
 import MyTableHead from "./MyTableHead";
 import MyToolBar from "./MyToolBar";
 
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy].name < a[orderBy].name) {
-    return -1;
-  }
-  if (b[orderBy].name > a[orderBy].name) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -69,6 +42,8 @@ const MyTable = ({
   tableTitle = "No title",
   rightNode,
   onRowClick,
+  countOfGateways,
+  fetchRecords,
 }) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
@@ -80,19 +55,39 @@ const MyTable = ({
     const isAsc = orderBy === index && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(index);
+    setPage(0);
+
+    fetchRecords({
+      order: isAsc ? "desc" : "asc",
+      rowsPerPage,
+      page: 1,
+      column: headCells[index],
+    });
   };
 
   const handleChangePage = (event, newPage) => {
+    fetchRecords({
+      order,
+      rowsPerPage,
+      page: newPage + 1,
+      column: headCells[orderBy],
+    });
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    const newRowsPerPage = parseInt(event.target.value, 10);
+    setRowsPerPage(newRowsPerPage);
     setPage(0);
+    fetchRecords({
+      order,
+      rowsPerPage: newRowsPerPage,
+      page: 1,
+      column: headCells[orderBy],
+    });
   };
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length);
 
   return (
     <React.Fragment>
@@ -128,32 +123,30 @@ const MyTable = ({
               })
             ) : (
               <React.Fragment>
-                {stableSort(rows, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((arr, index) => {
-                    const arrLength = arr.length;
+                {rows.map((arr, index) => {
+                  const arrLength = arr.length;
 
-                    return (
-                      <TableRow
-                        hover
-                        tabIndex={-1}
-                        key={index}
-                        onClick={() => onRowClick(index + page * rowsPerPage)}
-                      >
-                        {arr.map((el, index) => {
-                          return (
-                            <TableCell
-                              align={index + 1 === arrLength ? "right" : "left"}
-                              key={index}
-                              title={el.name}
-                            >
-                              {el.content}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
+                  return (
+                    <TableRow
+                      hover
+                      tabIndex={-1}
+                      key={index}
+                      onClick={() => onRowClick(index + page * rowsPerPage)}
+                    >
+                      {arr.map((el, index) => {
+                        return (
+                          <TableCell
+                            align={index + 1 === arrLength ? "right" : "left"}
+                            key={index}
+                            title={el.name}
+                          >
+                            {el.content}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
 
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 53 * emptyRows }}>
@@ -168,7 +161,7 @@ const MyTable = ({
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={rows.length}
+        count={parseInt(countOfGateways) || 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

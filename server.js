@@ -1,6 +1,9 @@
 const express = require("express");
 var cors = require("cors");
 
+// const { populateDatabase } = require("./db/populate");
+// populateDatabase();
+
 const app = express();
 
 app.use(cors());

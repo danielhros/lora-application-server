@@ -1,7 +1,8 @@
-import { SET_GATEWAYS } from "../actions/gateway";
+import { SET_GATEWAYS, SET_COUNT_GATEWAYS } from "../actions/gateway";
 
 const initialState = {
   gateways: [],
+  countOfGateways: null,
   selected: null,
 };
 
@@ -14,6 +15,12 @@ export default (state = initialState, action) => {
         ...state,
         gateways: payload,
       };
+    case SET_COUNT_GATEWAYS:
+      return {
+        ...state,
+        countOfGateways: payload,
+      };
+
     default:
       return state;
   }

@@ -4,20 +4,44 @@ import { connect } from "react-redux";
 import MyTable from "../components/MyTable";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { getGateways } from "../actions/gateway";
+import { getGateways, getCountOfGateways } from "../actions/gateway";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
-export const Gateways = ({ gateways, getGateways }) => {
+const getColumnName = (column) => {
+  switch (column) {
+    case "Name":
+      return "name";
+    case "STIOT":
+      return "protocol_ver";
+    case "LoRa":
+      return "lora_protocol_ver";
+    case "Firmware":
+      return "firmware";
+    case "DC_refresh":
+      return "duty_cycle_refresh";
+    default:
+      return "id";
+  }
+};
+
+export const Gateways = ({
+  gateways,
+  getGateways,
+  getCountOfGateways,
+  countOfGateways,
+}) => {
   const classes = useStyles();
 
   React.useEffect(() => {
-    getGateways();
-  }, [getGateways]);
+    getCountOfGateways();
+    getGateways({ order: "asc", rowsPerPage: 5, page: 1, column: "id" });
+  }, [getCountOfGateways, getGateways]);
 
   const headCells = ["id", "Name", "STIOT", "LoRa", "Firmware", "DC_refresh"];
+
   const rows = gateways.map((e, i) => {
     return [
       {
@@ -25,8 +49,8 @@ export const Gateways = ({ gateways, getGateways }) => {
         content: e.id,
       },
       {
-        name: "ToDo Name " + i,
-        content: "ToDo Name " + i,
+        name: e.name,
+        content: e.name,
       },
       {
         name: e.protocol_ver,
@@ -37,8 +61,8 @@ export const Gateways = ({ gateways, getGateways }) => {
         content: e.lora_protocol_ver,
       },
       {
-        name: "ToDo firmware",
-        content: "ToDo firmware",
+        name: e.firmware,
+        content: e.firmware,
       },
       {
         name: e.duty_cycle_refresh,
@@ -65,6 +89,15 @@ export const Gateways = ({ gateways, getGateways }) => {
             headCells={headCells}
             tableTitle={"List of gateways"}
             onRowClick={(rowIndex) => console.log(rowIndex)}
+            countOfGateways={countOfGateways}
+            fetchRecords={({ order, rowsPerPage, page, column }) => {
+              getGateways({
+                order,
+                rowsPerPage,
+                page,
+                column: getColumnName(column),
+              });
+            }}
             rightNode={
               <Tooltip title="Add gateway">
                 <Button
@@ -108,10 +141,12 @@ const useStyles = makeStyles((theme) => ({
 
 const mapStateToProps = ({ gateway }) => ({
   gateways: gateway.gateways,
+  countOfGateways: gateway.countOfGateways,
 });
 
 const mapDispatchToProps = {
   getGateways,
+  getCountOfGateways,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gateways);
