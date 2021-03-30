@@ -39,6 +39,14 @@ Content-Type: application/json
 }
 
 ### Get gateways
-GET http://localhost:5000/api/gateway
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE2NDg3NzgwLCJleHAiOjE2MTcwODc3ODB9.7JmSBoQ_XulUWIGjNbdlXoFTfw3dECeQbG9I8JyKJdo
+POST http://localhost:5000/api/gateway
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3MTEzNDA3LCJleHAiOjE2MTcxMjg0MDd9.EnubMcYLmtrITq_hSvcaK-n3Iur44giyQA0TsfiMEmw
+Content-Type: application/json
+
+{
+    "order": "desc",
+    "rowsPerPage": 5,
+    "page": 2,
+    "column": "id"
+}
 
