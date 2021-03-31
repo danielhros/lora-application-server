@@ -21,7 +21,7 @@ const PrivateRoute = ({
       {...rest}
       render={(props) =>
         !isAuthenticated ? (
-          <Redirect to="login" />
+          <Redirect to="/login" />
         ) : (
           <Layout setRefresh={() => setRefresh(true)}>
             <Component {...props} refresh={refresh} />

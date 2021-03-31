@@ -8,7 +8,7 @@ router.post("/", auth, async (req, res) => {
     const { order, rowsPerPage, column, page } = req.body;
 
     const select =
-      "id, protocol_ver, max_power, duty_cycle_refresh, lora_protocol_ver, name, firmware";
+      "id, protocol_ver, max_power, duty_cycle_refresh, lora_protocol_ver, name, firmware, dev_id";
 
     const query = {
       text:

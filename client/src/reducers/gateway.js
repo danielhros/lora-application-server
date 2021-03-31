@@ -1,8 +1,13 @@
-import { SET_GATEWAYS, SET_COUNT_GATEWAYS } from "../actions/gateway";
+import {
+  SET_GATEWAYS,
+  SET_COUNT_GATEWAYS,
+  SET_ROWS_PER_PAGE,
+} from "../actions/gateway";
 
 const initialState = {
   gateways: [],
   countOfGateways: null,
+  rowsPerPage: 5,
   selected: null,
 };
 
@@ -19,6 +24,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         countOfGateways: payload,
+      };
+    case SET_ROWS_PER_PAGE:
+      return {
+        ...state,
+        rowsPerPage: payload,
       };
 
     default:

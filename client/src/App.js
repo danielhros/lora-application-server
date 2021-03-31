@@ -7,7 +7,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 import Dashboard from "./views/Dashboard";
 import Applications from "./views/Applications";
-import Gateways from "./views/Gateways";
+import GatewayWrapper from "./views/Gateway/GatewayWrapper";
 import Devices from "./views/Devices";
 import AllMessages from "./views/AllMessages";
 import Profile from "./views/Profile";
@@ -51,7 +51,7 @@ function App({ loadUser, loading }) {
                 path="/applications"
                 component={Applications}
               />
-              <PrivateRoute exact path="/gateways" component={Gateways} />
+              <PrivateRoute path="/gateways" component={GatewayWrapper} />
               <PrivateRoute exact path="/devices" component={Devices} />
               <PrivateRoute exact path="/allMessages" component={AllMessages} />
               <PrivateRoute exact path="/profile" component={Profile} />

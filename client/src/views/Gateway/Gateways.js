@@ -1,14 +1,20 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import MyTable from "../components/MyTable";
+import MyTable from "../../components/MyTable";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { getGateways, getCountOfGateways } from "../actions/gateway";
+import {
+  getGateways,
+  getCountOfGateways,
+  setRowsPerPage,
+} from "../../actions/gateway";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import LinearProgress from "@material-ui/core/LinearProgress";
+
+import { useRouteMatch, withRouter } from "react-router-dom";
 
 const getColumnName = (column) => {
   switch (column) {
@@ -35,10 +41,14 @@ export const Gateways = ({
   getCountOfGateways,
   countOfGateways,
   refresh,
+  history,
+  setRowsPerPage,
+  rowsPerPage,
 }) => {
   const classes = useStyles();
+  let { url } = useRouteMatch();
 
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  // const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
   const [order, setOrder] = React.useState("asc");
@@ -66,8 +76,12 @@ export const Gateways = ({
 
   React.useEffect(() => {
     getCountOfGateways();
-    getGateways({ order: "asc", rowsPerPage: 5, page: 1, column: "id" });
-  }, [getCountOfGateways, getGateways]);
+    getGateways({ order: "asc", rowsPerPage, page: 1, column: "id" });
+  }, [getCountOfGateways, getGateways, rowsPerPage]);
+
+  const handleOnRowClick = (index) => {
+    history.push(`${url}/${gateways[index].dev_id}`);
+  };
 
   const rows = gateways.map((e, i) => {
     return [
@@ -115,7 +129,7 @@ export const Gateways = ({
             rows={rows}
             headCells={headCells}
             tableTitle={"List of gateways"}
-            onRowClick={(rowIndex) => console.log(rowIndex)}
+            onRowClick={handleOnRowClick}
             countOfGateways={countOfGateways}
             showPagination={true}
             rowsPerPageOptions={[5, 10, 25]}
@@ -179,11 +193,16 @@ const useStyles = makeStyles((theme) => ({
 const mapStateToProps = ({ gateway }) => ({
   gateways: gateway.gateways,
   countOfGateways: gateway.countOfGateways,
+  rowsPerPage: gateway.rowsPerPage,
 });
 
 const mapDispatchToProps = {
   getGateways,
   getCountOfGateways,
+  setRowsPerPage,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Gateways);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Gateways));

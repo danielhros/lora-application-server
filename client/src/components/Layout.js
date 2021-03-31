@@ -106,21 +106,21 @@ const Layout = ({ children, width, setRefresh }) => {
   const location = useLocation();
 
   const getPageName = () => {
-    switch (location.pathname) {
-      case "/":
-        return "Dashboard";
-      case "/applications":
+    const pathNames = location.pathname.split("/").filter((x) => x);
+
+    switch (pathNames[0]) {
+      case "applications":
         return "Applications";
-      case "/gateways":
+      case "gateways":
         return "Gateways";
-      case "/devices":
+      case "devices":
         return "Devices";
-      case "/allMessages":
+      case "allMessages":
         return "All Messages";
-      case "/profile":
+      case "profile":
         return "Profile";
       default:
-        return "Unknown";
+        return "Dashboard";
     }
   };
 

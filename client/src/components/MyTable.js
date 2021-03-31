@@ -137,7 +137,7 @@ const MyTable = ({
                       hover
                       tabIndex={-1}
                       key={index}
-                      onClick={() => onRowClick(index + page * rowsPerPage)}
+                      onClick={() => onRowClick(index)}
                     >
                       {arr.map((el, index) => {
                         return (
