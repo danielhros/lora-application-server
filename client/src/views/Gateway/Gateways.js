@@ -8,6 +8,8 @@ import {
   getGateways,
   getCountOfGateways,
   setRowsPerPage,
+  cleanGateways,
+  selectGateway,
 } from "../../actions/gateway";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
@@ -44,6 +46,8 @@ export const Gateways = ({
   history,
   setRowsPerPage,
   rowsPerPage,
+  cleanGateways,
+  selectGateway,
 }) => {
   const classes = useStyles();
   let { url } = useRouteMatch();
@@ -77,9 +81,14 @@ export const Gateways = ({
   React.useEffect(() => {
     getCountOfGateways();
     getGateways({ order: "asc", rowsPerPage, page: 1, column: "id" });
-  }, [getCountOfGateways, getGateways, rowsPerPage]);
+
+    return () => {
+      cleanGateways();
+    };
+  }, [cleanGateways, getCountOfGateways, getGateways, rowsPerPage]);
 
   const handleOnRowClick = (index) => {
+    selectGateway(index);
     history.push(`${url}/${gateways[index].dev_id}`);
   };
 
@@ -200,6 +209,8 @@ const mapDispatchToProps = {
   getGateways,
   getCountOfGateways,
   setRowsPerPage,
+  cleanGateways,
+  selectGateway,
 };
 
 export default connect(

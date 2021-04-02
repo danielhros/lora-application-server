@@ -2,6 +2,9 @@ import {
   SET_GATEWAYS,
   SET_COUNT_GATEWAYS,
   SET_ROWS_PER_PAGE,
+  RESET_GATEWAYS,
+  SELECT_GATEWAY,
+  RESET_SELECTED_GATEWAY,
 } from "../actions/gateway";
 
 const initialState = {
@@ -30,7 +33,22 @@ export default (state = initialState, action) => {
         ...state,
         rowsPerPage: payload,
       };
-
+    case RESET_GATEWAYS:
+      return {
+        ...state,
+        gateways: [],
+        countOfGateways: null,
+      };
+    case SELECT_GATEWAY:
+      return {
+        ...state,
+        selected: state.gateways[payload],
+      };
+    case RESET_SELECTED_GATEWAY:
+      return {
+        ...state,
+        selected: null,
+      };
     default:
       return state;
   }
