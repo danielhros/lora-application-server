@@ -15,10 +15,12 @@ import Loading from "../Loading";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import globalStyles from "../../shared/styles";
 import clsx from "clsx";
 import DetailList from "./DetailList";
+import Title from "../../components/Title";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import PRDList from "./PRDList";
 
 const GatewayDetail = ({
   refresh,
@@ -106,26 +108,33 @@ const GatewayDetail = ({
 
         <Grid item xs={12} md={4}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={12}>
+            <Grid item xs={12} md={12}>
               <Paper
                 className={clsx(global.paper, classes.downloadConfiguration)}
-                style={{ height: 120 }}
               >
-                Download configuration
+                <Title>Download configuration</Title>
+                <Button
+                  variant="contained"
+                  color="default"
+                  startIcon={<GetAppIcon />}
+                >
+                  Download
+                </Button>
               </Paper>
             </Grid>
 
-            <Grid item xs={12} sm={3} md={12}>
+            <Grid item xs={12} md={12}>
               <Paper
                 className={clsx(global.paper, classes.uploadConfiguration)}
               >
-                Upload Configuration
+                <Title>Upload configuration</Title>
               </Paper>
             </Grid>
 
-            <Grid item xs={12} sm={3} md={12}>
+            <Grid item xs={12} md={12}>
               <Paper className={clsx(global.paper, classes.channelsPDR)}>
-                ChannelsPDR
+                <Title>Channels PDR</Title>
+                <PRDList />
               </Paper>
             </Grid>
           </Grid>
