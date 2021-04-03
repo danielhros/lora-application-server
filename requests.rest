@@ -53,5 +53,15 @@ Content-Type: application/json
 ### Get count of gateways
 GET http://localhost:5000/api/gateway
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3MTEzNDA3LCJleHAiOjE2MTcxMjg0MDd9.EnubMcYLmtrITq_hSvcaK-n3Iur44giyQA0TsfiMEmw
+
+### Get gateway detail
+POST http://localhost:5000/api/gateway/detail
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NDM5MDc4LCJleHAiOjE2MTc0NDQwNzh9.9tFibqt0nQVwBqo-P1aMVaYJzUSrOHAT89RToV5AEqs
 Content-Type: application/json
+
+{
+    "devId": 1
+}
+
+
 

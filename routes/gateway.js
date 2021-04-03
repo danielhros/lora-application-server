@@ -33,7 +33,7 @@ router.get("/", auth, async (req, res) => {
       text: "SELECT COUNT(*) FROM aps",
     };
 
-    let { rows } = await db.query(query);
+    let { rows } = await db.query(query.text);
     res.json(rows[0]);
   } catch (err) {
     res.status(500).send("Server error");
@@ -44,6 +44,19 @@ router.post("/create", auth, async (req, res) => {
   try {
     // TODO: create record of gateway
     res.statusCode(200);
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+
+router.post("/detail", auth, async (req, res) => {
+  try {
+    const query = {
+      text: "SElECT * FROM aps WHERE dev_id = $1",
+      values: [req.body.devId],
+    };
+    let { rows } = await db.query(query.text, query.values);
+    res.json(rows);
   } catch (err) {
     res.status(500).send("Server error");
   }
