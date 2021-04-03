@@ -70,7 +70,6 @@ export const resetSelected = () => (dispatch) => {
 };
 
 export const getGatewayDetail = ({ id }) => async (dispatch) => {
-  console.log("som tu");
   try {
     const payload = { devId: parseInt(id) };
 

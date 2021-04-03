@@ -6,12 +6,12 @@ import NoRecourse from "../NoResource";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import Loading from "../Loading";
 
 const GatewayDetail = ({
   refresh,
@@ -37,13 +37,8 @@ const GatewayDetail = ({
   }, [getGatewayDetail, id, resetSelected, refresh]);
 
   if (selected === null) {
-    return (
-      <div>
-        <h3>Loading</h3>
-      </div>
-    );
+    return <Loading />;
   }
-  console.log(openSettings);
 
   if (selected === undefined) {
     return <NoRecourse recourse={id} />;
@@ -71,7 +66,6 @@ const GatewayDetail = ({
         </DialogTitle>
 
         <DialogContent>
-          {/* <DialogContentText>{selected.name}</DialogContentText> */}
           <TextField
             autoFocus
             margin="dense"

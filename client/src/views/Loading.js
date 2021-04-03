@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 const Loading = () => {
   const useStyles = makeStyles(() => ({
     root: {
-      height: "80vh",
+      height: "60vh",
       paddingLeft: "10%",
       paddingRight: "10%",
     },
