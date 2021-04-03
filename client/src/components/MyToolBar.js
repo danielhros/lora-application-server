@@ -1,6 +1,6 @@
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import Title from "../components/Title";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,9 +10,6 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flex: "1 1 100%",
   },
-  button: {
-    margin: theme.spacing(1),
-  },
 }));
 
 const MyToolBar = ({ tableTitle, rightNode = null }) => {
@@ -20,14 +17,7 @@ const MyToolBar = ({ tableTitle, rightNode = null }) => {
 
   return (
     <Toolbar className={classes.root}>
-      <Typography
-        className={classes.title}
-        variant="h6"
-        id="tableTitle"
-        component="div"
-      >
-        {tableTitle}
-      </Typography>
+      <Title className={classes.title}>{tableTitle}</Title>
 
       {rightNode}
     </Toolbar>

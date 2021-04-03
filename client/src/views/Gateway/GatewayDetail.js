@@ -15,8 +15,10 @@ import Loading from "../Loading";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import globalStyles from "../../shared/styles";
+import clsx from "clsx";
+import DetailList from "./DetailList";
 
 const GatewayDetail = ({
   refresh,
@@ -28,6 +30,7 @@ const GatewayDetail = ({
 }) => {
   let { id } = useParams();
   const classes = useStyles();
+  const global = globalStyles();
 
   React.useEffect(() => {
     getGatewayDetail({ id });
@@ -50,25 +53,8 @@ const GatewayDetail = ({
     return <NoRecourse recourse={id} />;
   }
 
-  function FormRow() {
-    return (
-      <React.Fragment>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>item 1</Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>item 2</Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>item 3</Paper>
-        </Grid>
-      </React.Fragment>
-    );
-  }
-
   return (
     <React.Fragment>
-      <CssBaseline />
       <Dialog
         open={openSettings}
         onClose={handleSettingsClose}
@@ -112,46 +98,54 @@ const GatewayDetail = ({
       </Dialog>
 
       <Grid container spacing={3}>
-        {/* Gateway detail */}
         <Grid item xs={12} md={8}>
-          <Paper className={classes.paper} style={{ height: "100%" }}>
-            Detail
+          <Paper className={clsx(global.paper, classes.gatewayDetail)}>
+            <DetailList gateway={selected} />
           </Paper>
         </Grid>
 
         <Grid item xs={12} md={4}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={12}>
-              <Paper className={classes.paper} style={{ height: 120 }}>
-                upload
+              <Paper
+                className={clsx(global.paper, classes.downloadConfiguration)}
+                style={{ height: 120 }}
+              >
+                Download configuration
               </Paper>
             </Grid>
 
             <Grid item xs={12} sm={3} md={12}>
-              <Paper className={classes.paper}>something else</Paper>
+              <Paper
+                className={clsx(global.paper, classes.uploadConfiguration)}
+              >
+                Upload Configuration
+              </Paper>
             </Grid>
 
             <Grid item xs={12} sm={3} md={12}>
-              <Paper className={classes.paper}>something else</Paper>
+              <Paper className={clsx(global.paper, classes.channelsPDR)}>
+                ChannelsPDR
+              </Paper>
             </Grid>
           </Grid>
         </Grid>
 
         {/* Map */}
         <Grid item xs={12}>
-          <Paper className={classes.paper}>{/* <Orders /> */}</Paper>
+          <Paper className={global.paper}>{/* <Orders /> */}</Paper>
         </Grid>
         {/* Uplink messages */}
         <Grid item xs={12}>
-          <Paper className={classes.paper}>{/* <Orders /> */}</Paper>
+          <Paper className={global.paper}>{/* <Orders /> */}</Paper>
         </Grid>
         {/* Scheduled downlink messages */}
         <Grid item xs={12}>
-          <Paper className={classes.paper}>{/* <Orders /> */}</Paper>
+          <Paper className={global.paper}>{/* <Orders /> */}</Paper>
         </Grid>
         {/* Sent downlink messages */}
         <Grid item xs={12}>
-          <Paper className={classes.paper}>{/* <Orders /> */}</Paper>
+          <Paper className={global.paper}>{/* <Orders /> */}</Paper>
         </Grid>
       </Grid>
     </React.Fragment>
@@ -159,34 +153,16 @@ const GatewayDetail = ({
 };
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-    flexGrow: 1,
-    height: "100%",
-    // height: 400,
-  },
-  fixedHeight: {
-    height: 240,
-  },
   gatewayDetail: {
-    height: 440,
+    height: "100%",
   },
   downloadConfiguration: {
-    // minHeight: 60,
     height: "100%",
   },
   uploadConfiguration: {
-    // height: 60,
     height: "100%",
   },
   channelsPDR: {
-    // height: 200,
     height: "100%",
   },
 }));

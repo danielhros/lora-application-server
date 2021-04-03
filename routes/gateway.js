@@ -49,10 +49,16 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
+// SELECT * FROM aps
+// JOIN transmission_params ON aps.transmission_param_id = transmission_params.id
+// WHERE aps.dev_id = 20
 router.post("/detail", auth, async (req, res) => {
   try {
     const query = {
-      text: "SElECT * FROM aps WHERE dev_id = $1",
+      text:
+        "SElECT * FROM aps " +
+        "JOIN transmission_params ON aps.transmission_param_id = transmission_params.id " +
+        "WHERE aps.dev_id = $1",
       values: [req.body.devId],
     };
     let { rows } = await db.query(query.text, query.values);
