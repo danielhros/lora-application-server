@@ -164,7 +164,6 @@ export const Gateways = ({
                   variant="outlined"
                   className={classes.button}
                   startIcon={<AddIcon />}
-                  style={{ textTransform: "none" }}
                   onClick={() => console.log("hello")}
                 >
                   add
@@ -196,6 +195,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 70,
     width: "100%",
     marginRight: theme.spacing(1),
+  },
+  button: {
+    textTransform: "none",
   },
 }));
 

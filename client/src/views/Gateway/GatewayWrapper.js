@@ -1,30 +1,18 @@
 import React from "react";
-import { Switch, Route, useRouteMatch, Link } from "react-router-dom";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 import Gateways from "./Gateways";
 import GatewayDetail from "./GatewayDetail";
 import MyBreadcrumbs from "../../components/MyBreadCrumps";
-import NotFound from "../../views/NotFound";
 import Typography from "@material-ui/core/Typography";
 import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
-import Grid from "@material-ui/core/Grid";
+import NoRecourse from "../NoResource";
+import NotFound from "../NotFound";
+import { connect } from "react-redux";
+import Button from "@material-ui/core/Button";
 
-const useStyles = makeStyles((theme) => ({
-  margin: {
-    marginBottom: theme.spacing(2),
-  },
-  link: {
-    color: "inherit",
-    textDecoration: "none",
-
-    "&:hover": {
-      textDecoration: "underline",
-    },
-  },
-}));
-
-function GatewayWrapper({ refresh }) {
+function GatewayWrapper({ refresh, selected }) {
   let { path } = useRouteMatch();
   const classes = useStyles();
   return (
@@ -45,13 +33,13 @@ function GatewayWrapper({ refresh }) {
             >
               Gateways
             </RouterLink>
-
-            <Link className={classes.link}>
-              <Grid container direction="row" alignItems="center">
-                <Typography color="textPrimary">example</Typography>
-                <SettingsIcon />
-              </Grid>
-            </Link>
+            <Button
+              size="small"
+              className={classes.button}
+              endIcon={<SettingsIcon />}
+            >
+              {selected?.name || "loading"}
+            </Button>
           </MyBreadcrumbs>
           <GatewayDetail />
         </Route>
@@ -61,4 +49,33 @@ function GatewayWrapper({ refresh }) {
   );
 }
 
-export default GatewayWrapper;
+const useStyles = makeStyles((theme) => ({
+  margin: {
+    marginBottom: theme.spacing(2),
+  },
+  nameText: {
+    marginRight: theme.spacing(1),
+  },
+  link: {
+    color: "inherit",
+    textDecoration: "none",
+
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
+  paper: {
+    padding: theme.spacing(2),
+  },
+  button: {
+    padding: 0,
+  },
+}));
+
+const mapStateToProps = ({ gateway }) => ({
+  selected: gateway.selected,
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GatewayWrapper);
