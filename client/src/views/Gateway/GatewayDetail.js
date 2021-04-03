@@ -21,6 +21,7 @@ import DetailList from "./DetailList";
 import Title from "../../components/Title";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import PRDList from "./PRDList";
+import Upload from "./Upload";
 
 const GatewayDetail = ({
   refresh,
@@ -128,6 +129,7 @@ const GatewayDetail = ({
                 className={clsx(global.paper, classes.uploadConfiguration)}
               >
                 <Title>Upload configuration</Title>
+                <Upload />
               </Paper>
             </Grid>
 
