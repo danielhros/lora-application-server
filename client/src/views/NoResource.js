@@ -6,14 +6,18 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "80vh",
+    height: "50vh",
     paddingLeft: "10%",
     paddingRight: "10%",
   },
+  recourse: {
+    color: theme.palette.primary.main,
+  },
 }));
 
-const NoResource = ({ recourse = "provided" }) => {
+const NoResource = ({ recourse = "" }) => {
   const classes = useStyles();
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -25,8 +29,8 @@ const NoResource = ({ recourse = "provided" }) => {
         className={classes.root}
       >
         <Typography component="h2" variant="h6" gutterBottom align={"center"}>
-          {/* <Box color="primary.main">404</Box> */}
-          Recourse {recourse} not found!
+          Recourse <span className={classes.recourse}>{recourse}</span> not
+          found!
         </Typography>
       </Grid>
     </React.Fragment>

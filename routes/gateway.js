@@ -58,6 +58,7 @@ router.post("/detail", auth, async (req, res) => {
     let { rows } = await db.query(query.text, query.values);
     res.json(rows);
   } catch (err) {
+    console.log(err);
     res.status(500).send("Server error");
   }
 });

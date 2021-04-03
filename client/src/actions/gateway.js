@@ -55,10 +55,11 @@ export const cleanGateways = () => (dispatch) => {
   });
 };
 
-export const selectGateway = (index) => (dispatch) => {
+export const selectGateway = (index) => (dispatch, getState) => {
+  const { gateway } = getState();
   dispatch({
     type: SELECT_GATEWAY,
-    payload: index,
+    payload: gateway.gateways[index],
   });
 };
 
@@ -66,4 +67,20 @@ export const resetSelected = () => (dispatch) => {
   dispatch({
     type: RESET_SELECTED_GATEWAY,
   });
+};
+
+export const getGatewayDetail = ({ id }) => async (dispatch) => {
+  console.log("som tu");
+  try {
+    const payload = { devId: parseInt(id) };
+
+    const { data } = await gatewayApi.getGatewayDetail(payload);
+
+    dispatch({
+      type: SELECT_GATEWAY,
+      payload: data[0] || undefined,
+    });
+  } catch (err) {
+    devConsole.log(err);
+  }
 };

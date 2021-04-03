@@ -11,7 +11,7 @@ const initialState = {
   gateways: [],
   countOfGateways: null,
   rowsPerPage: 5,
-  selected: null,
+  selected: null, // null = nothing was selected, undefined = recourse not found
 };
 
 export default (state = initialState, action) => {
@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
     case SELECT_GATEWAY:
       return {
         ...state,
-        selected: state.gateways[payload],
+        selected: payload,
       };
     case RESET_SELECTED_GATEWAY:
       return {

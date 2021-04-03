@@ -12,4 +12,8 @@ export default {
     devConsole.log("Sending request to get count of gateways from server..");
     return appApi.get(GATEWAY);
   },
+  getGatewayDetail(payload) {
+    devConsole.log("Sending request to get detail of gateway from server..");
+    return appApi.post(`${GATEWAY}/detail`, payload);
+  },
 };

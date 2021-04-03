@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
-import NoRecourse from "../NoResource";
+
 import NotFound from "../NotFound";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
@@ -15,6 +15,7 @@ import Button from "@material-ui/core/Button";
 function GatewayWrapper({ refresh, selected }) {
   let { path } = useRouteMatch();
   const classes = useStyles();
+
   return (
     <React.Fragment>
       <Switch>
@@ -25,23 +26,27 @@ function GatewayWrapper({ refresh, selected }) {
           <Gateways refresh={refresh} />
         </Route>
         <Route exact path={`${path}/:id`}>
-          <MyBreadcrumbs>
-            <RouterLink
-              className={classes.link}
-              color="textPrimary"
-              to={"/gateways"}
-            >
-              Gateways
-            </RouterLink>
-            <Button
-              size="small"
-              className={classes.button}
-              endIcon={<SettingsIcon />}
-            >
-              {selected?.name || "loading"}
-            </Button>
-          </MyBreadcrumbs>
-          <GatewayDetail />
+          <React.Fragment>
+            <MyBreadcrumbs>
+              <RouterLink
+                className={classes.link}
+                color="textPrimary"
+                to={"/gateways"}
+              >
+                Gateways
+              </RouterLink>
+              {selected === undefined ? null : (
+                <Button
+                  size="small"
+                  className={classes.button}
+                  endIcon={<SettingsIcon />}
+                >
+                  {selected?.name || "loading"}
+                </Button>
+              )}
+            </MyBreadcrumbs>
+            <GatewayDetail refresh={refresh} />
+          </React.Fragment>
         </Route>
         <Route component={NotFound} />
       </Switch>
