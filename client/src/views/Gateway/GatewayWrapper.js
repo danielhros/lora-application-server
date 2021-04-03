@@ -15,6 +15,15 @@ import Button from "@material-ui/core/Button";
 function GatewayWrapper({ refresh, selected }) {
   let { path } = useRouteMatch();
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <React.Fragment>
@@ -39,13 +48,19 @@ function GatewayWrapper({ refresh, selected }) {
                 <Button
                   size="small"
                   className={classes.button}
-                  endIcon={<SettingsIcon />}
+                  endIcon={selected === null ? null : <SettingsIcon />}
+                  onClick={handleClickOpen}
+                  disabled={selected === null}
                 >
                   {selected?.name || "loading"}
                 </Button>
               )}
             </MyBreadcrumbs>
-            <GatewayDetail refresh={refresh} />
+            <GatewayDetail
+              openSettings={open}
+              handleSettingsClose={handleClose}
+              refresh={refresh}
+            />
           </React.Fragment>
         </Route>
         <Route component={NotFound} />
