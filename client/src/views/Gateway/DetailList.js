@@ -9,7 +9,7 @@ import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 
 export const DetailList = ({ gateway, width }) => {
   const classes = useStyles();
-  console.log(gateway);
+
   return (
     <React.Fragment>
       <Title>Gateway detail</Title>
