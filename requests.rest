@@ -100,3 +100,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxf
 ### Get count of scheduled donwlink messages
 GET http://localhost:5000/api/messages/downlink/scheduled
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NTQyMzE4LCJleHAiOjE2MTc1NDczMTh9.xN2SoGb8rQBqa-56apGnKPwaxkpWMV-wZJBwRVOLt9k
+
+### Get uplink messages by gateway
+POST http://localhost:5000/api/gateway/uplinkMessages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NTQ5NTgzLCJleHAiOjE2MTc1NTQ1ODN9.35XG8EblO2vReJvtMC4pfrku0WTFjvzlM4p0WMWAgcI
+Content-Type: application/json
+
+{
+    "order": "asc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "snr",
+    "gatewayId": "111111"
+}
+
+### Get count of uplink messages
+POST http://localhost:5000/api/gateway/uplinkMessages/count
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NTQyMzE4LCJleHAiOjE2MTc1NDczMTh9.xN2SoGb8rQBqa-56apGnKPwaxkpWMV-wZJBwRVOLt9k
+Content-Type: application/json
+
+{
+    "gatewayId": "111111"
+}

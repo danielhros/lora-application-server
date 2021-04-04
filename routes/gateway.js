@@ -69,4 +69,52 @@ router.post("/detail", auth, async (req, res) => {
   }
 });
 
+// SELECT uplink_messages.*, aps.name as gateway_name, aps.id FROM uplink_messages
+// INNER JOIN aps ON aps.id = uplink_messages.ap_id
+// WHERE uplink_messages.ap_id = '111111'
+// LIMIT 5 OFFSET 0
+
+router.post("/uplinkMessages", auth, async (req, res) => {
+  try {
+    const { order, rowsPerPage, column, page, gatewayId } = req.body;
+
+    const query = {
+      text:
+        `SELECT uplink_messages.*, aps.name as gateway_name FROM uplink_messages ` +
+        "INNER JOIN aps ON aps.id = uplink_messages.ap_id " +
+        `WHERE uplink_messages.ap_id = '${gatewayId}' ` +
+        `ORDER BY ${column} ${order.toUpperCase()}, dev_id ${order.toUpperCase()} ` +
+        `LIMIT ${rowsPerPage} OFFSET ${rowsPerPage * page - rowsPerPage}`,
+    };
+
+    let { rows } = await db.query(query.text);
+    res.json(rows);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
+// SELECT COUNT(*) FROM uplink_messages
+// INNER JOIN aps ON aps.id = uplink_messages.ap_id
+// WHERE uplink_messages.ap_id = '111111'
+router.post("/uplinkMessages/count", auth, async (req, res) => {
+  try {
+    const { gatewayId } = req.body;
+
+    const query = {
+      text:
+        `SELECT COUNT(*) FROM uplink_messages ` +
+        "INNER JOIN aps ON aps.id = uplink_messages.ap_id " +
+        `WHERE uplink_messages.ap_id = '${gatewayId}' `,
+    };
+
+    let { rows } = await db.query(query.text);
+    res.json(rows);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
