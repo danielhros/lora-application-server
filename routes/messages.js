@@ -25,9 +25,6 @@ router.post("/uplink", auth, async (req, res) => {
 
 router.post("/downlink", auth, async (req, res) => {
   const { order, rowsPerPage, column, page, sent } = req.body;
-
-  console.log(req.body);
-
   try {
     const query = {
       text:
@@ -37,7 +34,6 @@ router.post("/downlink", auth, async (req, res) => {
         `ORDER BY ${column} ${order.toUpperCase()}, dev_id ${order.toUpperCase()} ` +
         `LIMIT ${rowsPerPage} OFFSET ${rowsPerPage * page - rowsPerPage}`,
     };
-    console.log(query.text);
 
     let { rows } = await db.query(query.text);
     res.json(rows);

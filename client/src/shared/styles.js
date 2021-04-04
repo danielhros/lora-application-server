@@ -21,5 +21,7 @@ export default makeStyles((theme) => ({
   },
   tableButton: {
     textTransform: "none",
+    minWidth: 100,
+    marginLeft: theme.spacing(3),
   },
 }));

@@ -44,9 +44,9 @@ const getColumnName = (column) => {
   }
 };
 
-const sent = false;
+const sent = true;
 
-export const ScheduledDownlinkTable = ({
+export const SentDownlinkMessages = ({
   getDownlinkMessages,
   getCountOfDownlinkMessages,
   messages,
@@ -148,7 +148,7 @@ export const ScheduledDownlinkTable = ({
     <MyTable
       rows={rows}
       headCells={headCells}
-      tableTitle={"Scheduled downlink messages"}
+      tableTitle={"Sent downlink messages"}
       onRowClick={handleOnRowClick}
       countOfRows={count}
       showPagination={true}
@@ -187,9 +187,9 @@ export const ScheduledDownlinkTable = ({
 };
 
 const mapStateToProps = ({ messages }) => ({
-  messages: messages.scheduledDownlink.messages,
-  rowsPerPage: messages.scheduledDownlink.rowsPerPage,
-  count: messages.scheduledDownlink.count,
+  messages: messages.sentDownlink.messages,
+  rowsPerPage: messages.sentDownlink.rowsPerPage,
+  count: messages.sentDownlink.count,
 });
 
 const mapDispatchToProps = {
@@ -201,4 +201,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ScheduledDownlinkTable);
+)(SentDownlinkMessages);
