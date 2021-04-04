@@ -80,3 +80,23 @@ GET http://localhost:5000/api/messages/uplink
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NTM1MDk3LCJleHAiOjE2MTc1NDAwOTd9.jBQEE7TPs5gOQWxJCw4mno5x2OVedNwY-AmGtQePySw
 
 
+### Get scheduled/sent downlink messages 
+POST http://localhost:5000/api/messages/downlink
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NTQyMzE4LCJleHAiOjE2MTc1NDczMTh9.xN2SoGb8rQBqa-56apGnKPwaxkpWMV-wZJBwRVOLt9k
+Content-Type: application/json
+
+{
+    "order": "asc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "id",
+    "sent": true
+}
+
+### Get count of sent donwlink messages
+GET http://localhost:5000/api/messages/downlink/sent
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NTQyMzE4LCJleHAiOjE2MTc1NDczMTh9.xN2SoGb8rQBqa-56apGnKPwaxkpWMV-wZJBwRVOLt9k
+
+### Get count of scheduled donwlink messages
+GET http://localhost:5000/api/messages/downlink/scheduled
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NTQyMzE4LCJleHAiOjE2MTc1NDczMTh9.xN2SoGb8rQBqa-56apGnKPwaxkpWMV-wZJBwRVOLt9k

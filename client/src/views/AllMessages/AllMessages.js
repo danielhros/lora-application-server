@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import PDRProgress from "../../components/PDRProgress";
 import MyChart from "../../components/MyChart";
 import UplinkTable from "./UplinkTable";
+import ScheduledDownlinkTable from "./ScheduledDownlinkTable";
 
 export const AllMessages = ({ refresh }) => {
   const global = globalStyles();
@@ -28,7 +29,9 @@ export const AllMessages = ({ refresh }) => {
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper className={global.paper} />
+          <Paper className={global.paper}>
+            <ScheduledDownlinkTable refresh={refresh} />
+          </Paper>
         </Grid>
         <Grid item xs={12}>
           <Paper className={global.paper} />
