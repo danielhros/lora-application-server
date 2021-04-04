@@ -1,6 +1,5 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
 import globalStyles from "../../shared/styles";
 import Paper from "@material-ui/core/Paper";
 import PDRProgress from "../../components/PDRProgress";
@@ -8,7 +7,6 @@ import MyChart from "../../components/MyChart";
 import UplinkTable from "./UplinkTable";
 
 export const AllMessages = ({ refresh }) => {
-  const classes = useStyles();
   const global = globalStyles();
 
   return (
@@ -39,7 +37,5 @@ export const AllMessages = ({ refresh }) => {
     </React.Fragment>
   );
 };
-
-const useStyles = makeStyles((theme) => ({}));
 
 export default AllMessages;
