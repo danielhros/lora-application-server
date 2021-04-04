@@ -1,12 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
-import {
-  getUplinkMessages,
-  getCountOfUplinkMessages,
-  cleanAllMessages,
-} from "../../actions/messages";
-import globalStyles from "../../shared/styles";
-import MyTable from "../../components/MyTable";
+import globalStyles from "../shared/styles";
+import MyTable from "./MyTable";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -48,7 +42,7 @@ const getColumnName = (column) => {
 };
 
 // todo refresh
-export const UplinkTable = ({
+export const UplinkMessagesWrapper = ({
   getUplinkMessages,
   messages,
   getCountOfUplinkMessages,
@@ -189,16 +183,4 @@ export const UplinkTable = ({
   );
 };
 
-const mapStateToProps = ({ messages }) => ({
-  messages: messages.uplink.messages,
-  rowsPerPage: messages.uplink.rowsPerPage,
-  count: messages.uplink.count,
-});
-
-const mapDispatchToProps = {
-  getUplinkMessages,
-  getCountOfUplinkMessages,
-  cleanAllMessages,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UplinkTable);
+export default UplinkMessagesWrapper;
