@@ -4,9 +4,9 @@ import globalStyles from "../../shared/styles";
 import Paper from "@material-ui/core/Paper";
 import PDRProgress from "../../components/PDRProgress";
 import MyChart from "../../components/MyChart";
-import ScheduledDownlinkTable from "./ScheduledDownlinkTable";
-import SentDownlinkTable from "./SentDownlinkTable";
+import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import UplinkMessages from "./UplinkMessages";
+import SentDownlinkMessages from "./SentDownlinkMessages";
 
 export const AllMessages = ({ refresh }) => {
   const global = globalStyles();
@@ -31,12 +31,12 @@ export const AllMessages = ({ refresh }) => {
         </Grid>
         <Grid item xs={12}>
           <Paper className={global.paper}>
-            <ScheduledDownlinkTable refresh={refresh} />
+            <ScheduledDownlinkMessages refresh={refresh} />
           </Paper>
         </Grid>
         <Grid item xs={12}>
           <Paper className={global.paper}>
-            <SentDownlinkTable refresh={refresh} />
+            <SentDownlinkMessages refresh={refresh} />
           </Paper>
         </Grid>
       </Grid>

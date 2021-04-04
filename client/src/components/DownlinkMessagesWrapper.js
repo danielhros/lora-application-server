@@ -1,12 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
-import {
-  getDownlinkMessages,
-  getCountOfDownlinkMessages,
-  cleanAllMessages,
-} from "../../actions/messages";
-import globalStyles from "../../shared/styles";
-import MyTable from "../../components/MyTable";
+
+import globalStyles from "../shared/styles";
+import MyTable from "./MyTable";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -44,15 +39,14 @@ const getColumnName = (column) => {
   }
 };
 
-const sent = false;
-
-export const ScheduledDownlinkTable = ({
+export const DownlinkMessagesWrapper = ({
   getDownlinkMessages,
   getCountOfDownlinkMessages,
   messages,
   count,
   refresh,
   cleanAllMessages,
+  sent,
 }) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [page, setPage] = React.useState(0);
@@ -81,6 +75,7 @@ export const ScheduledDownlinkTable = ({
     orderBy,
     refresh,
     rowsPerPage,
+    sent,
   ]);
 
   React.useEffect(() => {
@@ -96,7 +91,7 @@ export const ScheduledDownlinkTable = ({
     return () => {
       cleanAllMessages();
     };
-  }, [cleanAllMessages, getCountOfDownlinkMessages, getDownlinkMessages]);
+  }, [cleanAllMessages, getCountOfDownlinkMessages, getDownlinkMessages, sent]);
 
   const rows = messages.map((e, i) => {
     return [
@@ -148,7 +143,7 @@ export const ScheduledDownlinkTable = ({
     <MyTable
       rows={rows}
       headCells={headCells}
-      tableTitle={"Scheduled downlink messages"}
+      tableTitle={"Sent downlink messages"}
       onRowClick={handleOnRowClick}
       countOfRows={count}
       showPagination={true}
@@ -186,19 +181,4 @@ export const ScheduledDownlinkTable = ({
   );
 };
 
-const mapStateToProps = ({ messages }) => ({
-  messages: messages.scheduledDownlink.messages,
-  rowsPerPage: messages.scheduledDownlink.rowsPerPage,
-  count: messages.scheduledDownlink.count,
-});
-
-const mapDispatchToProps = {
-  getDownlinkMessages,
-  getCountOfDownlinkMessages,
-  cleanAllMessages,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ScheduledDownlinkTable);
+export default DownlinkMessagesWrapper;
