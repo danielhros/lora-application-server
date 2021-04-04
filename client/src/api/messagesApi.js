@@ -8,7 +8,7 @@ export default {
     devConsole.log("Sending request to get uplink messages from server..");
     return appApi.post(`${MESSAGES}/uplink`, payload);
   },
-  getCountOfGateways() {
+  getCountOfUplinkMessages() {
     devConsole.log(
       "Sending request to get count of uplink messages from server.."
     );
@@ -20,7 +20,6 @@ export default {
     );
     return appApi.post(`${MESSAGES}/downlink`, payload);
   },
-
   getCountOfSentDownlinkMessages() {
     devConsole.log(
       "Sending request to get count of sent downlink messages from server.."

@@ -110,7 +110,7 @@ router.post("/uplinkMessages/count", auth, async (req, res) => {
     };
 
     let { rows } = await db.query(query.text);
-    res.json(rows);
+    res.json(rows[0]);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server error");

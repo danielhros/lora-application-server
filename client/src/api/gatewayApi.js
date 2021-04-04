@@ -16,4 +16,16 @@ export default {
     devConsole.log("Sending request to get detail of gateway from server..");
     return appApi.post(`${GATEWAY}/detail`, payload);
   },
+  getUplinkMessages(payload) {
+    devConsole.log(
+      "Sending request to get uplink messages for gateway from server.."
+    );
+    return appApi.post(`${GATEWAY}/uplinkMessages`, payload);
+  },
+  getCountOfUplinkMessages(payload) {
+    devConsole.log(
+      "Sending request to get count of uplink messages for gateway from server.."
+    );
+    return appApi.post(`${GATEWAY}/uplinkMessages/count`, payload);
+  },
 };

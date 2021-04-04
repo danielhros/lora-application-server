@@ -1,20 +1,16 @@
 import messagesApi from "../api/messagesApi";
 import devConsole from "../devConsole";
 
-export const SET_UPLINK_MESSAGES = "SET_UPLINK_MESSAGES";
-export const SET_UPLINK_ROWS_MESSAGES_PER_PAGE =
-  "SET_UPLINK_ROWS_MESSAGES_PER_PAGE";
-export const SET_COUNT_OF_UPLINK_MESSAGES = "SET_COUNT_OF_UPLINK_MESSAGES";
-export const RESET_ALL_MESSAGES = "RESET_ALL_MESSAGES";
-export const SET_SENT_DOWNLINK_MESSAGES = "SET_SENT_DOWNLINK_MESSAGES";
-export const SET_SCHEDULED_DOWNLINK_MESSAGES =
-  "SET_SCHEDULED_DOWNLINK_MESSAGES";
-export const SET_COUNT_OF_SENT_DOWNLINK_MESSAGES =
-  "SET_COUNT_OF_SENT_DOWNLINK_MESSAGES";
-export const SET_COUNT_OF_SCHEDULED_DOWNLINK_MESSAGES =
-  "SET_COUNT_OF_SCHEDULED_DOWNLINK_MESSAGES";
+import {
+  SET_UPLINK_MESSAGES,
+  SET_COUNT_OF_UPLINK_MESSAGES,
+  RESET_ALL_MESSAGES,
+  SET_SENT_DOWNLINK_MESSAGES,
+  SET_SCHEDULED_DOWNLINK_MESSAGES,
+  SET_COUNT_OF_SENT_DOWNLINK_MESSAGES,
+  SET_COUNT_OF_SCHEDULED_DOWNLINK_MESSAGES,
+} from "./types";
 
-// Load User
 export const getUplinkMessages = ({
   order,
   rowsPerPage,
@@ -40,7 +36,7 @@ export const getUplinkMessages = ({
 
 export const getCountOfUplinkMessages = () => async (dispatch) => {
   try {
-    const res = await messagesApi.getCountOfGateways();
+    const res = await messagesApi.getCountOfUplinkMessages();
 
     dispatch({
       type: SET_COUNT_OF_UPLINK_MESSAGES,

@@ -6,7 +6,7 @@ import {
   SET_SCHEDULED_DOWNLINK_MESSAGES,
   SET_COUNT_OF_SENT_DOWNLINK_MESSAGES,
   SET_COUNT_OF_SCHEDULED_DOWNLINK_MESSAGES,
-} from "../actions/messages";
+} from "../actions/types";
 
 const initialState = {
   uplink: {

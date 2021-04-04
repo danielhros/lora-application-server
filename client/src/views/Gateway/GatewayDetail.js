@@ -23,6 +23,7 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import PRDList from "./PRDList";
 import Upload from "./Upload";
 import MyMap from "./MyMap";
+import UplinkMessages from "./UplinkMessages";
 
 const GatewayDetail = ({
   refresh,
@@ -149,7 +150,9 @@ const GatewayDetail = ({
         </Grid>
         {/* Uplink messages */}
         <Grid item xs={12}>
-          <Paper className={global.paper}>{/* <Orders /> */}</Paper>
+          <Paper className={global.paper}>
+            {<UplinkMessages refresh={refresh} />}
+          </Paper>
         </Grid>
         {/* Scheduled downlink messages */}
         <Grid item xs={12}>

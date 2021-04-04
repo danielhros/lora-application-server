@@ -116,7 +116,7 @@ Content-Type: application/json
 
 ### Get count of uplink messages
 POST http://localhost:5000/api/gateway/uplinkMessages/count
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NTQyMzE4LCJleHAiOjE2MTc1NDczMTh9.xN2SoGb8rQBqa-56apGnKPwaxkpWMV-wZJBwRVOLt9k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NTUwMDE5LCJleHAiOjE2MTc1NTUwMTl9.sWm4sqlQjiCYpQMgM30zhzCWOXCkHl0rIV1YYORUa14
 Content-Type: application/json
 
 {
