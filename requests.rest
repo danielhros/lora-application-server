@@ -63,5 +63,20 @@ Content-Type: application/json
     "devId": 1
 }
 
+### Get uplink messages 
+POST http://localhost:5000/api/messages/uplink
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NTI5NjE3LCJleHAiOjE2MTc1MzQ2MTd9.r5TVVBaEcaNa1RSCGsMvG-eAb9QbxDZK1XVMesIvqTk
+Content-Type: application/json
+
+{
+    "order": "asc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "id"
+}
+
+### Get count of gateways
+GET http://localhost:5000/api/messages/uplink
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NTM1MDk3LCJleHAiOjE2MTc1NDAwOTd9.jBQEE7TPs5gOQWxJCw4mno5x2OVedNwY-AmGtQePySw
 
 

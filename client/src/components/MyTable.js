@@ -42,7 +42,7 @@ const MyTable = ({
   tableTitle = "No title",
   rightNode,
   onRowClick,
-  countOfGateways,
+  countOfRows,
   fetchRecords,
   showPagination,
   rowsPerPageOptions,
@@ -168,7 +168,7 @@ const MyTable = ({
         <TablePagination
           rowsPerPageOptions={rowsPerPageOptions}
           component="div"
-          count={parseInt(countOfGateways) || 0}
+          count={parseInt(countOfRows) || 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

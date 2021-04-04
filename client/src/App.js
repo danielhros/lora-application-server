@@ -9,7 +9,7 @@ import Dashboard from "./views/Dashboard";
 import Applications from "./views/Applications";
 import GatewayWrapper from "./views/Gateway/GatewayWrapper";
 import Devices from "./views/Devices";
-import AllMessages from "./views/AllMessages";
+import AllMessages from "./views/AllMessages/AllMessages";
 import Profile from "./views/Profile";
 import SignIn from "./views/SignIn";
 import Loading from "./views/Loading";

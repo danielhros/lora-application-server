@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import MyTable from "../../components/MyTable";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import globalStyles from "../../shared/styles";
 import {
   getGateways,
   getCountOfGateways,
@@ -48,9 +49,9 @@ export const Gateways = ({
   cleanGateways,
 }) => {
   const classes = useStyles();
+  const global = globalStyles();
   let { url } = useRouteMatch();
 
-  // const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
   const [order, setOrder] = React.useState("asc");
@@ -114,9 +115,9 @@ export const Gateways = ({
       {
         name: e.duty_cycle_refresh,
         content: (
-          <div className={classes.progressBarWrapper}>
+          <div className={global.tableProgressBarWrapper}>
             <LinearProgress
-              className={classes.progressBar}
+              className={global.tableProgressBar}
               variant="determinate"
               value={12}
             />{" "}
@@ -136,7 +137,7 @@ export const Gateways = ({
             headCells={headCells}
             tableTitle={"List of gateways"}
             onRowClick={handleOnRowClick}
-            countOfGateways={countOfGateways}
+            countOfRows={countOfGateways}
             showPagination={true}
             rowsPerPageOptions={[5, 10, 25]}
             rowsPerPage={rowsPerPage}
@@ -159,7 +160,7 @@ export const Gateways = ({
               <Tooltip title="Add gateway">
                 <Button
                   variant="outlined"
-                  className={classes.button}
+                  className={global.tableButton}
                   startIcon={<AddIcon />}
                   onClick={() => console.log("hello")}
                 >

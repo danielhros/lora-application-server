@@ -7,4 +7,19 @@ export default makeStyles((theme) => ({
     overflow: "auto",
     flexDirection: "column",
   },
+  tableProgressBarWrapper: {
+    display: "flex",
+    flex: "1",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  tableProgressBar: {
+    height: 5,
+    maxWidth: 70,
+    width: "100%",
+    marginRight: theme.spacing(1),
+  },
+  tableButton: {
+    textTransform: "none",
+  },
 }));
