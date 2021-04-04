@@ -10,6 +10,7 @@ import MyTable from "../../components/MyTable";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
 const headCells = [
@@ -59,6 +60,7 @@ export const UplinkTable = ({
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
   const [order, setOrder] = React.useState("asc");
+  const [hideId, setHideId] = React.useState(false);
 
   const global = globalStyles();
 
@@ -94,7 +96,7 @@ export const UplinkTable = ({
     return () => {
       cleanAllMessages();
     };
-  }, [getCountOfUplinkMessages, getUplinkMessages]);
+  }, [cleanAllMessages, getCountOfUplinkMessages, getUplinkMessages]);
 
   const rows = messages.map((e, i) => {
     return [
@@ -104,7 +106,7 @@ export const UplinkTable = ({
       },
       {
         name: e.node_id,
-        content: e.node_id,
+        content: hideId ? "*****" : e.node_id,
       },
       {
         name: e.snr,
@@ -176,8 +178,8 @@ export const UplinkTable = ({
           <Button
             variant="outlined"
             className={global.tableButton}
-            startIcon={<VisibilityIcon />}
-            onClick={() => console.log("hello")}
+            startIcon={hideId ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            onClick={() => setHideId(!hideId)}
           >
             device_id
           </Button>
