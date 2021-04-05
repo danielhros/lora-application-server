@@ -5,7 +5,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import Skeleton from "@material-ui/lab/Skeleton";
-import Box from "@material-ui/core/Box";
+import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
@@ -55,6 +55,7 @@ const MyTable = ({
   setOrderBy,
   order,
   setOrder,
+  width,
 }) => {
   const classes = useStyles();
 
@@ -116,7 +117,10 @@ const MyTable = ({
           {parseInt(countOfRows) === 0 ? (
             <TableBody>
               <TableRow style={{ height: 53 * rowsPerPage }}>
-                <TableCell align="center" colSpan="100%">
+                <TableCell
+                  align={isWidthUp("md", width) ? "center" : "left"}
+                  colSpan="100%"
+                >
                   No data..
                 </TableCell>
               </TableRow>
@@ -190,4 +194,4 @@ const MyTable = ({
   );
 };
 
-export default MyTable;
+export default withWidth()(MyTable);
