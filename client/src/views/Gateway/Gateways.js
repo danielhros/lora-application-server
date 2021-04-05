@@ -1,10 +1,10 @@
-import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import MyTable from "../../components/MyTable";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import globalStyles from "../../shared/styles";
+import { makeStyles } from "@material-ui/core";
+import { useGlobalStyles } from "../../shared/styles";
 import {
   getGateways,
   getCountOfGateways,
@@ -49,7 +49,7 @@ export const Gateways = ({
   cleanGateways,
 }) => {
   const classes = useStyles();
-  const global = globalStyles();
+  const global = useGlobalStyles();
   let { url } = useRouteMatch();
 
   const [page, setPage] = React.useState(0);

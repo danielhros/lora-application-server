@@ -15,7 +15,7 @@ import Loading from "../Loading";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import globalStyles from "../../shared/styles";
+import { useGlobalStyles } from "../../shared/styles";
 import clsx from "clsx";
 import DetailList from "./DetailList";
 import Title from "../../components/Title";
@@ -37,7 +37,7 @@ const GatewayDetail = ({
 }) => {
   let { id } = useParams();
   const classes = useStyles();
-  const global = globalStyles();
+  const global = useGlobalStyles();
 
   React.useEffect(() => {
     getGatewayDetail({ id });

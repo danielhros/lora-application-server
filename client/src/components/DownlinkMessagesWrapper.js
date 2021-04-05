@@ -1,6 +1,6 @@
+import { useGlobalStyles } from "../shared/styles";
 import React from "react";
 
-import globalStyles from "../shared/styles";
 import MyTable from "./MyTable";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
@@ -52,13 +52,13 @@ export const DownlinkMessagesWrapper = ({
   sortAllowed = true,
   tableTitle = sent ? "Sent downlink messages" : "Scheduled downlink messages",
 }) => {
+  const global = useGlobalStyles();
+
   const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageInit);
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
   const [order, setOrder] = React.useState("desc");
   const [hideId, setHideId] = React.useState(false);
-
-  const global = globalStyles();
 
   React.useEffect(() => {
     if (refresh) {

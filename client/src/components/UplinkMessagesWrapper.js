@@ -1,5 +1,5 @@
 import React from "react";
-import globalStyles from "../shared/styles";
+import { useGlobalStyles } from "../shared/styles";
 import MyTable from "./MyTable";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
@@ -59,7 +59,7 @@ export const UplinkMessagesWrapper = ({
   const [order, setOrder] = React.useState("desc");
   const [hideId, setHideId] = React.useState(false);
 
-  const global = globalStyles();
+  const global = useGlobalStyles();
 
   React.useEffect(() => {
     if (refresh) {

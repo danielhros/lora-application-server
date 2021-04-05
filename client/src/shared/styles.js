@@ -1,6 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export default makeStyles((theme) => ({
+const useGlobalStyles = makeStyles((theme) => ({
+  tableButton: {
+    textTransform: "none",
+    minWidth: 120,
+    marginLeft: theme.spacing(3),
+  },
   paper: {
     padding: theme.spacing(2),
     display: "flex",
@@ -20,9 +25,6 @@ export default makeStyles((theme) => ({
     width: "100%",
     marginRight: theme.spacing(1),
   },
-  tableButton: {
-    textTransform: "none",
-    minWidth: 120,
-    marginLeft: theme.spacing(3),
-  },
 }));
+
+export { useGlobalStyles };
