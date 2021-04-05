@@ -5,6 +5,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import Skeleton from "@material-ui/lab/Skeleton";
+import Box from "@material-ui/core/Box";
 
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
@@ -112,56 +113,66 @@ const MyTable = ({
             headCells={headCells}
           />
 
-          <TableBody>
-            {rows.length === 0 ? (
-              Array.from(Array(rowsPerPage)).map((x, i) => {
-                return (
-                  <TableRow key={i} hover>
-                    {headCells.map((name) => {
-                      return (
-                        <TableCell key={name}>
-                          <Skeleton />
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })
-            ) : (
-              <React.Fragment>
-                {rows.map((arr, index) => {
-                  const arrLength = arr.length;
-
+          {parseInt(countOfRows) === 0 ? (
+            <TableBody>
+              <TableRow style={{ height: 53 * rowsPerPage }}>
+                <TableCell align="center" colSpan="100%">
+                  No data..
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          ) : (
+            <TableBody>
+              {rows.length === 0 ? (
+                Array.from(Array(rowsPerPage)).map((x, i) => {
                   return (
-                    <TableRow
-                      hover
-                      tabIndex={-1}
-                      key={index}
-                      onClick={() => onRowClick(index)}
-                    >
-                      {arr.map((el, index) => {
+                    <TableRow key={i} hover>
+                      {headCells.map((name) => {
                         return (
-                          <TableCell
-                            align={index + 1 === arrLength ? "right" : "left"}
-                            key={index}
-                            title={el.name}
-                          >
-                            {el.content}
+                          <TableCell key={name}>
+                            <Skeleton />
                           </TableCell>
                         );
                       })}
                     </TableRow>
                   );
-                })}
+                })
+              ) : (
+                <React.Fragment>
+                  {rows.map((arr, index) => {
+                    const arrLength = arr.length;
 
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-              </React.Fragment>
-            )}
-          </TableBody>
+                    return (
+                      <TableRow
+                        hover
+                        tabIndex={-1}
+                        key={index}
+                        onClick={() => onRowClick(index)}
+                      >
+                        {arr.map((el, index) => {
+                          return (
+                            <TableCell
+                              align={index + 1 === arrLength ? "right" : "left"}
+                              key={index}
+                              title={el.name}
+                            >
+                              {el.content}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </React.Fragment>
+              )}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
       {showPagination ? (
