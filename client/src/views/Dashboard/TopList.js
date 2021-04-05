@@ -1,9 +1,9 @@
 import React from "react";
 
-import { makeStyles } from "@material-ui/core/styles";
+import { globalStyles } from "../../shared/styles";
+import { withStyles } from "@material-ui/core/styles";
 
-export const TopList = () => {
-  const classes = useStyles();
+export const TopList = ({ classes }) => {
   return (
     <table className={classes.table}>
       <thead style={{ display: "none" }}>
@@ -26,45 +26,4 @@ export const TopList = () => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  table: {
-    borderCollapse: "collapse",
-
-    "& tr:not(:last-child)": {
-      borderBottom: "0.1px solid rgba(255, 255, 255, 0.12)",
-    },
-
-    "& td": {
-      width: "50%",
-    },
-  },
-  tableHead: {
-    "& > th:first-child": {
-      textAlign: "right",
-      paddingRight: 10,
-    },
-    "& > th:last-child": {
-      textAlign: "left",
-      paddingLeft: 10,
-    },
-    "& > th": {
-      paddingBottom: 10,
-    },
-  },
-  tableRow: {
-    "& > td:first-child": {
-      textAlign: "right",
-      paddingRight: 10,
-    },
-    "& > td:last-child": {
-      textAlign: "left",
-      paddingLeft: 10,
-    },
-    "& > td": {
-      paddingBottom: 5,
-      paddingTop: 5,
-    },
-  },
-}));
-
-export default TopList;
+export default withStyles(globalStyles)(TopList);

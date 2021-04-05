@@ -1,9 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
+import { globalStyles } from "../../shared/styles";
+import { withStyles } from "@material-ui/core/styles";
 
-export const PRDList = () => {
-  const classes = useStyles();
+export const PRDList = ({ classes }) => {
   return (
     <table className={classes.table}>
       <thead>
@@ -42,49 +41,4 @@ export const PRDList = () => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  table: {
-    borderCollapse: "collapse",
-
-    "& tr:not(:last-child)": {
-      borderBottom: "0.1px solid rgba(255, 255, 255, 0.12)",
-    },
-
-    "& td": {
-      width: "50%",
-    },
-  },
-  tableHead: {
-    "& > th:first-child": {
-      textAlign: "right",
-      paddingRight: 10,
-    },
-    "& > th:last-child": {
-      textAlign: "left",
-      paddingLeft: 10,
-    },
-    "& > th": {
-      paddingBottom: 10,
-    },
-  },
-  tableRow: {
-    "& > td:first-child": {
-      textAlign: "right",
-      paddingRight: 10,
-    },
-    "& > td:last-child": {
-      textAlign: "left",
-      paddingLeft: 10,
-    },
-    "& > td": {
-      paddingBottom: 5,
-      paddingTop: 5,
-    },
-  },
-}));
-
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PRDList);
+export default withStyles(globalStyles)(PRDList);

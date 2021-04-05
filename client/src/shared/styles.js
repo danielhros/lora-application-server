@@ -34,6 +34,45 @@ const globalStyles = (theme) => ({
   breadCrumpsButton: {
     padding: 0,
   },
+  // Table styles
+  table: {
+    borderCollapse: "collapse",
+
+    "& tr:not(:last-child)": {
+      borderBottom: "0.1px solid rgba(255, 255, 255, 0.12)",
+    },
+
+    "& td": {
+      width: "50%",
+    },
+  },
+  tableHead: {
+    "& > th:first-child": {
+      textAlign: "right",
+      paddingRight: 10,
+    },
+    "& > th:last-child": {
+      textAlign: "left",
+      paddingLeft: 10,
+    },
+    "& > th": {
+      paddingBottom: 10,
+    },
+  },
+  tableRow: {
+    "& > td:first-child": {
+      textAlign: "right",
+      paddingRight: 10,
+    },
+    "& > td:last-child": {
+      textAlign: "left",
+      paddingLeft: 10,
+    },
+    "& > td": {
+      paddingBottom: 5,
+      paddingTop: 5,
+    },
+  },
 });
 
 export { globalStyles };

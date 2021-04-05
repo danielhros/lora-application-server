@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { globalStyles } from "../../shared/styles";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -9,6 +8,7 @@ import PDRProgress from "../../components/PDRProgress";
 import UplinkMessages from "./UplinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
+import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Title from "../../components/Title";
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
