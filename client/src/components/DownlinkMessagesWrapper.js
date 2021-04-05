@@ -104,7 +104,7 @@ export const DownlinkMessagesWrapper = ({
         content: hideId ? "*****" : e.node_id,
       },
       {
-        name: e.ack_required,
+        name: e.ack_required ? "true" : "false",
         content: e.ack_required ? "true" : "false",
       },
       {
