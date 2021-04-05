@@ -28,4 +28,16 @@ export default {
     );
     return appApi.post(`${GATEWAY}/uplinkMessages/count`, payload);
   },
+  getCountOfDownlinkMessages(payload) {
+    devConsole.log(
+      "Sending request to get count of sent/scheduled downlink messages for gateway from server.."
+    );
+    return appApi.post(`${GATEWAY}/downlinkMessages/count`, payload);
+  },
+  getDownlinkMessages(payload) {
+    devConsole.log(
+      "Sending request to get scheduled/sent downlink messages for gateway from server.."
+    );
+    return appApi.post(`${GATEWAY}/downlinkMessages`, payload);
+  },
 };

@@ -143,7 +143,9 @@ export const DownlinkMessagesWrapper = ({
     <MyTable
       rows={rows}
       headCells={headCells}
-      tableTitle={"Sent downlink messages"}
+      tableTitle={
+        sent ? "Sent downlink messages" : "Scheduled downlink messages"
+      }
       onRowClick={handleOnRowClick}
       countOfRows={count}
       showPagination={true}

@@ -137,3 +137,63 @@ export const getCountOfUplinkMessages = () => async (dispatch, getState) => {
     devConsole.log(err);
   }
 };
+
+export const getCountOfDownlinkMessages = (sent) => async (
+  dispatch,
+  getState
+) => {
+  const { id } = getState().gateway.selected;
+  try {
+    const res = await gatewayApi.getCountOfDownlinkMessages({
+      gatewayId: id,
+      sent,
+    });
+    if (sent) {
+      dispatch({
+        type: SET_COUNT_OF_SENT_DOWNLINK_MESSAGES,
+        payload: res.data.count,
+      });
+    } else {
+      dispatch({
+        type: SET_COUNT_OF_SCHEDULED_DOWNLINK_MESSAGES,
+        payload: res.data.count,
+      });
+    }
+  } catch (err) {
+    devConsole.log(err);
+  }
+};
+
+export const getDownlinkMessages = ({
+  order,
+  rowsPerPage,
+  page,
+  column,
+  sent,
+}) => async (dispatch, getState) => {
+  const { id } = getState().gateway.selected;
+  try {
+    const res = await gatewayApi.getDownlinkMessages({
+      order,
+      rowsPerPage,
+      page,
+      column,
+      sent,
+      gatewayId: id,
+    });
+
+    if (sent === true) {
+      dispatch({
+        type: SET_SENT_DOWNLINK_MESSAGES,
+        payload: res.data,
+      });
+    } else {
+      dispatch({
+        type: SET_SCHEDULED_DOWNLINK_MESSAGES,
+        payload: res.data,
+      });
+    }
+  } catch (err) {
+    devConsole.log(err);
+  }
+};

@@ -24,6 +24,8 @@ import PRDList from "./PRDList";
 import Upload from "./Upload";
 import MyMap from "./MyMap";
 import UplinkMessages from "./UplinkMessages";
+import SentDownlinkMessages from "./SentDownlinkMessages";
+import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 
 const GatewayDetail = ({
   refresh,
@@ -146,21 +148,27 @@ const GatewayDetail = ({
 
         {/* Map */}
         <Grid item xs={12}>
-          <Paper className={global.paper}>{<MyMap />}</Paper>
+          <Paper className={global.paper}>
+            <MyMap />
+          </Paper>
         </Grid>
         {/* Uplink messages */}
         <Grid item xs={12}>
           <Paper className={global.paper}>
-            {<UplinkMessages refresh={refresh} />}
+            <UplinkMessages refresh={refresh} />
           </Paper>
         </Grid>
         {/* Scheduled downlink messages */}
         <Grid item xs={12}>
-          <Paper className={global.paper}>{/* <Orders /> */}</Paper>
+          <Paper className={global.paper}>
+            <ScheduledDownlinkMessages />
+          </Paper>
         </Grid>
         {/* Sent downlink messages */}
         <Grid item xs={12}>
-          <Paper className={global.paper}>{/* <Orders /> */}</Paper>
+          <Paper className={global.paper}>
+            <SentDownlinkMessages refresh={refresh} />
+          </Paper>
         </Grid>
       </Grid>
     </React.Fragment>
