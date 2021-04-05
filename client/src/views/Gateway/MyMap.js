@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 export const MyMap = (props) => {
-  return <div>App coming soon</div>;
+  return <div>Map coming soon</div>;
 };
 
 const mapStateToProps = (state) => ({});

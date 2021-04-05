@@ -117,4 +117,51 @@ router.post("/uplinkMessages/count", auth, async (req, res) => {
   }
 });
 
+// SELECT COUNT(*) FROM downlink_messages
+// INNER JOIN aps ON aps.id = downlink_messages.ap_id
+// WHERE downlink_messages.ap_id = '111111' and downlink_messages.sent = true
+router.post("/downlinkMessages/count", auth, async (req, res) => {
+  try {
+    const { gatewayId, sent } = req.body;
+
+    const query = {
+      text:
+        `SELECT COUNT(*) FROM downlink_messages ` +
+        "INNER JOIN aps ON aps.id = downlink_messages.ap_id " +
+        `WHERE downlink_messages.ap_id = '${gatewayId}' and downlink_messages.sent = ${sent}`,
+    };
+
+    let { rows } = await db.query(query.text);
+    res.json(rows[0]);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
+// SELECT downlink_messages.*, aps.name as gateway_name FROM downlink_messages
+// INNER JOIN aps ON aps.id = downlink_messages.ap_id
+// WHERE downlink_messages.sent = true AND downlink_messages.ap_id = '111111'
+// ORDER BY sent DESC, dev_id DESC
+// LIMIT 5 OFFSET 0
+router.post("/downlinkMessages", auth, async (req, res) => {
+  const { order, rowsPerPage, column, page, sent, gatewayId } = req.body;
+  try {
+    const query = {
+      text:
+        `SELECT downlink_messages.*, aps.name as gateway_name FROM downlink_messages ` +
+        "INNER JOIN aps ON aps.id = downlink_messages.ap_id " +
+        `WHERE downlink_messages.sent = ${sent} AND downlink_messages.ap_id = '${gatewayId}' ` +
+        `ORDER BY ${column} ${order.toUpperCase()}, dev_id ${order.toUpperCase()} ` +
+        `LIMIT ${rowsPerPage} OFFSET ${rowsPerPage * page - rowsPerPage}`,
+    };
+
+    let { rows } = await db.query(query.text);
+    res.json(rows);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
