@@ -4,7 +4,8 @@ import MyTable from "../../components/MyTable";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core";
-import { useGlobalStyles } from "../../shared/styles";
+import { globalStyles } from "../../shared/styles";
+import { withStyles } from "@material-ui/core/styles";
 import {
   getGateways,
   getCountOfGateways,
@@ -47,9 +48,8 @@ export const Gateways = ({
   setRowsPerPage,
   rowsPerPage,
   cleanGateways,
+  classes,
 }) => {
-  const classes = useStyles();
-  const global = useGlobalStyles();
   let { url } = useRouteMatch();
 
   const [page, setPage] = React.useState(0);
@@ -115,9 +115,9 @@ export const Gateways = ({
       {
         name: e.duty_cycle_refresh,
         content: (
-          <div className={global.tableProgressBarWrapper}>
+          <div className={classes.tableProgressBarWrapper}>
             <LinearProgress
-              className={global.tableProgressBar}
+              className={classes.tableProgressBar}
               variant="determinate"
               value={12}
             />{" "}
@@ -160,7 +160,7 @@ export const Gateways = ({
               <Tooltip title="Add gateway">
                 <Button
                   variant="outlined"
-                  className={global.tableButton}
+                  className={classes.tableButton}
                   startIcon={<AddIcon />}
                   onClick={() => console.log("hello")}
                 >
@@ -174,30 +174,6 @@ export const Gateways = ({
     </Grid>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
-  progressBarWrapper: {
-    display: "flex",
-    flex: "1",
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
-  progressBar: {
-    height: 5,
-    maxWidth: 70,
-    width: "100%",
-    marginRight: theme.spacing(1),
-  },
-  button: {
-    textTransform: "none",
-  },
-}));
 
 const mapStateToProps = ({ gateway }) => ({
   gateways: gateway.gateways,
@@ -215,4 +191,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(Gateways));
+)(withRouter(withStyles(globalStyles)(Gateways)));

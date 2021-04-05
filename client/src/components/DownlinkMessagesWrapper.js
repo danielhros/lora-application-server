@@ -1,6 +1,6 @@
-import { useGlobalStyles } from "../shared/styles";
 import React from "react";
-
+import { globalStyles } from "../shared/styles";
+import { withStyles } from "@material-ui/core/styles";
 import MyTable from "./MyTable";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
@@ -51,9 +51,8 @@ export const DownlinkMessagesWrapper = ({
   rowsPerPageInit = 5,
   sortAllowed = true,
   tableTitle = sent ? "Sent downlink messages" : "Scheduled downlink messages",
+  classes,
 }) => {
-  const global = useGlobalStyles();
-
   const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageInit);
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
@@ -132,9 +131,9 @@ export const DownlinkMessagesWrapper = ({
       {
         name: e.duty_cycle_remaining,
         content: (
-          <div className={global.tableProgressBarWrapper}>
+          <div className={classes.tableProgressBarWrapper}>
             <LinearProgress
-              className={global.tableProgressBar}
+              className={classes.tableProgressBar}
               variant="determinate"
               value={12}
             />{" "}
@@ -180,7 +179,7 @@ export const DownlinkMessagesWrapper = ({
         <Tooltip title="Hide device id">
           <Button
             variant="outlined"
-            className={global.tableButton}
+            className={classes.tableButton}
             startIcon={hideId ? <VisibilityOffIcon /> : <VisibilityIcon />}
             onClick={() => setHideId(!hideId)}
           >
@@ -192,4 +191,4 @@ export const DownlinkMessagesWrapper = ({
   );
 };
 
-export default DownlinkMessagesWrapper;
+export default withStyles(globalStyles)(DownlinkMessagesWrapper);

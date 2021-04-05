@@ -3,17 +3,16 @@ import clsx from "clsx";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { useGlobalStyles } from "../../shared/styles";
+import { globalStyles } from "../../shared/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
-export const Devices = () => {
-  const classes = useStyles();
-  const global = useGlobalStyles();
+export const Devices = ({ classes }) => {
   return (
     <React.Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Paper className={clsx(global.paper, classes.chartPaper)}>
+          <Paper className={clsx(classes.paper)}>
             Table of devices coming soon
           </Paper>
         </Grid>
@@ -28,4 +27,7 @@ const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Devices);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(globalStyles)(Devices));

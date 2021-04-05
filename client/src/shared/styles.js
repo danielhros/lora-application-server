@@ -1,6 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
-
-const useGlobalStyles = makeStyles((theme) => ({
+const globalStyles = (theme) => ({
   tableButton: {
     textTransform: "none",
     minWidth: 120,
@@ -25,6 +23,6 @@ const useGlobalStyles = makeStyles((theme) => ({
     width: "100%",
     marginRight: theme.spacing(1),
   },
-}));
+});
 
-export { useGlobalStyles };
+export { globalStyles };

@@ -1,5 +1,7 @@
 import React from "react";
-import { useGlobalStyles } from "../shared/styles";
+import { globalStyles } from "../shared/styles";
+import { withStyles } from "@material-ui/core/styles";
+
 import MyTable from "./MyTable";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
@@ -52,14 +54,13 @@ export const UplinkMessagesWrapper = ({
   rowsPerPageInit = 5,
   sortAllowed = true,
   tableTitle = "Uplink messages",
+  classes,
 }) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageInit);
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
   const [order, setOrder] = React.useState("desc");
   const [hideId, setHideId] = React.useState(false);
-
-  const global = useGlobalStyles();
 
   React.useEffect(() => {
     if (refresh) {
@@ -133,9 +134,9 @@ export const UplinkMessagesWrapper = ({
       {
         name: e.duty_cycle_remaining,
         content: (
-          <div className={global.tableProgressBarWrapper}>
+          <div className={classes.tableProgressBarWrapper}>
             <LinearProgress
-              className={global.tableProgressBar}
+              className={classes.tableProgressBar}
               variant="determinate"
               value={12}
             />{" "}
@@ -180,7 +181,7 @@ export const UplinkMessagesWrapper = ({
         <Tooltip title="Hide device id">
           <Button
             variant="outlined"
-            className={global.tableButton}
+            className={classes.tableButton}
             startIcon={hideId ? <VisibilityOffIcon /> : <VisibilityIcon />}
             onClick={() => setHideId(!hideId)}
           >
@@ -192,4 +193,4 @@ export const UplinkMessagesWrapper = ({
   );
 };
 
-export default UplinkMessagesWrapper;
+export default withStyles(globalStyles)(UplinkMessagesWrapper);

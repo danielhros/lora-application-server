@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useGlobalStyles } from "../../shared/styles";
+import { globalStyles } from "../../shared/styles";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -9,15 +9,16 @@ import PDRProgress from "../../components/PDRProgress";
 import UplinkMessages from "./UplinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
+import { withStyles } from "@material-ui/core/styles";
 
-export const Dashboard = ({ refresh }) => {
-  const classes = useStyles();
-  const global = useGlobalStyles();
+export const Dashboard = ({ refresh, classes }) => {
+  const localClasses = useStyles();
+
   return (
     <React.Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
-          <Paper className={clsx(global.paper, classes.chartPaper)}>
+          <Paper className={clsx(classes.paper, localClasses.chartPaper)}>
             Map coming soon
           </Paper>
         </Grid>
@@ -25,29 +26,29 @@ export const Dashboard = ({ refresh }) => {
         <Grid item xs={12} md={4}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={12}>
-              <Paper className={clsx(global.paper)}>
+              <Paper className={clsx(classes.paper)}>
                 <PDRProgress value={100} />
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
-              <Paper className={clsx(global.paper)}>
+              <Paper className={clsx(classes.paper)}>
                 Top summary coming soon
               </Paper>
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Paper className={global.paper}>
+          <Paper className={classes.paper}>
             <UplinkMessages refresh={refresh} />
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper className={global.paper}>
+          <Paper className={classes.paper}>
             <ScheduledDownlinkMessages refresh={refresh} />
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper className={global.paper}>
+          <Paper className={classes.paper}>
             <SentDownlinkMessages refresh={refresh} />
           </Paper>
         </Grid>
@@ -66,4 +67,7 @@ const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(globalStyles)(Dashboard));

@@ -15,7 +15,8 @@ import Loading from "../Loading";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import { useGlobalStyles } from "../../shared/styles";
+import { globalStyles } from "../../shared/styles";
+import { withStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import DetailList from "./DetailList";
 import Title from "../../components/Title";
@@ -34,10 +35,9 @@ const GatewayDetail = ({
   selected,
   handleSettingsClose,
   openSettings,
+  classes,
 }) => {
   let { id } = useParams();
-  const classes = useStyles();
-  const global = useGlobalStyles();
 
   React.useEffect(() => {
     getGatewayDetail({ id });
@@ -106,7 +106,7 @@ const GatewayDetail = ({
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
-          <Paper className={clsx(global.paper, classes.gatewayDetail)}>
+          <Paper className={clsx(classes.paper)}>
             <DetailList gateway={selected} />
           </Paper>
         </Grid>
@@ -114,9 +114,7 @@ const GatewayDetail = ({
         <Grid item xs={12} md={4}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-              <Paper
-                className={clsx(global.paper, classes.downloadConfiguration)}
-              >
+              <Paper className={clsx(classes.paper)}>
                 <Title>Download configuration</Title>
                 <Button
                   variant="contained"
@@ -129,16 +127,14 @@ const GatewayDetail = ({
             </Grid>
 
             <Grid item xs={12} md={12}>
-              <Paper
-                className={clsx(global.paper, classes.uploadConfiguration)}
-              >
+              <Paper className={clsx(classes.paper)}>
                 <Title>Upload configuration</Title>
                 <Upload />
               </Paper>
             </Grid>
 
             <Grid item xs={12} md={12}>
-              <Paper className={clsx(global.paper, classes.channelsPDR)}>
+              <Paper className={clsx(classes.paper)}>
                 <Title>Channels PDR</Title>
                 <PRDList />
               </Paper>
@@ -148,25 +144,25 @@ const GatewayDetail = ({
 
         {/* Map */}
         <Grid item xs={12}>
-          <Paper className={global.paper}>
+          <Paper className={classes.paper}>
             <MyMap />
           </Paper>
         </Grid>
         {/* Uplink messages */}
         <Grid item xs={12}>
-          <Paper className={global.paper}>
+          <Paper className={classes.paper}>
             <UplinkMessages refresh={refresh} />
           </Paper>
         </Grid>
         {/* Scheduled downlink messages */}
         <Grid item xs={12}>
-          <Paper className={global.paper}>
+          <Paper className={classes.paper}>
             <ScheduledDownlinkMessages />
           </Paper>
         </Grid>
         {/* Sent downlink messages */}
         <Grid item xs={12}>
-          <Paper className={global.paper}>
+          <Paper className={classes.paper}>
             <SentDownlinkMessages refresh={refresh} />
           </Paper>
         </Grid>
@@ -199,4 +195,7 @@ const mapDispatchToProps = {
   getGatewayDetail,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GatewayDetail);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(globalStyles)(GatewayDetail));
