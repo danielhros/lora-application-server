@@ -41,7 +41,6 @@ const getColumnName = (column) => {
   }
 };
 
-// todo refresh
 export const UplinkMessagesWrapper = ({
   getUplinkMessages,
   messages,
@@ -49,11 +48,15 @@ export const UplinkMessagesWrapper = ({
   count,
   refresh,
   cleanAllMessages,
+  showPagination = true,
+  rowsPerPageInit = 5,
+  sortAllowed = true,
+  tableTitle = "Uplink messages",
 }) => {
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageInit);
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
-  const [order, setOrder] = React.useState("asc");
+  const [order, setOrder] = React.useState("desc");
   const [hideId, setHideId] = React.useState(false);
 
   const global = globalStyles();
@@ -81,8 +84,8 @@ export const UplinkMessagesWrapper = ({
   React.useEffect(() => {
     getCountOfUplinkMessages();
     getUplinkMessages({
-      order: "asc",
-      rowsPerPage: 5,
+      order: "desc",
+      rowsPerPage: rowsPerPageInit,
       page: 1,
       column: getColumnName("date"),
     });
@@ -90,7 +93,12 @@ export const UplinkMessagesWrapper = ({
     return () => {
       cleanAllMessages();
     };
-  }, [cleanAllMessages, getCountOfUplinkMessages, getUplinkMessages]);
+  }, [
+    cleanAllMessages,
+    getCountOfUplinkMessages,
+    getUplinkMessages,
+    rowsPerPageInit,
+  ]);
 
   const rows = messages.map((e, i) => {
     return [
@@ -146,10 +154,10 @@ export const UplinkMessagesWrapper = ({
     <MyTable
       rows={rows}
       headCells={headCells}
-      tableTitle={"Uplink messages"}
+      tableTitle={tableTitle}
       onRowClick={handleOnRowClick}
       countOfRows={count}
-      showPagination={true}
+      showPagination={showPagination}
       rowsPerPageOptions={[5, 10, 25]}
       rowsPerPage={rowsPerPage}
       setRowsPerPage={setRowsPerPage}
@@ -159,6 +167,7 @@ export const UplinkMessagesWrapper = ({
       setOrderBy={setOrderBy}
       order={order}
       setOrder={setOrder}
+      sortAllowed={sortAllowed}
       fetchRecords={({ order, rowsPerPage, page, column }) => {
         getUplinkMessages({
           order,

@@ -83,7 +83,7 @@ export const DetailList = ({ gateway, width }) => {
                       JSON.stringify(e, undefined, 2)
                     )}
                     readOnly
-                    rowsMax={5}
+                    rowsMax={9}
                     aria-label="maximum height"
                   />
                 </td>
@@ -103,7 +103,7 @@ export const DetailList = ({ gateway, width }) => {
                       JSON.stringify(e, undefined, 2)
                     )}
                     readOnly
-                    rowsMax={5}
+                    rowsMax={9}
                     aria-label="maximum height"
                   />
                 </td>

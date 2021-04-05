@@ -4,7 +4,6 @@ import devConsole from "../devConsole";
 import {
   SET_UPLINK_MESSAGES,
   SET_COUNT_OF_UPLINK_MESSAGES,
-  RESET_ALL_MESSAGES,
   SET_SENT_DOWNLINK_MESSAGES,
   SET_SCHEDULED_DOWNLINK_MESSAGES,
   SET_COUNT_OF_SENT_DOWNLINK_MESSAGES,
@@ -90,6 +89,10 @@ export const getGatewayDetail = ({ id }) => async (dispatch) => {
       payload: data[0] || undefined,
     });
   } catch (err) {
+    dispatch({
+      type: SELECT_GATEWAY,
+      payload: undefined,
+    });
     devConsole.log(err);
   }
 };

@@ -5,10 +5,10 @@ import { Switch, Route, Router } from "react-router-dom";
 import { orange, deepOrange } from "@material-ui/core/colors";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-import Dashboard from "./views/Dashboard";
-import Applications from "./views/Applications";
+import Dashboard from "./views/Dashboard/Dashboard";
 import GatewayWrapper from "./views/Gateway/GatewayWrapper";
-import Devices from "./views/Devices";
+import ApplicationsWrapper from "./views/Applications/ApplicationsWrapper";
+import DevicesWrapper from "./views/Devices/DevicesWrapper";
 import AllMessages from "./views/AllMessages/AllMessages";
 import Profile from "./views/Profile";
 import SignIn from "./views/SignIn";
@@ -47,12 +47,11 @@ function App({ loadUser, loading }) {
               <Route exact path="/login" component={SignIn} />
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute
-                exact
                 path="/applications"
-                component={Applications}
+                component={ApplicationsWrapper}
               />
               <PrivateRoute path="/gateways" component={GatewayWrapper} />
-              <PrivateRoute exact path="/devices" component={Devices} />
+              <PrivateRoute path="/devices" component={DevicesWrapper} />
               <PrivateRoute exact path="/allMessages" component={AllMessages} />
               <PrivateRoute exact path="/profile" component={Profile} />
               <Route component={NotFound} />

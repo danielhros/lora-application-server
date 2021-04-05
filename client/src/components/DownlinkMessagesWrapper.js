@@ -47,11 +47,15 @@ export const DownlinkMessagesWrapper = ({
   refresh,
   cleanAllMessages,
   sent,
+  showPagination = true,
+  rowsPerPageInit = 5,
+  sortAllowed = true,
+  tableTitle = sent ? "Sent downlink messages" : "Scheduled downlink messages",
 }) => {
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageInit);
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
-  const [order, setOrder] = React.useState("asc");
+  const [order, setOrder] = React.useState("desc");
   const [hideId, setHideId] = React.useState(false);
 
   const global = globalStyles();
@@ -81,8 +85,8 @@ export const DownlinkMessagesWrapper = ({
   React.useEffect(() => {
     getCountOfDownlinkMessages(sent);
     getDownlinkMessages({
-      order: "asc",
-      rowsPerPage: 5,
+      order: "desc",
+      rowsPerPage: rowsPerPageInit,
       page: 1,
       column: getColumnName("date"),
       sent,
@@ -91,7 +95,13 @@ export const DownlinkMessagesWrapper = ({
     return () => {
       cleanAllMessages();
     };
-  }, [cleanAllMessages, getCountOfDownlinkMessages, getDownlinkMessages, sent]);
+  }, [
+    cleanAllMessages,
+    getCountOfDownlinkMessages,
+    getDownlinkMessages,
+    rowsPerPageInit,
+    sent,
+  ]);
 
   const rows = messages.map((e, i) => {
     return [
@@ -143,12 +153,10 @@ export const DownlinkMessagesWrapper = ({
     <MyTable
       rows={rows}
       headCells={headCells}
-      tableTitle={
-        sent ? "Sent downlink messages" : "Scheduled downlink messages"
-      }
+      tableTitle={tableTitle}
       onRowClick={handleOnRowClick}
       countOfRows={count}
-      showPagination={true}
+      showPagination={showPagination}
       rowsPerPageOptions={[5, 10, 25]}
       rowsPerPage={rowsPerPage}
       setRowsPerPage={setRowsPerPage}
@@ -158,6 +166,7 @@ export const DownlinkMessagesWrapper = ({
       setOrderBy={setOrderBy}
       order={order}
       setOrder={setOrder}
+      sortAllowed={sortAllowed}
       fetchRecords={({ order, rowsPerPage, page, column }) => {
         getDownlinkMessages({
           order,

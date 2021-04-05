@@ -18,7 +18,6 @@ const MyToolBar = ({ tableTitle, rightNode = null }) => {
   return (
     <Toolbar className={classes.root}>
       <Title className={classes.title}>{tableTitle}</Title>
-
       {rightNode}
     </Toolbar>
   );

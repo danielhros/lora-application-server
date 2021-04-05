@@ -45,9 +45,9 @@ const MyTable = ({
   onRowClick,
   countOfRows,
   fetchRecords,
-  showPagination,
+  showPagination = true,
   rowsPerPageOptions,
-  rowsPerPage,
+  rowsPerPage = 5,
   setRowsPerPage,
   page,
   setPage,
@@ -56,6 +56,7 @@ const MyTable = ({
   order,
   setOrder,
   width,
+  sortAllowed = true,
 }) => {
   const classes = useStyles();
 
@@ -105,6 +106,7 @@ const MyTable = ({
           className={classes.table}
           aria-labelledby="tableTitle"
           aria-label="enhanced table"
+          style={{ marginBottom: showPagination ? 0 : 20 }}
         >
           <MyTableHead
             classes={classes}
@@ -112,6 +114,7 @@ const MyTable = ({
             orderBy={orderBy}
             onRequestSort={handleRequestSort}
             headCells={headCells}
+            sortAllowed={sortAllowed}
           />
 
           {parseInt(countOfRows) === 0 ? (

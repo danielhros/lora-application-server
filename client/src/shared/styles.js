@@ -6,6 +6,7 @@ export default makeStyles((theme) => ({
     display: "flex",
     overflow: "auto",
     flexDirection: "column",
+    height: "100%",
   },
   tableProgressBarWrapper: {
     display: "flex",
@@ -21,7 +22,7 @@ export default makeStyles((theme) => ({
   },
   tableButton: {
     textTransform: "none",
-    minWidth: 100,
+    minWidth: 120,
     marginLeft: theme.spacing(3),
   },
 }));
