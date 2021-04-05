@@ -10,6 +10,10 @@ import UplinkMessages from "./UplinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import { withStyles } from "@material-ui/core/styles";
+import Title from "../../components/Title";
+import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
+import Tooltip from "@material-ui/core/Tooltip";
+import TopList from "./TopList";
 
 export const Dashboard = ({ refresh, classes }) => {
   const localClasses = useStyles();
@@ -32,7 +36,18 @@ export const Dashboard = ({ refresh, classes }) => {
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
               <Paper className={clsx(classes.paper)}>
-                Top summary coming soon
+                <Title
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  Top{" "}
+                  <Tooltip title="Most used values" arrow>
+                    <HelpOutlineOutlinedIcon style={{ marginLeft: 5 }} />
+                  </Tooltip>
+                </Title>
+                <TopList />
               </Paper>
             </Grid>
           </Grid>
