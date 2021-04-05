@@ -3,18 +3,19 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 import MyBreadcrumbs from "../../components/MyBreadCrumps";
 import Typography from "@material-ui/core/Typography";
 import { Link as RouterLink } from "react-router-dom";
-import { makeStyles } from "@material-ui/core";
+import { globalStyles } from "../../shared/styles";
+import { withStyles } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 
 import NotFound from "../NotFound";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Devices from "./Devices";
-import DevicesDetail from "./DevicesDeatail";
+import DevicesDetail from "./DevicesDetail";
 
-function DevicesWrapper({ refresh, selected }) {
+function DevicesWrapper({ refresh, selected, classes }) {
   let { path } = useRouteMatch();
-  const classes = useStyles();
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -38,7 +39,7 @@ function DevicesWrapper({ refresh, selected }) {
           <React.Fragment>
             <MyBreadcrumbs>
               <RouterLink
-                className={classes.link}
+                className={classes.breadCrumpsLink}
                 color="textPrimary"
                 to={"/devices"}
               >
@@ -47,7 +48,7 @@ function DevicesWrapper({ refresh, selected }) {
               {selected === undefined ? null : (
                 <Button
                   size="small"
-                  className={classes.button}
+                  className={classes.breadCrumpsButton}
                   endIcon={selected === null ? null : <SettingsIcon />}
                   onClick={handleClickOpen}
                   disabled={selected === null}
@@ -69,33 +70,13 @@ function DevicesWrapper({ refresh, selected }) {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
-  margin: {
-    marginBottom: theme.spacing(2),
-  },
-  nameText: {
-    marginRight: theme.spacing(1),
-  },
-  link: {
-    color: "inherit",
-    textDecoration: "none",
-
-    "&:hover": {
-      textDecoration: "underline",
-    },
-  },
-  paper: {
-    padding: theme.spacing(2),
-  },
-  button: {
-    padding: 0,
-  },
-}));
-
 const mapStateToProps = ({ gateway }) => ({
   selected: gateway.selected,
 });
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(DevicesWrapper);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(globalStyles)(DevicesWrapper));

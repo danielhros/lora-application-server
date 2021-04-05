@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import MyTable from "../../components/MyTable";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
 import {

@@ -3,7 +3,8 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 import MyBreadcrumbs from "../../components/MyBreadCrumps";
 import Typography from "@material-ui/core/Typography";
 import { Link as RouterLink } from "react-router-dom";
-import { makeStyles } from "@material-ui/core";
+import { globalStyles } from "../../shared/styles";
+import { withStyles } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 
 import NotFound from "../NotFound";
@@ -12,9 +13,8 @@ import Button from "@material-ui/core/Button";
 import Applications from "./Applications";
 import ApplicationDetail from "./ApplicationDetail";
 
-function ApplicationsWrapper({ refresh, selected }) {
+function ApplicationsWrapper({ refresh, selected, classes }) {
   let { path } = useRouteMatch();
-  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -38,7 +38,7 @@ function ApplicationsWrapper({ refresh, selected }) {
           <React.Fragment>
             <MyBreadcrumbs>
               <RouterLink
-                className={classes.link}
+                className={classes.breadCrumpsLink}
                 color="textPrimary"
                 to={"/applications"}
               >
@@ -47,7 +47,7 @@ function ApplicationsWrapper({ refresh, selected }) {
               {selected === undefined ? null : (
                 <Button
                   size="small"
-                  className={classes.button}
+                  className={classes.breadCrumpsButton}
                   endIcon={selected === null ? null : <SettingsIcon />}
                   onClick={handleClickOpen}
                   disabled={selected === null}
@@ -69,29 +69,6 @@ function ApplicationsWrapper({ refresh, selected }) {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
-  margin: {
-    marginBottom: theme.spacing(2),
-  },
-  nameText: {
-    marginRight: theme.spacing(1),
-  },
-  link: {
-    color: "inherit",
-    textDecoration: "none",
-
-    "&:hover": {
-      textDecoration: "underline",
-    },
-  },
-  paper: {
-    padding: theme.spacing(2),
-  },
-  button: {
-    padding: 0,
-  },
-}));
-
 const mapStateToProps = ({ gateway }) => ({
   selected: gateway.selected,
 });
@@ -101,4 +78,4 @@ const mapDispatchToProps = {};
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ApplicationsWrapper);
+)(withStyles(globalStyles)(ApplicationsWrapper));

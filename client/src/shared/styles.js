@@ -23,6 +23,17 @@ const globalStyles = (theme) => ({
     width: "100%",
     marginRight: theme.spacing(1),
   },
+  breadCrumpsLink: {
+    color: "inherit",
+    textDecoration: "none",
+
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
+  breadCrumpsButton: {
+    padding: 0,
+  },
 });
 
 export { globalStyles };
