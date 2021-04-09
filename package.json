@@ -4,12 +4,11 @@
   "description": "LoRa@FIIT Application Server",
   "main": "server.js",
   "scripts": {
-    "start": "node -r server",
     "server": "nodemon -r dotenv/config server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "buildClient": "npm install --prefix client && npm run build --prefix client",
-    "buildServer": "npm install && NODE_ENV=production node server",
+    "buildClient": "npm run build --prefix client",
+    "buildServer": "NODE_ENV=production node -r dotenv/config server",
     "build": "npm run buildClient && npm run buildServer"
   },
   "author": "",
