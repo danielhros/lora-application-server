@@ -27,7 +27,7 @@
 
 ### Access to postgres:
 
-- `localhost:${PGADMIN_PORT}`
+- `localhost:${DB_PORT}`
 - **Username:** `${DB_USER}`
 - **Password:** `${DP_PASSWORD}`
 
