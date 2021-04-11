@@ -2,7 +2,6 @@ import React from "react";
 import clsx from "clsx";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -20,8 +19,6 @@ export const Applications = ({ classes }) => {
     </React.Fragment>
   );
 };
-
-const useStyles = makeStyles((theme) => ({}));
 
 const mapStateToProps = (state) => ({});
 

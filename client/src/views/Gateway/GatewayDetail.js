@@ -16,7 +16,6 @@ import Box from "@material-ui/core/Box";
 import Loading from "../Loading";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -172,21 +171,6 @@ const GatewayDetail = ({
     </React.Fragment>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  gatewayDetail: {
-    height: "100%",
-  },
-  downloadConfiguration: {
-    height: "100%",
-  },
-  uploadConfiguration: {
-    height: "100%",
-  },
-  channelsPDR: {
-    height: "100%",
-  },
-}));
 
 const mapStateToProps = ({ result }) => ({
   selected: result.selected,

@@ -92,7 +92,8 @@ export const Devices = ({
     return () => {
       cleanDevices();
     };
-  }, [cleanDevices, getCountOfDevices, getDevices, rowsPerPage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cleanDevices, getCountOfDevices, getDevices]);
 
   const handleOnRowClick = (index) => {
     history.push(`${url}/${devices[index].dev_id}`);

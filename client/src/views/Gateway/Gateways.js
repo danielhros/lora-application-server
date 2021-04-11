@@ -82,7 +82,8 @@ export const Gateways = ({
     return () => {
       cleanGateways();
     };
-  }, [cleanGateways, getCountOfGateways, getGateways, rowsPerPage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cleanGateways, getCountOfGateways, getGateways]);
 
   const handleOnRowClick = (index) => {
     history.push(`${url}/${gateways[index].dev_id}`);
