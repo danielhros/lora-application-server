@@ -69,11 +69,6 @@ router.post("/detail", auth, async (req, res) => {
   }
 });
 
-// SELECT uplink_messages.*, aps.name as gateway_name, aps.id FROM uplink_messages
-// INNER JOIN aps ON aps.id = uplink_messages.ap_id
-// WHERE uplink_messages.ap_id = '111111'
-// LIMIT 5 OFFSET 0
-
 router.post("/uplinkMessages", auth, async (req, res) => {
   try {
     const { order, rowsPerPage, column, page, gatewayId } = req.body;

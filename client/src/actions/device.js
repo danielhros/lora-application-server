@@ -45,3 +45,22 @@ export const getCountOfDevices = () => async (dispatch) => {
     devConsole.log(err);
   }
 };
+
+export const getDeviceDetail = ({ id }) => async (dispatch) => {
+  try {
+    const payload = { devId: parseInt(id) };
+
+    const { data } = await deviceApi.getDeviceDetail(payload);
+
+    dispatch({
+      type: SELECT_RESULT,
+      payload: data[0] || undefined,
+    });
+  } catch (err) {
+    dispatch({
+      type: SELECT_RESULT,
+      payload: undefined,
+    });
+    devConsole.log(err);
+  }
+};

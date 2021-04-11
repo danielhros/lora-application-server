@@ -125,12 +125,12 @@ Content-Type: application/json
 
 ### Get count of sent/scheduled downlink messages for gateway
 POST http://localhost:5000/api/gateway/downlinkMessages/count
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NjEwNTg3LCJleHAiOjE2MTc2MTU1ODd9.XP0QZbAVHpe0uvpxQ_rjW9Si_W3SZBeeV5Y9QwougWg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTM2NjY5LCJleHAiOjE2MTgxNDE2Njl9.4tdm9a41g5byskehzfapdd-cVzuATroehFKu5utDp3A
 Content-Type: application/json
 
 {
     "gatewayId": "111111",
-    "sent": true // true for sent, false for scheduled
+    "sent": true
 }
 
 ### Get scheduled/sent downlink messages for gateway
@@ -164,3 +164,58 @@ Content-Type: application/json
 GET http://localhost:5000/api/device
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTI4NzgzLCJleHAiOjE2MTgxMzM3ODN9.4WzAPw6hrqEmzqie16LRo8LfOStxwwvlp-sexOyZI8c
 Content-Type: application/json
+
+### Get device detail
+POST http://localhost:5000/api/device/detail
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTM2NjY5LCJleHAiOjE2MTgxNDE2Njl9.4tdm9a41g5byskehzfapdd-cVzuATroehFKu5utDp3A
+Content-Type: application/json
+
+{
+    "devId": 1
+}
+
+### Get uplink messages for device
+POST http://localhost:5000/api/device/uplinkMessages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTM2NjY5LCJleHAiOjE2MTgxNDE2Njl9.4tdm9a41g5byskehzfapdd-cVzuATroehFKu5utDp3A
+Content-Type: application/json
+
+{
+    "order": "asc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "snr",
+    "deviceId": "xb15"
+}
+
+### Get count of uplink messages for device
+POST http://localhost:5000/api/device/uplinkMessages/count
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTM2NjY5LCJleHAiOjE2MTgxNDE2Njl9.4tdm9a41g5byskehzfapdd-cVzuATroehFKu5utDp3A
+Content-Type: application/json
+
+{
+    "deviceId": "xb15"
+}
+
+### Get count of sent/scheduled downlink messages for device
+POST http://localhost:5000/api/device/downlinkMessages/count
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTM2NjY5LCJleHAiOjE2MTgxNDE2Njl9.4tdm9a41g5byskehzfapdd-cVzuATroehFKu5utDp3A
+Content-Type: application/json
+
+{
+    "deviceId": "xb15",
+    "sent": true 
+}
+
+### Get scheduled/sent downlink messages for device
+POST http://localhost:5000/api/device/downlinkMessages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTM2NjY5LCJleHAiOjE2MTgxNDE2Njl9.4tdm9a41g5byskehzfapdd-cVzuATroehFKu5utDp3A
+Content-Type: application/json
+
+{
+    "order": "desc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "sent",
+    "sent": true,
+    "deviceId": "xb15"
+}

@@ -12,10 +12,10 @@ export default {
     devConsole.log("Sending request to get count of devices from server..");
     return appApi.get(DEVICE);
   },
-  // getGatewayDetail(payload) {
-  //   devConsole.log("Sending request to get detail of device from server..");
-  //   return appApi.post(`${DEVICE}/detail`, payload);
-  // },
+  getDeviceDetail(payload) {
+    devConsole.log("Sending request to get detail of device from server..");
+    return appApi.post(`${DEVICE}/detail`, payload);
+  },
   // getUplinkMessages(payload) {
   //   devConsole.log(
   //     "Sending request to get uplink messages for device from server.."
