@@ -12,7 +12,7 @@
     This will just run db and pgadmin container, React and Server are running separately on local machine
 
 1. Change value of DB_HOST from `.env` to: `localhost`
-2. Run db and pgadmin containers in console: `docker-compose -f docker-compose.yml up`
+2. Run db and pgadmin containers in console: `docker-compose -f docker-compose.dev.yml up`
 3. Run server in console: `npm run server`
 4. Run client in console: `npm run client`
 5. App is available at: `localhost:3000`
