@@ -49,33 +49,6 @@ export const getCountOfGateways = () => async (dispatch) => {
   }
 };
 
-export const setRowsPerPage = (rowsPerPage) => (dispatch) => {
-  dispatch({
-    type: SET_ROWS_PER_PAGE_RESULT,
-    payload: rowsPerPage,
-  });
-};
-
-export const cleanGateways = () => (dispatch) => {
-  dispatch({
-    type: RESET_RESULTS,
-  });
-};
-
-export const selectGateway = (index) => (dispatch, getState) => {
-  const { gateway } = getState();
-  dispatch({
-    type: SELECT_RESULT,
-    payload: gateway.gateways[index],
-  });
-};
-
-export const resetSelected = () => (dispatch) => {
-  dispatch({
-    type: RESET_SELECTED_RESULT,
-  });
-};
-
 export const getGatewayDetail = ({ id }) => async (dispatch) => {
   try {
     const payload = { devId: parseInt(id) };
@@ -100,7 +73,6 @@ export const getUplinkMessages = ({
   rowsPerPage,
   page,
   column,
-  gatewayId,
 }) => async (dispatch, getState) => {
   const { id } = getState().result.selected;
 

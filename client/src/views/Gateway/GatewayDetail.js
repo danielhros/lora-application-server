@@ -1,7 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { resetSelected, getGatewayDetail } from "../../actions/gateway";
+import { getGatewayDetail } from "../../actions/gateway";
+import { resetSelectedResult } from "../../actions/shared";
+
 import NoRecourse from "../NoResource";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -30,7 +32,7 @@ import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 
 const GatewayDetail = ({
   refresh,
-  resetSelected,
+  resetSelectedResult,
   getGatewayDetail,
   selected,
   handleSettingsClose,
@@ -42,15 +44,15 @@ const GatewayDetail = ({
   React.useEffect(() => {
     getGatewayDetail({ id });
     return () => {
-      resetSelected();
+      resetSelectedResult();
     };
-  }, [getGatewayDetail, id, resetSelected]);
+  }, [getGatewayDetail, id, resetSelectedResult]);
 
   React.useEffect(() => {
     if (refresh) {
       getGatewayDetail({ id });
     }
-  }, [getGatewayDetail, id, resetSelected, refresh]);
+  }, [getGatewayDetail, id, resetSelectedResult, refresh]);
 
   if (selected === null) {
     return <Loading />;
@@ -157,7 +159,7 @@ const GatewayDetail = ({
         {/* Scheduled downlink messages */}
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <ScheduledDownlinkMessages />
+            <ScheduledDownlinkMessages refresh={refresh} />
           </Paper>
         </Grid>
         {/* Sent downlink messages */}
@@ -191,7 +193,7 @@ const mapStateToProps = ({ result }) => ({
 });
 
 const mapDispatchToProps = {
-  resetSelected,
+  resetSelectedResult,
   getGatewayDetail,
 };
 

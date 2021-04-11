@@ -5,12 +5,11 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
+import { getGateways, getCountOfGateways } from "../../actions/gateway";
 import {
-  getGateways,
-  getCountOfGateways,
   setRowsPerPage,
-  cleanGateways,
-} from "../../actions/gateway";
+  cleanResults as cleanGateways,
+} from "../../actions/shared";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
