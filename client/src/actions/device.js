@@ -10,13 +10,10 @@ import {
   SET_COUNT_OF_SCHEDULED_DOWNLINK_MESSAGES,
   SET_RESULTS,
   SET_COUNT_RESULTS,
-  SET_ROWS_PER_PAGE_RESULT,
-  RESET_RESULTS,
   SELECT_RESULT,
-  RESET_SELECTED_RESULT,
 } from "./types";
 
-export const getDEVICE = ({ order, rowsPerPage, page, column }) => async (
+export const getDevices = ({ order, rowsPerPage, page, column }) => async (
   dispatch
 ) => {
   try {
@@ -38,7 +35,7 @@ export const getDEVICE = ({ order, rowsPerPage, page, column }) => async (
 
 export const getCountOfDevices = () => async (dispatch) => {
   try {
-    const res = await devConsole.getCountOfDevices();
+    const res = await deviceApi.getCountOfDevices();
 
     dispatch({
       type: SET_COUNT_RESULTS,

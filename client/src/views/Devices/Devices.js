@@ -7,27 +7,196 @@ import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
-export const Devices = ({ classes }) => {
+import { getDevices, getCountOfDevices } from "../../actions/device";
+import {
+  setRowsPerPage,
+  cleanResults as cleanDevices,
+} from "../../actions/shared";
+
+import MyTable from "../../components/MyTable";
+import Tooltip from "@material-ui/core/Tooltip";
+import Button from "@material-ui/core/Button";
+import AddIcon from "@material-ui/icons/Add";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import { useRouteMatch, withRouter } from "react-router-dom";
+
+const getColumnName = (column) => {
+  switch (column) {
+    case "Name":
+      return "name";
+    case "Firmware":
+      return "firmware";
+    case "App_name":
+      return "application_name";
+    case "dc_refresh":
+      return "duty_cycle_refresh";
+    case "pdr":
+      return "pdr";
+    default:
+      return "id";
+  }
+};
+
+const headCells = [
+  "device_id",
+  "Name",
+  "Firmware",
+  "App_name",
+  "pdr",
+  "dc_refresh",
+];
+
+export const Devices = ({
+  classes,
+  getDevices,
+  getCountOfDevices,
+  setRowsPerPage,
+  cleanDevices,
+  rowsPerPage,
+  countOfDevices,
+  devices,
+  history,
+  refresh,
+}) => {
+  let { url } = useRouteMatch();
+
+  const [page, setPage] = React.useState(0);
+  const [orderBy, setOrderBy] = React.useState(0);
+  const [order, setOrder] = React.useState("asc");
+
+  React.useEffect(() => {
+    if (refresh) {
+      getCountOfDevices();
+      getDevices({
+        order,
+        rowsPerPage,
+        page: 1,
+        column: getColumnName(headCells[orderBy]),
+      });
+      setPage(0);
+    }
+  }, [
+    getCountOfDevices,
+    getDevices,
+    order,
+    orderBy,
+    page,
+    refresh,
+    rowsPerPage,
+  ]);
+
+  React.useEffect(() => {
+    getCountOfDevices();
+    getDevices({ order: "asc", rowsPerPage, page: 1, column: "id" });
+
+    return () => {
+      cleanDevices();
+    };
+  }, [cleanDevices, getCountOfDevices, getDevices, rowsPerPage]);
+
+  const handleOnRowClick = (index) => {
+    history.push(`${url}/${devices[index].dev_id}`);
+  };
+
+  const rows = devices.map((e, i) => {
+    return [
+      {
+        name: e.id,
+        content: e.id,
+      },
+      {
+        name: e.name,
+        content: e.name,
+      },
+      {
+        name: e.firmware,
+        content: e.firmware,
+      },
+      {
+        name: e.application_name,
+        content: e.application_name,
+      },
+      {
+        name: e.pdr,
+        content: e.pdr,
+      },
+      {
+        name: e.duty_cycle_refresh,
+        content: (
+          <div className={classes.tableProgressBarWrapper}>
+            <LinearProgress
+              className={classes.tableProgressBar}
+              variant="determinate"
+              value={12}
+            />{" "}
+            {e.duty_cycle_refresh}
+          </div>
+        ),
+      },
+    ];
+  });
+
   return (
-    <React.Fragment>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Paper className={clsx(classes.paper)}>
-            Table of devices coming soon
-          </Paper>
-        </Grid>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Paper className={classes.paper}>
+          <MyTable
+            rows={rows}
+            headCells={headCells}
+            tableTitle={"List of devices"}
+            onRowClick={handleOnRowClick}
+            countOfRows={countOfDevices}
+            showPagination={true}
+            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
+            page={page}
+            setPage={setPage}
+            orderBy={orderBy}
+            setOrderBy={setOrderBy}
+            order={order}
+            setOrder={setOrder}
+            fetchRecords={({ order, rowsPerPage, page, column }) => {
+              getDevices({
+                order,
+                rowsPerPage,
+                page,
+                column: getColumnName(column),
+              });
+            }}
+            rightNode={
+              <Tooltip title="Add gateway">
+                <Button
+                  variant="outlined"
+                  className={classes.tableButton}
+                  startIcon={<AddIcon />}
+                  onClick={() => console.log("hello")}
+                >
+                  add
+                </Button>
+              </Tooltip>
+            }
+          />
+        </Paper>
       </Grid>
-    </React.Fragment>
+    </Grid>
   );
 };
 
-const useStyles = makeStyles((theme) => ({}));
+const mapStateToProps = ({ result }) => ({
+  devices: result.results,
+  countOfDevices: result.countOfResults,
+  rowsPerPage: result.rowsPerPage,
+});
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getDevices,
+  getCountOfDevices,
+  setRowsPerPage,
+  cleanDevices,
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(globalStyles)(Devices));
+)(withRouter(withStyles(globalStyles)(Devices)));
