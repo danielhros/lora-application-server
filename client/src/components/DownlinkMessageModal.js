@@ -18,11 +18,12 @@ const DialogContent = withStyles((theme) => ({
   },
 }))(MuiDialogContent);
 
-const DownlinkMessagesModal = ({
+const DownlinkMessageModal = ({
   open,
   handleClose,
   message = null,
   width,
+  sent,
 }) => {
   const localClasses = useStyles();
 
@@ -44,7 +45,9 @@ const DownlinkMessagesModal = ({
           className={localClasses.root}
           id="customized-dialog-title"
         >
-          <Title style={{ margin: 0 }}>Uplink message detail</Title>
+          <Title style={{ margin: 0 }}>{`${
+            sent ? "Sent" : "Scheduled"
+          } downlink message detail`}</Title>
           {handleClose ? (
             <IconButton
               aria-label="close"
@@ -65,8 +68,8 @@ const DownlinkMessagesModal = ({
             </thead>
             <tbody>
               <tr className={localClasses.tableRow}>
-                <td>received</td>
-                <td>{message?.receive_time || "none"}</td>
+                <td>send_time</td>
+                <td>{message?.send_time || "none"}</td>
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>device_id</td>
@@ -104,30 +107,38 @@ const DownlinkMessagesModal = ({
             </thead>
             <tbody>
               <tr className={localClasses.tableRow}>
-                <td>signal_to_noise_ratio</td>
-                <td>{message?.snr || "none"}</td>
-              </tr>
-              <tr className={localClasses.tableRow}>
-                <td>received_signal_strength</td>
-                <td>{message?.rssi || "none"}</td>
-              </tr>
-              <tr className={localClasses.tableRow}>
                 <td>duty_cycle_remaining</td>
                 <td>{message?.duty_cycle_remaining || "none"}</td>
               </tr>
               <tr className={localClasses.tableRow}>
-                <td>is_primary</td>
+                <td>sent</td>
                 <td>
-                  {message.hasOwnProperty("is_primary")
-                    ? message.is_primary
+                  {message.hasOwnProperty("sent")
+                    ? message.sent
                       ? "yes"
                       : "no"
                     : "none"}
                 </td>
               </tr>
               <tr className={localClasses.tableRow}>
-                <td>sequence_number</td>
-                <td>{message?.seq || "none"}</td>
+                <td>ack_required</td>
+                <td>
+                  {message.hasOwnProperty("ack_required")
+                    ? message.ack_required
+                      ? "yes"
+                      : "no"
+                    : "none"}
+                </td>
+              </tr>
+              <tr className={localClasses.tableRow}>
+                <td>delivered</td>
+                <td>
+                  {message.hasOwnProperty("delivered")
+                    ? message.delivered
+                      ? "yes"
+                      : "no"
+                    : "none"}
+                </td>
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>frequency</td>
@@ -153,14 +164,48 @@ const DownlinkMessagesModal = ({
                 <td>bandwidth</td>
                 <td>{message?.bandwidth || "none"}</td>
               </tr>
-              <tr className={localClasses.tableRow}>
-                <td>message_group_number</td>
-                <td>{message?.msg_group_number || "none"}</td>
-              </tr>
-              <tr className={localClasses.tableRow}>
-                <td>message_type</td>
-                <td>{message?.message_type_name || "none"}</td>
-              </tr>
+              {isWidthUp("sm", width) ? (
+                <>
+                  <tr className={clsx(localClasses.tableRow)}>
+                    <td>net_data</td>
+                    <td>
+                      <TextareaAutosize
+                        className={localClasses.textArea}
+                        value={
+                          message?.net_data.map((e) =>
+                            JSON.stringify(e, undefined, 2)
+                          ) || ""
+                        }
+                        readOnly
+                        rowsMax={9}
+                        aria-label="maximum height"
+                      />
+                    </td>
+                  </tr>
+                </>
+              ) : (
+                <>
+                  <tr className={clsx(localClasses.tableRow)}>
+                    <td colSpan={2}>net_data</td>
+                  </tr>
+
+                  <tr className={clsx(localClasses.tableRow)}>
+                    <td colSpan={2}>
+                      <TextareaAutosize
+                        className={localClasses.textArea}
+                        value={
+                          message?.net_data.map((e) =>
+                            JSON.stringify(e, undefined, 2)
+                          ) || ""
+                        }
+                        readOnly
+                        rowsMax={9}
+                        aria-label="maximum height"
+                      />
+                    </td>
+                  </tr>
+                </>
+              )}
               {isWidthUp("sm", width) ? (
                 <>
                   <tr className={clsx(localClasses.tableRow)}>
@@ -248,4 +293,4 @@ const useStyles = makeStyles((theme) => ({
   tableBody: {},
 }));
 
-export default withWidth()(DownlinkMessagesModal);
+export default withWidth()(DownlinkMessageModal);

@@ -15,7 +15,7 @@ export const SentDownlinkMessages = (props) => {
       showPagination={false}
       rowsPerPageInit={3}
       sortAllowed={false}
-      tableTitle={"Latest sent downlink messagess"}
+      tableTitle={"Latest sent downlink messages"}
     />
   );
 };

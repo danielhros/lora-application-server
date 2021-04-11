@@ -42,11 +42,19 @@ router.post("/uplink", auth, async (req, res) => {
 
 router.post("/downlink", auth, async (req, res) => {
   const { order, rowsPerPage, column, page, sent } = req.body;
+
+  const select =
+    "downlink_messages.*, aps.name as gateway_name, " +
+    "nodes.name as node_name, " +
+    "applications.name as application_name ";
+
   try {
     const query = {
       text:
-        `SELECT downlink_messages.*, aps.name as gateway_name FROM downlink_messages ` +
+        `SELECT ${select} FROM downlink_messages ` +
         "INNER JOIN aps ON aps.id = downlink_messages.ap_id " +
+        "LEFT JOIN nodes ON nodes.id = downlink_messages.node_id " +
+        "LEFT JOIN applications ON applications.id = downlink_messages.application_id " +
         `WHERE downlink_messages.sent = ${sent} ` +
         `ORDER BY ${column} ${order.toUpperCase()}, dev_id ${order.toUpperCase()} ` +
         `LIMIT ${rowsPerPage} OFFSET ${rowsPerPage * page - rowsPerPage}`,
