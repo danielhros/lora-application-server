@@ -219,3 +219,15 @@ Content-Type: application/json
     "sent": true,
     "deviceId": "xb15"
 }
+
+### Get applications
+POST http://localhost:5000/api/application
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTcxMzQxLCJleHAiOjE2MTgxNzYzNDF9.6gaBbD1W4NynSbGFD-HH-xiv2ZeIGHI1quxuf_1jQpk
+Content-Type: application/json
+
+{
+    "order": "desc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "name"
+}
