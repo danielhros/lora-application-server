@@ -21,8 +21,6 @@ const DialogContent = withStyles((theme) => ({
 const UplinkMessageModal = ({ open, handleClose, message = null, width }) => {
   const localClasses = useStyles();
 
-  console.log(message);
-
   if (message === null) {
     return null;
   }
@@ -67,19 +65,19 @@ const UplinkMessageModal = ({ open, handleClose, message = null, width }) => {
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>device_id</td>
-                <td>{message?.dev_id || "none"}</td>
+                <td>{message?.node_id || "none"}</td>
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>device_name</td>
-                <td>TODO</td>
+                <td>{message?.node_name || "none"}</td>
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>application_name</td>
-                <td>TODO</td>
+                <td>{message?.application_name || "none"}</td>
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>application_id</td>
-                <td>TODO</td>
+                <td>{message?.application_id || "none"}</td>
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>gateway_name</td>
@@ -156,7 +154,7 @@ const UplinkMessageModal = ({ open, handleClose, message = null, width }) => {
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>message_type</td>
-                <td>TODO</td>
+                <td>{message?.message_type_name || "none"}</td>
               </tr>
               {isWidthUp("sm", width) ? (
                 <>

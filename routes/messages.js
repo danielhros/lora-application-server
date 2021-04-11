@@ -3,14 +3,31 @@ const router = express.Router();
 const db = require("../db");
 const auth = require("../middleware/auth");
 
+// SELECT uplink_messages.*, aps.name as gateway_name, message_types.name as message_type, nodes.name as node_name, applications.name as application_name
+// FROM uplink_messages
+// INNER JOIN aps ON aps.id = uplink_messages.ap_id
+// LEFT JOIN message_types ON message_types.id = uplink_messages.message_type_id
+// LEFT JOIN nodes ON nodes.id = uplink_messages.node_id
+// LEFT JOIN applications ON applications.id = uplink_messages.application_id
+// ORDER BY id DESC, dev_id DESC
+// LIMIT 5 OFFSET 0
 router.post("/uplink", auth, async (req, res) => {
   const { order, rowsPerPage, column, page } = req.body;
+
+  const select =
+    "uplink_messages.*, aps.name as gateway_name, " +
+    "message_types.name as message_type_name, " +
+    "nodes.name as node_name, " +
+    "applications.name as application_name ";
 
   try {
     const query = {
       text:
-        `SELECT uplink_messages.*, aps.name as gateway_name FROM uplink_messages ` +
+        `SELECT ${select} FROM uplink_messages ` +
         "INNER JOIN aps ON aps.id = uplink_messages.ap_id " +
+        "LEFT JOIN message_types ON message_types.id = uplink_messages.message_type_id " +
+        "LEFT JOIN nodes ON nodes.id = uplink_messages.node_id " +
+        "LEFT JOIN applications ON applications.id = uplink_messages.application_id " +
         `ORDER BY ${column} ${order.toUpperCase()}, dev_id ${order.toUpperCase()} ` +
         `LIMIT ${rowsPerPage} OFFSET ${rowsPerPage * page - rowsPerPage}`,
     };
