@@ -73,11 +73,19 @@ router.post("/uplinkMessages", auth, async (req, res) => {
   try {
     const { order, rowsPerPage, column, page, deviceId } = req.body;
 
+    const select =
+      "uplink_messages.*, aps.name as gateway_name, " +
+      "message_types.name as message_type_name, " +
+      "nodes.name as node_name, " +
+      "applications.name as application_name ";
+
     const query = {
       text:
-        `SELECT uplink_messages.*, aps.name as gateway_name FROM uplink_messages ` +
+        `SELECT ${select} FROM uplink_messages ` +
         "INNER JOIN aps ON aps.id = uplink_messages.ap_id " +
         "INNER JOIN nodes ON nodes.id = uplink_messages.node_id " +
+        "LEFT JOIN message_types ON message_types.id = uplink_messages.message_type_id " +
+        "LEFT JOIN applications ON applications.id = uplink_messages.application_id " +
         `WHERE nodes.id = '${deviceId}' ` +
         `ORDER BY ${column} ${order.toUpperCase()}, dev_id ${order.toUpperCase()} ` +
         `LIMIT ${rowsPerPage} OFFSET ${rowsPerPage * page - rowsPerPage}`,
@@ -147,12 +155,19 @@ router.post("/downlinkMessages/count", auth, async (req, res) => {
 // LIMIT 5 OFFSET 0
 router.post("/downlinkMessages", auth, async (req, res) => {
   const { order, rowsPerPage, column, page, sent, deviceId } = req.body;
+
+  const select =
+    "downlink_messages.*, aps.name as gateway_name, " +
+    "nodes.name as node_name, " +
+    "applications.name as application_name ";
+
   try {
     const query = {
       text:
-        `SELECT downlink_messages.*, aps.name as gateway_name FROM downlink_messages ` +
+        `SELECT ${select} FROM downlink_messages ` +
         "INNER JOIN aps ON aps.id = downlink_messages.ap_id " +
         "INNER JOIN nodes ON nodes.id = downlink_messages.node_id " +
+        "LEFT JOIN applications ON applications.id = downlink_messages.application_id " +
         `WHERE downlink_messages.sent = ${sent} AND nodes.id = '${deviceId}' ` +
         `ORDER BY ${column} ${order.toUpperCase()}, dev_id ${order.toUpperCase()} ` +
         `LIMIT ${rowsPerPage} OFFSET ${rowsPerPage * page - rowsPerPage}`,
