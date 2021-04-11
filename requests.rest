@@ -150,7 +150,7 @@ Content-Type: application/json
 
 ### Get devices
 POST http://localhost:5000/api/device
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTI4NzgzLCJleHAiOjE2MTgxMzM3ODN9.4WzAPw6hrqEmzqie16LRo8LfOStxwwvlp-sexOyZI8c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTMzOTI3LCJleHAiOjE2MTgxMzg5Mjd9.JYW59Ru6W92JKFwgCYcq7ry1dET_NuhQgDqdpFwXOMo
 Content-Type: application/json
 
 {

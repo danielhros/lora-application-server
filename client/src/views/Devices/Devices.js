@@ -6,6 +6,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 import { getDevices, getCountOfDevices } from "../../actions/device";
 import {
@@ -63,6 +65,7 @@ export const Devices = ({
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
   const [order, setOrder] = React.useState("asc");
+  const [hideId, setHideId] = React.useState(true);
 
   React.useEffect(() => {
     if (refresh) {
@@ -102,7 +105,7 @@ export const Devices = ({
     return [
       {
         name: e.id,
-        content: e.id,
+        content: hideId ? "*****" : e.id,
       },
       {
         name: e.name,
@@ -165,14 +168,16 @@ export const Devices = ({
               });
             }}
             rightNode={
-              <Tooltip title="Add gateway">
+              <Tooltip title="Hide device id">
                 <Button
                   variant="outlined"
                   className={classes.tableButton}
-                  startIcon={<AddIcon />}
-                  onClick={() => console.log("hello")}
+                  startIcon={
+                    hideId ? <VisibilityOffIcon /> : <VisibilityIcon />
+                  }
+                  onClick={() => setHideId(!hideId)}
                 >
-                  add
+                  device_id
                 </Button>
               </Tooltip>
             }

@@ -60,7 +60,7 @@ export const UplinkMessagesWrapper = ({
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
   const [order, setOrder] = React.useState("desc");
-  const [hideId, setHideId] = React.useState(false);
+  const [hideId, setHideId] = React.useState(true);
 
   React.useEffect(() => {
     if (refresh) {
