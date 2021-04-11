@@ -198,12 +198,12 @@ Content-Type: application/json
 
 ### Get count of sent/scheduled downlink messages for device
 POST http://localhost:5000/api/device/downlinkMessages/count
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTM2NjY5LCJleHAiOjE2MTgxNDE2Njl9.4tdm9a41g5byskehzfapdd-cVzuATroehFKu5utDp3A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTQyMTQzLCJleHAiOjE2MTgxNDcxNDN9.8aSEve8-O4pztyuv7IRSCS7UqtDiGCcrrCJaeoybBUA
 Content-Type: application/json
 
 {
-    "deviceId": "xb15",
-    "sent": true 
+    "deviceId": "01fU",
+    "sent": false 
 }
 
 ### Get scheduled/sent downlink messages for device

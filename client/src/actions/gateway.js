@@ -10,10 +10,7 @@ import {
   SET_COUNT_OF_SCHEDULED_DOWNLINK_MESSAGES,
   SET_RESULTS,
   SET_COUNT_RESULTS,
-  SET_ROWS_PER_PAGE_RESULT,
-  RESET_RESULTS,
   SELECT_RESULT,
-  RESET_SELECTED_RESULT,
 } from "./types";
 
 export const getGateways = ({ order, rowsPerPage, page, column }) => async (

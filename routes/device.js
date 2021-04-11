@@ -121,10 +121,7 @@ router.post("/uplinkMessages/count", auth, async (req, res) => {
 // WHERE nodes.id = 'xb15' and downlink_messages.sent = true
 router.post("/downlinkMessages/count", auth, async (req, res) => {
   try {
-    // const { deviceId, sent } = req.body;
-
-    const deviceId = "xb15";
-    const sent = true;
+    const { deviceId, sent } = req.body;
 
     const query = {
       text:

@@ -18,6 +18,9 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
+import UplinkMessages from "./UplinkMessages";
+import SentDownlinkMessages from "./SentDownlinkMessages";
+import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 
 export const DevicesDetail = ({
   refresh,
@@ -105,19 +108,19 @@ export const DevicesDetail = ({
         {/* Uplink messages */}
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            {/* <UplinkMessages refresh={refresh} /> */}
+            <UplinkMessages refresh={refresh} />
           </Paper>
         </Grid>
         {/* Scheduled downlink messages */}
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            {/* <ScheduledDownlinkMessages refresh={refresh} /> */}
+            <ScheduledDownlinkMessages refresh={refresh} />
           </Paper>
         </Grid>
         {/* Sent downlink messages */}
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            {/* <SentDownlinkMessages refresh={refresh} /> */}
+            <SentDownlinkMessages refresh={refresh} />
           </Paper>
         </Grid>
       </Grid>

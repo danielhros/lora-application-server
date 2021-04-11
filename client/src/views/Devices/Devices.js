@@ -1,8 +1,6 @@
 import React from "react";
-import clsx from "clsx";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -18,7 +16,6 @@ import {
 import MyTable from "../../components/MyTable";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { useRouteMatch, withRouter } from "react-router-dom";
 
