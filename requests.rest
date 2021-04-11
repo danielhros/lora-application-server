@@ -146,3 +146,16 @@ Content-Type: application/json
     "sent": true,
     "gatewayId": "111111"
 }
+
+
+### Get devices
+POST http://localhost:5000/api/devices
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTI4NzgzLCJleHAiOjE2MTgxMzM3ODN9.4WzAPw6hrqEmzqie16LRo8LfOStxwwvlp-sexOyZI8c
+Content-Type: application/json
+
+{
+    "order": "asc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "name"
+}

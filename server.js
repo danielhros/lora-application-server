@@ -14,6 +14,7 @@ app.use(express.json({ extended: false }));
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/gateway", require("./routes/gateway"));
+app.use("/api/devices", require("./routes/devices"));
 app.use("/api/messages", require("./routes/messages"));
 
 // Serve static assets in production
