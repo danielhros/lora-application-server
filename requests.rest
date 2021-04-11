@@ -159,3 +159,8 @@ Content-Type: application/json
     "page": 1,
     "column": "name"
 }
+
+### Get count of devices
+GET http://localhost:5000/api/device
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTI4NzgzLCJleHAiOjE2MTgxMzM3ODN9.4WzAPw6hrqEmzqie16LRo8LfOStxwwvlp-sexOyZI8c
+Content-Type: application/json

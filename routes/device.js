@@ -40,4 +40,18 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
+router.get("/", auth, async (req, res) => {
+  try {
+    const query = {
+      name: "get nodes",
+      text: "SELECT COUNT(*) FROM nodes",
+    };
+
+    let { rows } = await db.query(query.text);
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
