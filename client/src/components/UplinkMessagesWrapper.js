@@ -170,9 +170,12 @@ export const UplinkMessagesWrapper = ({
   return (
     <React.Fragment>
       <UplinkMessageModal
-        open={selectedMessage.openModal}
-        handleClose={handleClose}
-        message={selectedMessage.message}
+        // open={selectedMessage.openModal}
+        open={true}
+        // handleClose={handleClose}
+        handleClose={() => {}}
+        // message={selectedMessage.message}
+        message={messages[1]}
       />
       <MyTable
         rows={rows}
