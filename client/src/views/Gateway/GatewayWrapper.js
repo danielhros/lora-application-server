@@ -71,8 +71,8 @@ function GatewayWrapper({ refresh, selected, classes }) {
   );
 }
 
-const mapStateToProps = ({ gateway }) => ({
-  selected: gateway.selected,
+const mapStateToProps = ({ result }) => ({
+  selected: result.selected,
 });
 
 const mapDispatchToProps = {};

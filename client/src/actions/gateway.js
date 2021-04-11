@@ -8,16 +8,14 @@ import {
   SET_SCHEDULED_DOWNLINK_MESSAGES,
   SET_COUNT_OF_SENT_DOWNLINK_MESSAGES,
   SET_COUNT_OF_SCHEDULED_DOWNLINK_MESSAGES,
-} from "../actions/types";
+  SET_RESULTS,
+  SET_COUNT_RESULTS,
+  SET_ROWS_PER_PAGE_RESULT,
+  RESET_RESULTS,
+  SELECT_RESULT,
+  RESET_SELECTED_RESULT,
+} from "./types";
 
-export const SET_GATEWAYS = "GET_GATEWAYS";
-export const SET_COUNT_GATEWAYS = "SET_COUNT_GATEWAYS";
-export const SET_ROWS_PER_PAGE = "SET_ROWS_PER_PAGE";
-export const RESET_GATEWAYS = "RESET_GATEWAYS";
-export const SELECT_GATEWAY = "SELECT_GATEWAY";
-export const RESET_SELECTED_GATEWAY = "RESET_SELECTED_GATEWAY";
-
-// Load User
 export const getGateways = ({ order, rowsPerPage, page, column }) => async (
   dispatch
 ) => {
@@ -30,7 +28,7 @@ export const getGateways = ({ order, rowsPerPage, page, column }) => async (
     });
 
     dispatch({
-      type: SET_GATEWAYS,
+      type: SET_RESULTS,
       payload: res.data,
     });
   } catch (err) {
@@ -43,7 +41,7 @@ export const getCountOfGateways = () => async (dispatch) => {
     const res = await gatewayApi.getCountOfGateways();
 
     dispatch({
-      type: SET_COUNT_GATEWAYS,
+      type: SET_COUNT_RESULTS,
       payload: res.data.count,
     });
   } catch (err) {
@@ -53,28 +51,28 @@ export const getCountOfGateways = () => async (dispatch) => {
 
 export const setRowsPerPage = (rowsPerPage) => (dispatch) => {
   dispatch({
-    type: SET_ROWS_PER_PAGE,
+    type: SET_ROWS_PER_PAGE_RESULT,
     payload: rowsPerPage,
   });
 };
 
 export const cleanGateways = () => (dispatch) => {
   dispatch({
-    type: RESET_GATEWAYS,
+    type: RESET_RESULTS,
   });
 };
 
 export const selectGateway = (index) => (dispatch, getState) => {
   const { gateway } = getState();
   dispatch({
-    type: SELECT_GATEWAY,
+    type: SELECT_RESULT,
     payload: gateway.gateways[index],
   });
 };
 
 export const resetSelected = () => (dispatch) => {
   dispatch({
-    type: RESET_SELECTED_GATEWAY,
+    type: RESET_SELECTED_RESULT,
   });
 };
 
@@ -85,12 +83,12 @@ export const getGatewayDetail = ({ id }) => async (dispatch) => {
     const { data } = await gatewayApi.getGatewayDetail(payload);
 
     dispatch({
-      type: SELECT_GATEWAY,
+      type: SELECT_RESULT,
       payload: data[0] || undefined,
     });
   } catch (err) {
     dispatch({
-      type: SELECT_GATEWAY,
+      type: SELECT_RESULT,
       payload: undefined,
     });
     devConsole.log(err);
@@ -104,7 +102,7 @@ export const getUplinkMessages = ({
   column,
   gatewayId,
 }) => async (dispatch, getState) => {
-  const { id } = getState().gateway.selected;
+  const { id } = getState().result.selected;
 
   try {
     const res = await gatewayApi.getUplinkMessages({
@@ -125,7 +123,7 @@ export const getUplinkMessages = ({
 };
 
 export const getCountOfUplinkMessages = () => async (dispatch, getState) => {
-  const { id } = getState().gateway.selected;
+  const { id } = getState().result.selected;
 
   try {
     const res = await gatewayApi.getCountOfUplinkMessages({
@@ -145,7 +143,7 @@ export const getCountOfDownlinkMessages = (sent) => async (
   dispatch,
   getState
 ) => {
-  const { id } = getState().gateway.selected;
+  const { id } = getState().result.selected;
   try {
     const res = await gatewayApi.getCountOfDownlinkMessages({
       gatewayId: id,
@@ -174,7 +172,7 @@ export const getDownlinkMessages = ({
   column,
   sent,
 }) => async (dispatch, getState) => {
-  const { id } = getState().gateway.selected;
+  const { id } = getState().result.selected;
   try {
     const res = await gatewayApi.getDownlinkMessages({
       order,

@@ -174,10 +174,10 @@ export const Gateways = ({
   );
 };
 
-const mapStateToProps = ({ gateway }) => ({
-  gateways: gateway.gateways,
-  countOfGateways: gateway.countOfGateways,
-  rowsPerPage: gateway.rowsPerPage,
+const mapStateToProps = ({ result }) => ({
+  gateways: result.results,
+  countOfGateways: result.countOfResults,
+  rowsPerPage: result.rowsPerPage,
 });
 
 const mapDispatchToProps = {

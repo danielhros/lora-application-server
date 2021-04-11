@@ -186,8 +186,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const mapStateToProps = ({ gateway }) => ({
-  selected: gateway.selected,
+const mapStateToProps = ({ result }) => ({
+  selected: result.selected,
 });
 
 const mapDispatchToProps = {
