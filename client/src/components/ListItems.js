@@ -30,8 +30,6 @@ const ListItems = ({ handleDrawerClose, width, logout, getPageName }) => {
   let [actualLocation] = location.pathname.split("/").filter((x) => x);
   actualLocation = actualLocation || "dashboard";
 
-  console.log(actualLocation);
-
   const [openLeaveDialog, setOpenLeaveDialog] = React.useState(false);
 
   const handleClickOpen = () => {
