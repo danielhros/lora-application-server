@@ -15,7 +15,7 @@ import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
-import { useRouteMatch, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const getColumnName = (column) => {
   switch (column) {
@@ -48,8 +48,6 @@ export const Gateways = ({
   cleanGateways,
   classes,
 }) => {
-  let { url } = useRouteMatch();
-
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
   const [order, setOrder] = React.useState("asc");

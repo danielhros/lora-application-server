@@ -17,7 +17,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 
-import { useRouteMatch, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const getColumnName = (column) => {
   switch (column) {
@@ -60,8 +60,6 @@ export const Applications = ({
   cleanApplications,
   classes,
 }) => {
-  let { url } = useRouteMatch();
-
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
   const [order, setOrder] = React.useState("asc");
@@ -98,7 +96,7 @@ export const Applications = ({
   }, [cleanApplications, getApplications, getCountOfApplications]);
 
   const handleOnRowClick = (index) => {
-    history.push(`${url}/${applications[index].id}`);
+    history.push(`/applications/${applications[index].id}`);
   };
 
   const rows = applications.map((e, i) => {
