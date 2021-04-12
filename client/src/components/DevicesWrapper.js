@@ -1,8 +1,6 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
 import { globalStyles } from "../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
@@ -10,7 +8,7 @@ import MyTable from "./MyTable";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { useRouteMatch, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const getColumnName = (column) => {
   switch (column) {
@@ -50,8 +48,6 @@ export const Devices = ({
   history,
   refresh,
 }) => {
-  let { url } = useRouteMatch();
-
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
   const [order, setOrder] = React.useState("asc");
@@ -131,51 +127,43 @@ export const Devices = ({
   });
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <Paper className={classes.paper}>
-          <MyTable
-            rows={rows}
-            headCells={headCells}
-            tableTitle={"List of devices"}
-            onRowClick={handleOnRowClick}
-            countOfRows={countOfDevices}
-            showPagination={true}
-            rowsPerPageOptions={[5, 10, 25]}
-            rowsPerPage={rowsPerPage}
-            setRowsPerPage={setRowsPerPage}
-            page={page}
-            setPage={setPage}
-            orderBy={orderBy}
-            setOrderBy={setOrderBy}
-            order={order}
-            setOrder={setOrder}
-            fetchRecords={({ order, rowsPerPage, page, column }) => {
-              getDevices({
-                order,
-                rowsPerPage,
-                page,
-                column: getColumnName(column),
-              });
-            }}
-            rightNode={
-              <Tooltip title="Hide device id">
-                <Button
-                  variant="outlined"
-                  className={classes.tableButton}
-                  startIcon={
-                    hideId ? <VisibilityOffIcon /> : <VisibilityIcon />
-                  }
-                  onClick={() => setHideId(!hideId)}
-                >
-                  device_id
-                </Button>
-              </Tooltip>
-            }
-          />
-        </Paper>
-      </Grid>
-    </Grid>
+    <MyTable
+      rows={rows}
+      headCells={headCells}
+      tableTitle={"List of devices"}
+      onRowClick={handleOnRowClick}
+      countOfRows={countOfDevices}
+      showPagination={true}
+      rowsPerPageOptions={[5, 10, 25]}
+      rowsPerPage={rowsPerPage}
+      setRowsPerPage={setRowsPerPage}
+      page={page}
+      setPage={setPage}
+      orderBy={orderBy}
+      setOrderBy={setOrderBy}
+      order={order}
+      setOrder={setOrder}
+      fetchRecords={({ order, rowsPerPage, page, column }) => {
+        getDevices({
+          order,
+          rowsPerPage,
+          page,
+          column: getColumnName(column),
+        });
+      }}
+      rightNode={
+        <Tooltip title="Hide device id">
+          <Button
+            variant="outlined"
+            className={classes.tableButton}
+            startIcon={hideId ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            onClick={() => setHideId(!hideId)}
+          >
+            device_id
+          </Button>
+        </Tooltip>
+      }
+    />
   );
 };
 

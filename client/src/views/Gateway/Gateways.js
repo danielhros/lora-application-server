@@ -86,7 +86,7 @@ export const Gateways = ({
   }, [cleanGateways, getCountOfGateways, getGateways]);
 
   const handleOnRowClick = (index) => {
-    history.push(`${url}/${gateways[index].dev_id}`);
+    history.push(`/gateways/${gateways[index].dev_id}`);
   };
 
   const rows = gateways.map((e, i) => {

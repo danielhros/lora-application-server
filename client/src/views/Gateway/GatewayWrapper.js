@@ -46,7 +46,7 @@ function GatewayWrapper({ refresh, selected, classes }) {
               >
                 Gateways
               </RouterLink>
-              {selected === undefined ? null : (
+              {selected.data === undefined ? null : (
                 <Button
                   size="small"
                   className={classes.breadCrumpsButton}

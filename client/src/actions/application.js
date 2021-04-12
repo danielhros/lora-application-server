@@ -61,6 +61,7 @@ export const getApplicationDetail = ({ id }) => async (dispatch) => {
         },
       });
     } else {
+      console.log("som tu");
       dispatch({
         type: SELECT_RESULT,
         payload: {
@@ -178,6 +179,46 @@ export const getDownlinkMessages = ({
         payload: res.data,
       });
     }
+  } catch (err) {
+    devConsole.log(err);
+  }
+};
+
+export const getCountOfDevices = () => async (dispatch, getState) => {
+  const { id } = getState().result.selected.data;
+
+  try {
+    const res = await applicationApi.getCountOfDevices({
+      applicationId: id,
+    });
+
+    dispatch({
+      type: SET_COUNT_RESULTS,
+      payload: res.data.count,
+    });
+  } catch (err) {
+    devConsole.log(err);
+  }
+};
+
+export const getDevices = ({ order, rowsPerPage, page, column }) => async (
+  dispatch,
+  getState
+) => {
+  const { id } = getState().result.selected.data;
+  try {
+    const res = await applicationApi.getDevices({
+      order,
+      rowsPerPage,
+      page,
+      column,
+      applicationId: id,
+    });
+
+    dispatch({
+      type: SET_RESULTS,
+      payload: res.data,
+    });
   } catch (err) {
     devConsole.log(err);
   }

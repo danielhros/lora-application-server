@@ -44,4 +44,16 @@ export default {
     );
     return appApi.post(`${APPLICATION}/downlinkMessages`, payload);
   },
+  getDevices(payload) {
+    devConsole.log(
+      "Sending request to get devices for application from server.."
+    );
+    return appApi.post(`${APPLICATION}/devices`, payload);
+  },
+  getCountOfDevices(payload) {
+    devConsole.log(
+      "Sending request to get count of devices for application from server.."
+    );
+    return appApi.post(`${APPLICATION}/devicesCount`, payload);
+  },
 };

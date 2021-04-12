@@ -12,6 +12,8 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Devices from "./Devices";
 import DevicesDetail from "./DevicesDetail";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
 function DevicesWrapper({ refresh, selected, classes }) {
   let { path } = useRouteMatch();
@@ -33,7 +35,12 @@ function DevicesWrapper({ refresh, selected, classes }) {
           <MyBreadcrumbs>
             <Typography color="textPrimary">Devices</Typography>
           </MyBreadcrumbs>
-          <Devices refresh={refresh} />
+
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Devices refresh={refresh} />
+            </Paper>
+          </Grid>
         </Route>
         <Route exact path={`${path}/:id`}>
           <React.Fragment>
