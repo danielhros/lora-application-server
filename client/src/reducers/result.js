@@ -11,7 +11,10 @@ const initialState = {
   results: [],
   countOfResults: null,
   rowsPerPage: 5,
-  selected: null, // null = nothing was selected, undefined = recourse not found
+  selected: {
+    type: null, // null = nothing was selected, undefined = recourse not found
+    data: null,
+  },
 };
 
 export default (state = initialState, action) => {
@@ -42,12 +45,17 @@ export default (state = initialState, action) => {
     case SELECT_RESULT:
       return {
         ...state,
-        selected: payload,
+        selected: {
+          type: payload.type,
+          data: payload.data,
+        },
       };
     case RESET_SELECTED_RESULT:
       return {
         ...state,
-        selected: null,
+        selected: {
+          ...initialState.selected,
+        },
       };
     default:
       return state;

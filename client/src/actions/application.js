@@ -52,14 +52,30 @@ export const getApplicationDetail = ({ id }) => async (dispatch) => {
 
     const { data } = await applicationApi.getApplicationDetail(payload);
 
-    dispatch({
-      type: SELECT_RESULT,
-      payload: data[0] || undefined,
-    });
+    if (data[0]) {
+      dispatch({
+        type: SELECT_RESULT,
+        payload: {
+          data: data[0],
+          type: "application",
+        },
+      });
+    } else {
+      dispatch({
+        type: SELECT_RESULT,
+        payload: {
+          data: undefined,
+          type: undefined,
+        },
+      });
+    }
   } catch (err) {
     dispatch({
       type: SELECT_RESULT,
-      payload: undefined,
+      payload: {
+        data: undefined,
+        type: undefined,
+      },
     });
     devConsole.log(err);
   }
@@ -71,8 +87,7 @@ export const getUplinkMessages = ({
   page,
   column,
 }) => async (dispatch, getState) => {
-  const { id } = getState().result.selected;
-
+  const { id } = getState().result.selected.data;
   try {
     const res = await applicationApi.getUplinkMessages({
       order,
@@ -92,7 +107,7 @@ export const getUplinkMessages = ({
 };
 
 export const getCountOfUplinkMessages = () => async (dispatch, getState) => {
-  const { id } = getState().result.selected;
+  const { id } = getState().result.selected.data;
 
   try {
     const res = await applicationApi.getCountOfUplinkMessages({
@@ -112,7 +127,7 @@ export const getCountOfDownlinkMessages = (sent) => async (
   dispatch,
   getState
 ) => {
-  const { id } = getState().result.selected;
+  const { id } = getState().result.selected.data;
   try {
     const res = await applicationApi.getCountOfDownlinkMessages({
       applicationId: id,
@@ -141,7 +156,7 @@ export const getDownlinkMessages = ({
   column,
   sent,
 }) => async (dispatch, getState) => {
-  const { id } = getState().result.selected;
+  const { id } = getState().result.selected.data;
   try {
     const res = await applicationApi.getDownlinkMessages({
       order,

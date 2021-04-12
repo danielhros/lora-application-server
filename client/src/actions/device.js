@@ -52,14 +52,30 @@ export const getDeviceDetail = ({ id }) => async (dispatch) => {
 
     const { data } = await deviceApi.getDeviceDetail(payload);
 
-    dispatch({
-      type: SELECT_RESULT,
-      payload: data[0] || undefined,
-    });
+    if (data[0]) {
+      dispatch({
+        type: SELECT_RESULT,
+        payload: {
+          data: data[0],
+          type: "devices",
+        },
+      });
+    } else {
+      dispatch({
+        type: SELECT_RESULT,
+        payload: {
+          data: undefined,
+          type: undefined,
+        },
+      });
+    }
   } catch (err) {
     dispatch({
       type: SELECT_RESULT,
-      payload: undefined,
+      payload: {
+        data: undefined,
+        type: undefined,
+      },
     });
     devConsole.log(err);
   }
@@ -71,7 +87,7 @@ export const getUplinkMessages = ({
   page,
   column,
 }) => async (dispatch, getState) => {
-  const { id } = getState().result.selected;
+  const { id } = getState().result.selected.data;
 
   try {
     const res = await deviceApi.getUplinkMessages({
@@ -92,7 +108,7 @@ export const getUplinkMessages = ({
 };
 
 export const getCountOfUplinkMessages = () => async (dispatch, getState) => {
-  const { id } = getState().result.selected;
+  const { id } = getState().result.selected.data;
 
   try {
     const res = await deviceApi.getCountOfUplinkMessages({
@@ -112,7 +128,7 @@ export const getCountOfDownlinkMessages = (sent) => async (
   dispatch,
   getState
 ) => {
-  const { id } = getState().result.selected;
+  const { id } = getState().result.selected.data;
   try {
     const res = await deviceApi.getCountOfDownlinkMessages({
       deviceId: id,
@@ -141,7 +157,7 @@ export const getDownlinkMessages = ({
   column,
   sent,
 }) => async (dispatch, getState) => {
-  const { id } = getState().result.selected;
+  const { id } = getState().result.selected.data;
   try {
     const res = await deviceApi.getDownlinkMessages({
       order,

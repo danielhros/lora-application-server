@@ -16,6 +16,7 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import PDRProgress from "../../components/PDRProgress";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -34,6 +35,7 @@ export const ApplicationDetail = ({
   classes,
 }) => {
   let { id } = useParams();
+  const history = useHistory();
 
   React.useEffect(() => {
     getApplicationDetail({ id });
@@ -48,12 +50,12 @@ export const ApplicationDetail = ({
     }
   }, [id, resetSelectedResult, refresh, getApplicationDetail]);
 
-  if (selected === null) {
-    return <Loading />;
+  if (selected.data === undefined) {
+    return <NoRecourse recourse={id} />;
   }
 
-  if (selected === undefined) {
-    return <NoRecourse recourse={id} />;
+  if (selected.data === null || selected.type !== "application") {
+    return <Loading />;
   }
 
   return (
@@ -72,7 +74,7 @@ export const ApplicationDetail = ({
               m={1}
               style={{ marginLeft: 0, marginTop: 0 }}
             >
-              {selected.name}
+              {selected.data.name}
             </Box>
           </Typography>
         </DialogTitle>
@@ -112,7 +114,17 @@ export const ApplicationDetail = ({
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper className={classes.paper}>Device list</Paper>
+          <Paper className={classes.paper}>
+            <Button
+              variant="contained"
+              onClick={() => {
+                history.push("/gateways/71");
+              }}
+              color="primary"
+            >
+              pojde to
+            </Button>
+          </Paper>
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>

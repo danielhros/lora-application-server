@@ -50,11 +50,13 @@ function GatewayWrapper({ refresh, selected, classes }) {
                 <Button
                   size="small"
                   className={classes.breadCrumpsButton}
-                  endIcon={selected === null ? null : <SettingsIcon />}
+                  endIcon={selected.data === null ? null : <SettingsIcon />}
                   onClick={handleClickOpen}
-                  disabled={selected === null}
+                  disabled={selected.data === null}
                 >
-                  {selected?.name || "loading"}
+                  {selected.data?.name && selected?.type === "gateways"
+                    ? selected.data?.name
+                    : "loading"}
                 </Button>
               )}
             </MyBreadcrumbs>

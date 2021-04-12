@@ -46,12 +46,12 @@ export const DevicesDetail = ({
     }
   }, [id, resetSelectedResult, refresh, getDeviceDetail]);
 
-  if (selected === null) {
-    return <Loading />;
+  if (selected.data === undefined) {
+    return <NoRecourse recourse={id} />;
   }
 
-  if (selected === undefined) {
-    return <NoRecourse recourse={id} />;
+  if (selected.data === null || selected.type !== "devices") {
+    return <Loading />;
   }
 
   return (

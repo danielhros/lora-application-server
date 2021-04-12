@@ -53,12 +53,12 @@ const GatewayDetail = ({
     }
   }, [getGatewayDetail, id, resetSelectedResult, refresh]);
 
-  if (selected === null) {
-    return <Loading />;
+  if (selected.data === undefined) {
+    return <NoRecourse recourse={id} />;
   }
 
-  if (selected === undefined) {
-    return <NoRecourse recourse={id} />;
+  if (selected.data === null || selected.type !== "gateways") {
+    return <Loading />;
   }
 
   return (
@@ -77,7 +77,7 @@ const GatewayDetail = ({
               m={1}
               style={{ marginLeft: 0, marginTop: 0 }}
             >
-              {selected.name}
+              {selected.data.name}
             </Box>
           </Typography>
         </DialogTitle>
@@ -108,7 +108,7 @@ const GatewayDetail = ({
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Paper className={clsx(classes.paper)}>
-            <DetailList gateway={selected} />
+            <DetailList gateway={selected.data} />
           </Paper>
         </Grid>
 

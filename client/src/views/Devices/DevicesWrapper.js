@@ -45,15 +45,17 @@ function DevicesWrapper({ refresh, selected, classes }) {
               >
                 Devices
               </RouterLink>
-              {selected === undefined ? null : (
+              {selected.data === undefined ? null : (
                 <Button
                   size="small"
                   className={classes.breadCrumpsButton}
-                  endIcon={selected === null ? null : <SettingsIcon />}
+                  endIcon={selected.data === null ? null : <SettingsIcon />}
                   onClick={handleClickOpen}
-                  disabled={selected === null}
+                  disabled={selected.data === null}
                 >
-                  {selected?.name || "loading"}
+                  {selected.data?.name && selected?.type === "devices"
+                    ? selected.data?.name
+                    : "loading"}
                 </Button>
               )}
             </MyBreadcrumbs>
