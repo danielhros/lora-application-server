@@ -70,7 +70,7 @@ export const DevicesDetail = ({
               m={1}
               style={{ marginLeft: 0, marginTop: 0 }}
             >
-              {selected.name}
+              {selected.data.name}
             </Box>
           </Typography>
         </DialogTitle>
