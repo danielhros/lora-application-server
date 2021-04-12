@@ -287,3 +287,25 @@ Content-Type: application/json
     "sent": false,
     "applicationId": 2
 }
+
+### Get devices for application
+POST http://localhost:5000/api/application/devices
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjQwNDgwLCJleHAiOjE2MTgyNDU0ODB9.TmIR0ljIBSyt9nhPvABLkfFH5dZbVr4gIFpycGI2dyo
+Content-Type: application/json
+
+{
+    "order": "asc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "name",
+    "applicationId": 1
+}
+
+### Get count devices for application
+POST http://localhost:5000/api/application/devicesCount
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjQwNDgwLCJleHAiOjE2MTgyNDU0ODB9.TmIR0ljIBSyt9nhPvABLkfFH5dZbVr4gIFpycGI2dyo
+Content-Type: application/json
+
+{
+    "applicationId": 1
+}

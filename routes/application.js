@@ -161,4 +161,54 @@ router.post("/downlinkMessages", auth, async (req, res) => {
   }
 });
 
+router.post("/devices", auth, async (req, res) => {
+  try {
+    const { order, rowsPerPage, column, page, applicationId } = req.body;
+
+    const select =
+      "nodes.id, nodes.name, nodes.firmware, applications.name as application_name, " +
+      "nodes.duty_cycle_refresh, nodes.dev_id";
+
+    const query = {
+      text:
+        `SELECT ${select} FROM nodes ` +
+        `INNER JOIN applications ON applications.id = nodes.application_id ` +
+        `WHERE applications.id = ${applicationId} ` +
+        `ORDER BY ${column} ${order.toUpperCase()}, dev_id ${order.toUpperCase()} ` +
+        `LIMIT ${rowsPerPage} OFFSET ${rowsPerPage * page - rowsPerPage}`,
+    };
+
+    let { rows } = await db.query(query.text);
+
+    // TODO compute this for real
+    rows = rows.map((row) => {
+      return {
+        ...row,
+        pdr: "66",
+      };
+    });
+
+    res.json(rows);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.post("/devicesCount", auth, async (req, res) => {
+  try {
+    const query = {
+      text:
+        "SELECT COUNT(*) FROM nodes " +
+        "INNER JOIN applications ON applications.id = nodes.application_id " +
+        `WHERE applications.id = ${req.body.applicationId}`,
+    };
+
+    let { rows } = await db.query(query.text);
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
