@@ -20,28 +20,28 @@ export default {
     );
     return appApi.post(`${APPLICATION}/detail`, payload);
   },
-  // getUplinkMessages(payload) {
-  //   devConsole.log(
-  //     "Sending request to get uplink messages for application from server.."
-  //   );
-  //   return appApi.post(`${APPLICATION}/uplinkMessages`, payload);
-  // },
-  // getCountOfUplinkMessages(payload) {
-  //   devConsole.log(
-  //     "Sending request to get count of uplink messages for application from server.."
-  //   );
-  //   return appApi.post(`${APPLICATION}/uplinkMessages/count`, payload);
-  // },
-  // getCountOfDownlinkMessages(payload) {
-  //   devConsole.log(
-  //     "Sending request to get count of sent/scheduled downlink messages for application from server.."
-  //   );
-  //   return appApi.post(`${APPLICATION}/downlinkMessages/count`, payload);
-  // },
-  // getDownlinkMessages(payload) {
-  //   devConsole.log(
-  //     "Sending request to get scheduled/sent downlink messages for application from server.."
-  //   );
-  //   return appApi.post(`${APPLICATION}/downlinkMessages`, payload);
-  // },
+  getUplinkMessages(payload) {
+    devConsole.log(
+      "Sending request to get uplink messages for application from server.."
+    );
+    return appApi.post(`${APPLICATION}/uplinkMessages`, payload);
+  },
+  getCountOfUplinkMessages(payload) {
+    devConsole.log(
+      "Sending request to get count of uplink messages for application from server.."
+    );
+    return appApi.post(`${APPLICATION}/uplinkMessages/count`, payload);
+  },
+  getCountOfDownlinkMessages(payload) {
+    devConsole.log(
+      "Sending request to get count of sent/scheduled downlink messages for application from server.."
+    );
+    return appApi.post(`${APPLICATION}/downlinkMessages/count`, payload);
+  },
+  getDownlinkMessages(payload) {
+    devConsole.log(
+      "Sending request to get scheduled/sent downlink messages for application from server.."
+    );
+    return appApi.post(`${APPLICATION}/downlinkMessages`, payload);
+  },
 };

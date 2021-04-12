@@ -57,7 +57,7 @@ router.post("/detail", auth, async (req, res) => {
     const query = {
       text:
         "SELECT aps.*, transmission_params.registration_freq, transmission_params.emergency_freq, transmission_params.standard_freq, transmission_params.coderate, transmission_params.bandwidth  FROM aps " +
-        "JOIN transmission_params ON aps.transmission_param_id = transmission_params.id " +
+        "LEFT JOIN transmission_params ON aps.transmission_param_id = transmission_params.id " +
         "WHERE aps.dev_id = $1",
       values: [req.body.devId],
     };

@@ -45,3 +45,125 @@ export const getCountOfApplications = () => async (dispatch) => {
     devConsole.log(err);
   }
 };
+
+export const getApplicationDetail = ({ id }) => async (dispatch) => {
+  try {
+    const payload = { applicationId: parseInt(id) };
+
+    const { data } = await applicationApi.getApplicationDetail(payload);
+
+    dispatch({
+      type: SELECT_RESULT,
+      payload: data[0] || undefined,
+    });
+  } catch (err) {
+    dispatch({
+      type: SELECT_RESULT,
+      payload: undefined,
+    });
+    devConsole.log(err);
+  }
+};
+
+export const getUplinkMessages = ({
+  order,
+  rowsPerPage,
+  page,
+  column,
+}) => async (dispatch, getState) => {
+  const { id } = getState().result.selected;
+
+  try {
+    const res = await applicationApi.getUplinkMessages({
+      order,
+      rowsPerPage,
+      page,
+      column,
+      applicationId: id,
+    });
+
+    dispatch({
+      type: SET_UPLINK_MESSAGES,
+      payload: res.data,
+    });
+  } catch (err) {
+    devConsole.log(err);
+  }
+};
+
+export const getCountOfUplinkMessages = () => async (dispatch, getState) => {
+  const { id } = getState().result.selected;
+
+  try {
+    const res = await applicationApi.getCountOfUplinkMessages({
+      applicationId: id,
+    });
+
+    dispatch({
+      type: SET_COUNT_OF_UPLINK_MESSAGES,
+      payload: res.data.count,
+    });
+  } catch (err) {
+    devConsole.log(err);
+  }
+};
+
+export const getCountOfDownlinkMessages = (sent) => async (
+  dispatch,
+  getState
+) => {
+  const { id } = getState().result.selected;
+  try {
+    const res = await applicationApi.getCountOfDownlinkMessages({
+      applicationId: id,
+      sent,
+    });
+    if (sent) {
+      dispatch({
+        type: SET_COUNT_OF_SENT_DOWNLINK_MESSAGES,
+        payload: res.data.count,
+      });
+    } else {
+      dispatch({
+        type: SET_COUNT_OF_SCHEDULED_DOWNLINK_MESSAGES,
+        payload: res.data.count,
+      });
+    }
+  } catch (err) {
+    devConsole.log(err);
+  }
+};
+
+export const getDownlinkMessages = ({
+  order,
+  rowsPerPage,
+  page,
+  column,
+  sent,
+}) => async (dispatch, getState) => {
+  const { id } = getState().result.selected;
+  try {
+    const res = await applicationApi.getDownlinkMessages({
+      order,
+      rowsPerPage,
+      page,
+      column,
+      sent,
+      applicationId: id,
+    });
+
+    if (sent === true) {
+      dispatch({
+        type: SET_SENT_DOWNLINK_MESSAGES,
+        payload: res.data,
+      });
+    } else {
+      dispatch({
+        type: SET_SCHEDULED_DOWNLINK_MESSAGES,
+        payload: res.data,
+      });
+    }
+  } catch (err) {
+    devConsole.log(err);
+  }
+};

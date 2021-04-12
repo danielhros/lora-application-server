@@ -231,3 +231,59 @@ Content-Type: application/json
     "page": 1,
     "column": "name"
 }
+
+### Get application detail
+POST http://localhost:5000/api/application/detail
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjA5Nzg3LCJleHAiOjE2MTgyMTQ3ODd9.HnFQbWI0i-7QC5i1-lm9aC0gsFWrj7ojCRu-gq-O8wg
+Content-Type: application/json
+
+{
+    "applicationId": 1
+}
+
+### Get uplink messages for application
+POST http://localhost:5000/api/application/uplinkMessages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjA5Nzg3LCJleHAiOjE2MTgyMTQ3ODd9.HnFQbWI0i-7QC5i1-lm9aC0gsFWrj7ojCRu-gq-O8wg
+Content-Type: application/json
+
+{
+    "order": "asc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "snr",
+    "applicationId": 1
+}
+
+### Get count of uplink messages for application
+POST http://localhost:5000/api/application/uplinkMessages/count
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjA5Nzg3LCJleHAiOjE2MTgyMTQ3ODd9.HnFQbWI0i-7QC5i1-lm9aC0gsFWrj7ojCRu-gq-O8wg
+Content-Type: application/json
+
+{
+    "applicationId": 1
+}
+
+
+### Get count of sent/scheduled downlink messages for application
+POST http://localhost:5000/api/application/downlinkMessages/count
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjA5Nzg3LCJleHAiOjE2MTgyMTQ3ODd9.HnFQbWI0i-7QC5i1-lm9aC0gsFWrj7ojCRu-gq-O8wg
+Content-Type: application/json
+
+{
+    "applicationId": 1,
+    "sent": true
+}
+
+### Get scheduled/sent downlink messages for application
+POST http://localhost:5000/api/application/downlinkMessages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjA5Nzg3LCJleHAiOjE2MTgyMTQ3ODd9.HnFQbWI0i-7QC5i1-lm9aC0gsFWrj7ojCRu-gq-O8wg
+Content-Type: application/json
+
+{
+    "order": "desc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "sent",
+    "sent": false,
+    "applicationId": 2
+}
