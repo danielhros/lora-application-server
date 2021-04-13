@@ -24,6 +24,12 @@ function GatewayWrapper({ refresh, selected, classes }) {
   };
 
   const handleClose = () => {
+    console.log("CLosed without save");
+    setOpen(false);
+  };
+
+  const handleConfirmClose = () => {
+    console.log("Closed with success");
     setOpen(false);
   };
 
@@ -63,6 +69,7 @@ function GatewayWrapper({ refresh, selected, classes }) {
             <GatewayDetail
               openSettings={open}
               handleSettingsClose={handleClose}
+              handleConfirmClose={handleConfirmClose}
               refresh={refresh}
             />
           </React.Fragment>

@@ -3,16 +3,8 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { getGatewayDetail } from "../../actions/gateway";
 import { resetSelectedResult } from "../../actions/shared";
-
 import NoRecourse from "../NoResource";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 import Loading from "../Loading";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -28,6 +20,7 @@ import MyMap from "./MyMap";
 import UplinkMessages from "./UplinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
+import GatewaySettingsModal from "./GatewaySettingsModal";
 
 const GatewayDetail = ({
   refresh,
@@ -37,6 +30,7 @@ const GatewayDetail = ({
   handleSettingsClose,
   openSettings,
   classes,
+  handleConfirmClose,
 }) => {
   let { id } = useParams();
 
@@ -63,47 +57,12 @@ const GatewayDetail = ({
 
   return (
     <React.Fragment>
-      <Dialog
+      <GatewaySettingsModal
         open={openSettings}
-        onClose={handleSettingsClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Gateway settings</DialogTitle>
-
-        <DialogTitle style={{ paddingTop: 0 }}>
-          <Typography component="div">
-            <Box
-              fontSize="fontSize"
-              m={1}
-              style={{ marginLeft: 0, marginTop: 0 }}
-            >
-              {selected.data.name}
-            </Box>
-          </Typography>
-        </DialogTitle>
-
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="settings"
-            label="Todo settings"
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleSettingsClose} color="primary">
-            CANCEL
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleSettingsClose}
-            color="primary"
-          >
-            SAVE
-          </Button>
-        </DialogActions>
-      </Dialog>
+        handleClose={handleSettingsClose}
+        gateway={selected.data}
+        handleConfirmClose={handleConfirmClose}
+      />
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>

@@ -21,7 +21,7 @@ const DialogContent = withStyles((theme) => ({
   },
 }))(MuiDialogContent);
 
-const DownlinkMessagesModal = ({
+const ApplicationSettingsModal = ({
   open,
   handleClose,
   handleConfirmClose,
@@ -152,4 +152,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default DownlinkMessagesModal;
+export default ApplicationSettingsModal;
