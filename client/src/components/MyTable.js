@@ -122,7 +122,7 @@ const MyTable = ({
               <TableRow style={{ height: 53 * rowsPerPage }}>
                 <TableCell
                   align={isWidthUp("md", width) ? "center" : "left"}
-                  colSpan="100%"
+                  colSpan={12}
                 >
                   No data..
                 </TableCell>
@@ -173,7 +173,7 @@ const MyTable = ({
 
                   {emptyRows > 0 && (
                     <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
+                      <TableCell colSpan={12} />
                     </TableRow>
                   )}
                 </React.Fragment>
