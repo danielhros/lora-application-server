@@ -5,14 +5,6 @@ import { getDeviceDetail } from "../../actions/device";
 import { resetSelectedResult } from "../../actions/shared";
 
 import NoRecourse from "../NoResource";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 import Loading from "../Loading";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -21,6 +13,7 @@ import { withStyles } from "@material-ui/core/styles";
 import UplinkMessages from "./UplinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
+import DeviceSettingsModal from "../../components/DeviceSettingsModal";
 
 export const DevicesDetail = ({
   refresh,
@@ -30,6 +23,7 @@ export const DevicesDetail = ({
   handleSettingsClose,
   openSettings,
   classes,
+  handleConfirmClose,
 }) => {
   let { id } = useParams();
 
@@ -56,47 +50,12 @@ export const DevicesDetail = ({
 
   return (
     <React.Fragment>
-      <Dialog
+      <DeviceSettingsModal
         open={openSettings}
-        onClose={handleSettingsClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Device settings</DialogTitle>
-
-        <DialogTitle style={{ paddingTop: 0 }}>
-          <Typography component="div">
-            <Box
-              fontSize="fontSize"
-              m={1}
-              style={{ marginLeft: 0, marginTop: 0 }}
-            >
-              {selected.data.name}
-            </Box>
-          </Typography>
-        </DialogTitle>
-
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="settings"
-            label="Todo settings"
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleSettingsClose} color="primary">
-            CANCEL
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleSettingsClose}
-            color="primary"
-          >
-            SAVE
-          </Button>
-        </DialogActions>
-      </Dialog>
+        handleClose={handleSettingsClose}
+        device={selected.data}
+        handleConfirmClose={handleConfirmClose}
+      />
 
       <Grid container spacing={3}>
         <Grid item xs={12}>

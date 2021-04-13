@@ -28,6 +28,11 @@ function DevicesWrapper({ refresh, selected, classes }) {
     setOpen(false);
   };
 
+  const handleConfirmClose = ({ sf, tp }) => {
+    console.log(sf, tp);
+    setOpen(false);
+  };
+
   return (
     <React.Fragment>
       <Switch>
@@ -69,6 +74,7 @@ function DevicesWrapper({ refresh, selected, classes }) {
             <DevicesDetail
               openSettings={open}
               handleSettingsClose={handleClose}
+              handleConfirmClose={handleConfirmClose}
               refresh={refresh}
             />
           </React.Fragment>
