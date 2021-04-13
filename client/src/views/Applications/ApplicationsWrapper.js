@@ -22,6 +22,12 @@ function ApplicationsWrapper({ refresh, selected, classes }) {
   };
 
   const handleClose = () => {
+    console.log("CLosed without save");
+    setOpen(false);
+  };
+
+  const handleConfirmClose = () => {
+    console.log("Closed with success");
     setOpen(false);
   };
 
@@ -44,21 +50,24 @@ function ApplicationsWrapper({ refresh, selected, classes }) {
               >
                 Applications
               </RouterLink>
-              {selected === undefined ? null : (
+              {selected.data === undefined ? null : (
                 <Button
                   size="small"
                   className={classes.breadCrumpsButton}
-                  endIcon={selected === null ? null : <SettingsIcon />}
+                  endIcon={selected.data === null ? null : <SettingsIcon />}
                   onClick={handleClickOpen}
-                  disabled={selected === null}
+                  disabled={selected.data === null}
                 >
-                  {selected?.name || "loading"}
+                  {selected.data?.name && selected?.type === "application"
+                    ? selected.data?.name
+                    : "loading"}
                 </Button>
               )}
             </MyBreadcrumbs>
             <ApplicationDetail
               openSettings={open}
               handleSettingsClose={handleClose}
+              handleConfirmClose={handleConfirmClose}
               refresh={refresh}
             />
           </React.Fragment>
@@ -69,8 +78,8 @@ function ApplicationsWrapper({ refresh, selected, classes }) {
   );
 }
 
-const mapStateToProps = ({ gateway }) => ({
-  selected: gateway.selected,
+const mapStateToProps = ({ result }) => ({
+  selected: result.selected,
 });
 
 const mapDispatchToProps = {};

@@ -24,6 +24,12 @@ function GatewayWrapper({ refresh, selected, classes }) {
   };
 
   const handleClose = () => {
+    console.log("CLosed without save");
+    setOpen(false);
+  };
+
+  const handleConfirmClose = () => {
+    console.log("Closed with success");
     setOpen(false);
   };
 
@@ -46,21 +52,24 @@ function GatewayWrapper({ refresh, selected, classes }) {
               >
                 Gateways
               </RouterLink>
-              {selected === undefined ? null : (
+              {selected.data === undefined ? null : (
                 <Button
                   size="small"
                   className={classes.breadCrumpsButton}
-                  endIcon={selected === null ? null : <SettingsIcon />}
+                  endIcon={selected.data === null ? null : <SettingsIcon />}
                   onClick={handleClickOpen}
-                  disabled={selected === null}
+                  disabled={selected.data === null}
                 >
-                  {selected?.name || "loading"}
+                  {selected.data?.name && selected?.type === "gateways"
+                    ? selected.data?.name
+                    : "loading"}
                 </Button>
               )}
             </MyBreadcrumbs>
             <GatewayDetail
               openSettings={open}
               handleSettingsClose={handleClose}
+              handleConfirmClose={handleConfirmClose}
               refresh={refresh}
             />
           </React.Fragment>
@@ -71,8 +80,8 @@ function GatewayWrapper({ refresh, selected, classes }) {
   );
 }
 
-const mapStateToProps = ({ gateway }) => ({
-  selected: gateway.selected,
+const mapStateToProps = ({ result }) => ({
+  selected: result.selected,
 });
 
 const mapDispatchToProps = {};

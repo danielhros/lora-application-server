@@ -23,9 +23,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-const ListItems = ({ handleDrawerClose, width, logout }) => {
+const ListItems = ({ handleDrawerClose, width, logout, getPageName }) => {
   const history = useHistory();
   const location = useLocation();
+
+  let [actualLocation] = location.pathname.split("/").filter((x) => x);
+  actualLocation = actualLocation || "dashboard";
 
   const [openLeaveDialog, setOpenLeaveDialog] = React.useState(false);
 
@@ -73,7 +76,7 @@ const ListItems = ({ handleDrawerClose, width, logout }) => {
         <div>
           <ListItem
             button
-            selected={location.pathname === "/"}
+            selected={actualLocation === "dashboard"}
             onClick={() => {
               changeLocation("/");
             }}
@@ -85,7 +88,7 @@ const ListItems = ({ handleDrawerClose, width, logout }) => {
           </ListItem>
           <ListItem
             button
-            selected={location.pathname === "/applications"}
+            selected={actualLocation === "applications"}
             onClick={() => {
               changeLocation("/applications");
             }}
@@ -97,7 +100,7 @@ const ListItems = ({ handleDrawerClose, width, logout }) => {
           </ListItem>
           <ListItem
             button
-            selected={location.pathname === "/gateways"}
+            selected={actualLocation === "gateways"}
             onClick={() => {
               changeLocation("/gateways");
             }}
@@ -109,7 +112,7 @@ const ListItems = ({ handleDrawerClose, width, logout }) => {
           </ListItem>
           <ListItem
             button
-            selected={location.pathname === "/devices"}
+            selected={actualLocation === "devices"}
             onClick={() => {
               changeLocation("/devices");
             }}
@@ -121,7 +124,7 @@ const ListItems = ({ handleDrawerClose, width, logout }) => {
           </ListItem>
           <ListItem
             button
-            selected={location.pathname === "/allMessages"}
+            selected={actualLocation === "allMessages"}
             onClick={() => {
               changeLocation("/allMessages");
             }}
@@ -138,7 +141,7 @@ const ListItems = ({ handleDrawerClose, width, logout }) => {
         <div>
           <ListItem
             button
-            selected={location.pathname === "/profile"}
+            selected={actualLocation === "/profile"}
             onClick={() => {
               changeLocation("/profile");
             }}

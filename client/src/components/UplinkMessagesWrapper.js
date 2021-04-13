@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import UplinkMessageModal from "./UplinkMessageModal";
 
 const headCells = [
   "Date",
@@ -60,7 +61,12 @@ export const UplinkMessagesWrapper = ({
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
   const [order, setOrder] = React.useState("desc");
-  const [hideId, setHideId] = React.useState(false);
+  const [hideId, setHideId] = React.useState(true);
+
+  const [selectedMessage, setSelectedMessage] = React.useState({
+    openModal: false,
+    message: null,
+  });
 
   React.useEffect(() => {
     if (refresh) {
@@ -148,48 +154,65 @@ export const UplinkMessagesWrapper = ({
   });
 
   const handleOnRowClick = (index) => {
-    console.log(index);
+    setSelectedMessage({
+      openModal: true,
+      message: messages[index],
+    });
+  };
+
+  const handleClose = () => {
+    setSelectedMessage({
+      openModal: false,
+      message: null,
+    });
   };
 
   return (
-    <MyTable
-      rows={rows}
-      headCells={headCells}
-      tableTitle={tableTitle}
-      onRowClick={handleOnRowClick}
-      countOfRows={count}
-      showPagination={showPagination}
-      rowsPerPageOptions={[5, 10, 25]}
-      rowsPerPage={rowsPerPage}
-      setRowsPerPage={setRowsPerPage}
-      page={page}
-      setPage={setPage}
-      orderBy={orderBy}
-      setOrderBy={setOrderBy}
-      order={order}
-      setOrder={setOrder}
-      sortAllowed={sortAllowed}
-      fetchRecords={({ order, rowsPerPage, page, column }) => {
-        getUplinkMessages({
-          order,
-          rowsPerPage,
-          page,
-          column: getColumnName(column),
-        });
-      }}
-      rightNode={
-        <Tooltip title="Hide device id">
-          <Button
-            variant="outlined"
-            className={classes.tableButton}
-            startIcon={hideId ? <VisibilityOffIcon /> : <VisibilityIcon />}
-            onClick={() => setHideId(!hideId)}
-          >
-            device_id
-          </Button>
-        </Tooltip>
-      }
-    />
+    <React.Fragment>
+      <UplinkMessageModal
+        open={selectedMessage.openModal}
+        handleClose={handleClose}
+        message={selectedMessage.message}
+      />
+      <MyTable
+        rows={rows}
+        headCells={headCells}
+        tableTitle={tableTitle}
+        onRowClick={handleOnRowClick}
+        countOfRows={count}
+        showPagination={showPagination}
+        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPage={rowsPerPage}
+        setRowsPerPage={setRowsPerPage}
+        page={page}
+        setPage={setPage}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
+        order={order}
+        setOrder={setOrder}
+        sortAllowed={sortAllowed}
+        fetchRecords={({ order, rowsPerPage, page, column }) => {
+          getUplinkMessages({
+            order,
+            rowsPerPage,
+            page,
+            column: getColumnName(column),
+          });
+        }}
+        rightNode={
+          <Tooltip title="Hide device id">
+            <Button
+              variant="outlined"
+              className={classes.tableButton}
+              startIcon={hideId ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              onClick={() => setHideId(!hideId)}
+            >
+              device_id
+            </Button>
+          </Tooltip>
+        }
+      />
+    </React.Fragment>
   );
 };
 

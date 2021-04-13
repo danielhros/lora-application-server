@@ -1,4 +1,4 @@
-import gatewayApi from "../api/gatewayApi";
+import applicationApi from "../api/applicationApi";
 import devConsole from "../devConsole";
 
 import {
@@ -13,11 +13,11 @@ import {
   SELECT_RESULT,
 } from "./types";
 
-export const getGateways = ({ order, rowsPerPage, page, column }) => async (
+export const getApplications = ({ order, rowsPerPage, page, column }) => async (
   dispatch
 ) => {
   try {
-    const res = await gatewayApi.getGateways({
+    const res = await applicationApi.getApplications({
       order,
       rowsPerPage,
       page,
@@ -33,9 +33,9 @@ export const getGateways = ({ order, rowsPerPage, page, column }) => async (
   }
 };
 
-export const getCountOfGateways = () => async (dispatch) => {
+export const getCountOfApplications = () => async (dispatch) => {
   try {
-    const res = await gatewayApi.getCountOfGateways();
+    const res = await applicationApi.getCountOfApplications();
 
     dispatch({
       type: SET_COUNT_RESULTS,
@@ -46,21 +46,22 @@ export const getCountOfGateways = () => async (dispatch) => {
   }
 };
 
-export const getGatewayDetail = ({ id }) => async (dispatch) => {
+export const getApplicationDetail = ({ id }) => async (dispatch) => {
   try {
-    const payload = { devId: parseInt(id) };
+    const payload = { applicationId: parseInt(id) };
 
-    const { data } = await gatewayApi.getGatewayDetail(payload);
+    const { data } = await applicationApi.getApplicationDetail(payload);
 
     if (data[0]) {
       dispatch({
         type: SELECT_RESULT,
         payload: {
           data: data[0],
-          type: "gateways",
+          type: "application",
         },
       });
     } else {
+      console.log("som tu");
       dispatch({
         type: SELECT_RESULT,
         payload: {
@@ -88,14 +89,13 @@ export const getUplinkMessages = ({
   column,
 }) => async (dispatch, getState) => {
   const { id } = getState().result.selected.data;
-
   try {
-    const res = await gatewayApi.getUplinkMessages({
+    const res = await applicationApi.getUplinkMessages({
       order,
       rowsPerPage,
       page,
       column,
-      gatewayId: id,
+      applicationId: id,
     });
 
     dispatch({
@@ -111,8 +111,8 @@ export const getCountOfUplinkMessages = () => async (dispatch, getState) => {
   const { id } = getState().result.selected.data;
 
   try {
-    const res = await gatewayApi.getCountOfUplinkMessages({
-      gatewayId: id,
+    const res = await applicationApi.getCountOfUplinkMessages({
+      applicationId: id,
     });
 
     dispatch({
@@ -130,8 +130,8 @@ export const getCountOfDownlinkMessages = (sent) => async (
 ) => {
   const { id } = getState().result.selected.data;
   try {
-    const res = await gatewayApi.getCountOfDownlinkMessages({
-      gatewayId: id,
+    const res = await applicationApi.getCountOfDownlinkMessages({
+      applicationId: id,
       sent,
     });
     if (sent) {
@@ -159,13 +159,13 @@ export const getDownlinkMessages = ({
 }) => async (dispatch, getState) => {
   const { id } = getState().result.selected.data;
   try {
-    const res = await gatewayApi.getDownlinkMessages({
+    const res = await applicationApi.getDownlinkMessages({
       order,
       rowsPerPage,
       page,
       column,
       sent,
-      gatewayId: id,
+      applicationId: id,
     });
 
     if (sent === true) {
@@ -179,6 +179,46 @@ export const getDownlinkMessages = ({
         payload: res.data,
       });
     }
+  } catch (err) {
+    devConsole.log(err);
+  }
+};
+
+export const getCountOfDevices = () => async (dispatch, getState) => {
+  const { id } = getState().result.selected.data;
+
+  try {
+    const res = await applicationApi.getCountOfDevices({
+      applicationId: id,
+    });
+
+    dispatch({
+      type: SET_COUNT_RESULTS,
+      payload: res.data.count,
+    });
+  } catch (err) {
+    devConsole.log(err);
+  }
+};
+
+export const getDevices = ({ order, rowsPerPage, page, column }) => async (
+  dispatch,
+  getState
+) => {
+  const { id } = getState().result.selected.data;
+  try {
+    const res = await applicationApi.getDevices({
+      order,
+      rowsPerPage,
+      page,
+      column,
+      applicationId: id,
+    });
+
+    dispatch({
+      type: SET_RESULTS,
+      payload: res.data,
+    });
   } catch (err) {
     devConsole.log(err);
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { getDevices, getCountOfDevices } from "../../actions/device";
+import { getDevices, getCountOfDevices } from "../../actions/application";
 import {
   setRowsPerPage,
   cleanResults as cleanDevices,

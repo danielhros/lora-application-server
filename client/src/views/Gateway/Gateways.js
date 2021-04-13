@@ -5,18 +5,17 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
+import { getGateways, getCountOfGateways } from "../../actions/gateway";
 import {
-  getGateways,
-  getCountOfGateways,
   setRowsPerPage,
-  cleanGateways,
-} from "../../actions/gateway";
+  cleanResults as cleanGateways,
+} from "../../actions/shared";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
-import { useRouteMatch, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const getColumnName = (column) => {
   switch (column) {
@@ -49,8 +48,6 @@ export const Gateways = ({
   cleanGateways,
   classes,
 }) => {
-  let { url } = useRouteMatch();
-
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
   const [order, setOrder] = React.useState("asc");
@@ -83,10 +80,11 @@ export const Gateways = ({
     return () => {
       cleanGateways();
     };
-  }, [cleanGateways, getCountOfGateways, getGateways, rowsPerPage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cleanGateways, getCountOfGateways, getGateways]);
 
   const handleOnRowClick = (index) => {
-    history.push(`${url}/${gateways[index].dev_id}`);
+    history.push(`/gateways/${gateways[index].dev_id}`);
   };
 
   const rows = gateways.map((e, i) => {
@@ -174,10 +172,10 @@ export const Gateways = ({
   );
 };
 
-const mapStateToProps = ({ gateway }) => ({
-  gateways: gateway.gateways,
-  countOfGateways: gateway.countOfGateways,
-  rowsPerPage: gateway.rowsPerPage,
+const mapStateToProps = ({ result }) => ({
+  gateways: result.results,
+  countOfGateways: result.countOfResults,
+  rowsPerPage: result.rowsPerPage,
 });
 
 const mapDispatchToProps = {

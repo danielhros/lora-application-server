@@ -125,12 +125,12 @@ Content-Type: application/json
 
 ### Get count of sent/scheduled downlink messages for gateway
 POST http://localhost:5000/api/gateway/downlinkMessages/count
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE3NjEwNTg3LCJleHAiOjE2MTc2MTU1ODd9.XP0QZbAVHpe0uvpxQ_rjW9Si_W3SZBeeV5Y9QwougWg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTM2NjY5LCJleHAiOjE2MTgxNDE2Njl9.4tdm9a41g5byskehzfapdd-cVzuATroehFKu5utDp3A
 Content-Type: application/json
 
 {
     "gatewayId": "111111",
-    "sent": true // true for sent, false for scheduled
+    "sent": true
 }
 
 ### Get scheduled/sent downlink messages for gateway
@@ -145,4 +145,167 @@ Content-Type: application/json
     "column": "sent",
     "sent": true,
     "gatewayId": "111111"
+}
+
+
+### Get devices
+POST http://localhost:5000/api/device
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTMzOTI3LCJleHAiOjE2MTgxMzg5Mjd9.JYW59Ru6W92JKFwgCYcq7ry1dET_NuhQgDqdpFwXOMo
+Content-Type: application/json
+
+{
+    "order": "asc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "name"
+}
+
+### Get count of devices
+GET http://localhost:5000/api/device
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTI4NzgzLCJleHAiOjE2MTgxMzM3ODN9.4WzAPw6hrqEmzqie16LRo8LfOStxwwvlp-sexOyZI8c
+Content-Type: application/json
+
+### Get device detail
+POST http://localhost:5000/api/device/detail
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTM2NjY5LCJleHAiOjE2MTgxNDE2Njl9.4tdm9a41g5byskehzfapdd-cVzuATroehFKu5utDp3A
+Content-Type: application/json
+
+{
+    "devId": 1
+}
+
+### Get uplink messages for device
+POST http://localhost:5000/api/device/uplinkMessages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTM2NjY5LCJleHAiOjE2MTgxNDE2Njl9.4tdm9a41g5byskehzfapdd-cVzuATroehFKu5utDp3A
+Content-Type: application/json
+
+{
+    "order": "asc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "snr",
+    "deviceId": "xb15"
+}
+
+### Get count of uplink messages for device
+POST http://localhost:5000/api/device/uplinkMessages/count
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTM2NjY5LCJleHAiOjE2MTgxNDE2Njl9.4tdm9a41g5byskehzfapdd-cVzuATroehFKu5utDp3A
+Content-Type: application/json
+
+{
+    "deviceId": "xb15"
+}
+
+### Get count of sent/scheduled downlink messages for device
+POST http://localhost:5000/api/device/downlinkMessages/count
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTQyMTQzLCJleHAiOjE2MTgxNDcxNDN9.8aSEve8-O4pztyuv7IRSCS7UqtDiGCcrrCJaeoybBUA
+Content-Type: application/json
+
+{
+    "deviceId": "01fU",
+    "sent": false 
+}
+
+### Get scheduled/sent downlink messages for device
+POST http://localhost:5000/api/device/downlinkMessages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTM2NjY5LCJleHAiOjE2MTgxNDE2Njl9.4tdm9a41g5byskehzfapdd-cVzuATroehFKu5utDp3A
+Content-Type: application/json
+
+{
+    "order": "desc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "sent",
+    "sent": true,
+    "deviceId": "xb15"
+}
+
+### Get applications
+POST http://localhost:5000/api/application
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MTcxMzQxLCJleHAiOjE2MTgxNzYzNDF9.6gaBbD1W4NynSbGFD-HH-xiv2ZeIGHI1quxuf_1jQpk
+Content-Type: application/json
+
+{
+    "order": "desc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "name"
+}
+
+### Get application detail
+POST http://localhost:5000/api/application/detail
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjA5Nzg3LCJleHAiOjE2MTgyMTQ3ODd9.HnFQbWI0i-7QC5i1-lm9aC0gsFWrj7ojCRu-gq-O8wg
+Content-Type: application/json
+
+{
+    "applicationId": 1
+}
+
+### Get uplink messages for application
+POST http://localhost:5000/api/application/uplinkMessages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjA5Nzg3LCJleHAiOjE2MTgyMTQ3ODd9.HnFQbWI0i-7QC5i1-lm9aC0gsFWrj7ojCRu-gq-O8wg
+Content-Type: application/json
+
+{
+    "order": "asc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "snr",
+    "applicationId": 1
+}
+
+### Get count of uplink messages for application
+POST http://localhost:5000/api/application/uplinkMessages/count
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjA5Nzg3LCJleHAiOjE2MTgyMTQ3ODd9.HnFQbWI0i-7QC5i1-lm9aC0gsFWrj7ojCRu-gq-O8wg
+Content-Type: application/json
+
+{
+    "applicationId": 1
+}
+
+
+### Get count of sent/scheduled downlink messages for application
+POST http://localhost:5000/api/application/downlinkMessages/count
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjA5Nzg3LCJleHAiOjE2MTgyMTQ3ODd9.HnFQbWI0i-7QC5i1-lm9aC0gsFWrj7ojCRu-gq-O8wg
+Content-Type: application/json
+
+{
+    "applicationId": 1,
+    "sent": true
+}
+
+### Get scheduled/sent downlink messages for application
+POST http://localhost:5000/api/application/downlinkMessages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjA5Nzg3LCJleHAiOjE2MTgyMTQ3ODd9.HnFQbWI0i-7QC5i1-lm9aC0gsFWrj7ojCRu-gq-O8wg
+Content-Type: application/json
+
+{
+    "order": "desc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "sent",
+    "sent": false,
+    "applicationId": 2
+}
+
+### Get devices for application
+POST http://localhost:5000/api/application/devices
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjQwNDgwLCJleHAiOjE2MTgyNDU0ODB9.TmIR0ljIBSyt9nhPvABLkfFH5dZbVr4gIFpycGI2dyo
+Content-Type: application/json
+
+{
+    "order": "asc",
+    "rowsPerPage": 5,
+    "page": 1,
+    "column": "name",
+    "applicationId": 1
+}
+
+### Get count devices for application
+POST http://localhost:5000/api/application/devicesCount
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4MjQwNDgwLCJleHAiOjE2MTgyNDU0ODB9.TmIR0ljIBSyt9nhPvABLkfFH5dZbVr4gIFpycGI2dyo
+Content-Type: application/json
+
+{
+    "applicationId": 1
 }

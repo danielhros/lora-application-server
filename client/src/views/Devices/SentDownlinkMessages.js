@@ -1,23 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
+import { cleanAllMessages } from "../../actions/messages";
 import {
   getDownlinkMessages,
   getCountOfDownlinkMessages,
-  cleanAllMessages,
-} from "../../actions/messages";
+} from "../../actions/device";
 import DownlinkMessagesWrapper from "../../components/DownlinkMessagesWrapper";
 
 export const SentDownlinkMessages = (props) => {
-  return (
-    <DownlinkMessagesWrapper
-      {...props}
-      sent={true}
-      showPagination={false}
-      rowsPerPageInit={3}
-      sortAllowed={false}
-      tableTitle={"Latest sent downlink messages"}
-    />
-  );
+  return <DownlinkMessagesWrapper {...props} sent={true} />;
 };
 
 const mapStateToProps = ({ messages }) => ({

@@ -1,4 +1,4 @@
-import gatewayApi from "../api/gatewayApi";
+import deviceApi from "../api/deviceApi";
 import devConsole from "../devConsole";
 
 import {
@@ -13,11 +13,11 @@ import {
   SELECT_RESULT,
 } from "./types";
 
-export const getGateways = ({ order, rowsPerPage, page, column }) => async (
+export const getDevices = ({ order, rowsPerPage, page, column }) => async (
   dispatch
 ) => {
   try {
-    const res = await gatewayApi.getGateways({
+    const res = await deviceApi.getDevices({
       order,
       rowsPerPage,
       page,
@@ -33,9 +33,9 @@ export const getGateways = ({ order, rowsPerPage, page, column }) => async (
   }
 };
 
-export const getCountOfGateways = () => async (dispatch) => {
+export const getCountOfDevices = () => async (dispatch) => {
   try {
-    const res = await gatewayApi.getCountOfGateways();
+    const res = await deviceApi.getCountOfDevices();
 
     dispatch({
       type: SET_COUNT_RESULTS,
@@ -46,18 +46,18 @@ export const getCountOfGateways = () => async (dispatch) => {
   }
 };
 
-export const getGatewayDetail = ({ id }) => async (dispatch) => {
+export const getDeviceDetail = ({ id }) => async (dispatch) => {
   try {
     const payload = { devId: parseInt(id) };
 
-    const { data } = await gatewayApi.getGatewayDetail(payload);
+    const { data } = await deviceApi.getDeviceDetail(payload);
 
     if (data[0]) {
       dispatch({
         type: SELECT_RESULT,
         payload: {
           data: data[0],
-          type: "gateways",
+          type: "devices",
         },
       });
     } else {
@@ -90,12 +90,12 @@ export const getUplinkMessages = ({
   const { id } = getState().result.selected.data;
 
   try {
-    const res = await gatewayApi.getUplinkMessages({
+    const res = await deviceApi.getUplinkMessages({
       order,
       rowsPerPage,
       page,
       column,
-      gatewayId: id,
+      deviceId: id,
     });
 
     dispatch({
@@ -111,8 +111,8 @@ export const getCountOfUplinkMessages = () => async (dispatch, getState) => {
   const { id } = getState().result.selected.data;
 
   try {
-    const res = await gatewayApi.getCountOfUplinkMessages({
-      gatewayId: id,
+    const res = await deviceApi.getCountOfUplinkMessages({
+      deviceId: id,
     });
 
     dispatch({
@@ -130,8 +130,8 @@ export const getCountOfDownlinkMessages = (sent) => async (
 ) => {
   const { id } = getState().result.selected.data;
   try {
-    const res = await gatewayApi.getCountOfDownlinkMessages({
-      gatewayId: id,
+    const res = await deviceApi.getCountOfDownlinkMessages({
+      deviceId: id,
       sent,
     });
     if (sent) {
@@ -159,13 +159,13 @@ export const getDownlinkMessages = ({
 }) => async (dispatch, getState) => {
   const { id } = getState().result.selected.data;
   try {
-    const res = await gatewayApi.getDownlinkMessages({
+    const res = await deviceApi.getDownlinkMessages({
       order,
       rowsPerPage,
       page,
       column,
       sent,
-      gatewayId: id,
+      deviceId: id,
     });
 
     if (sent === true) {
