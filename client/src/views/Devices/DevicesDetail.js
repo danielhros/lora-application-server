@@ -13,7 +13,7 @@ import { withStyles } from "@material-ui/core/styles";
 import UplinkMessages from "./UplinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
-import DeviceSettingsModal from "../../components/DeviceSettingsModal";
+import DeviceSettingsModal from "./DeviceSettingsModal";
 
 export const DevicesDetail = ({
   refresh,

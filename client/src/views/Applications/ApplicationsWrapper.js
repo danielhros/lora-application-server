@@ -22,6 +22,12 @@ function ApplicationsWrapper({ refresh, selected, classes }) {
   };
 
   const handleClose = () => {
+    console.log("CLosed without save");
+    setOpen(false);
+  };
+
+  const handleConfirmClose = () => {
+    console.log("Closed with success");
     setOpen(false);
   };
 
@@ -61,6 +67,7 @@ function ApplicationsWrapper({ refresh, selected, classes }) {
             <ApplicationDetail
               openSettings={open}
               handleSettingsClose={handleClose}
+              handleConfirmClose={handleConfirmClose}
               refresh={refresh}
             />
           </React.Fragment>

@@ -25,11 +25,12 @@ function DevicesWrapper({ refresh, selected, classes }) {
   };
 
   const handleClose = () => {
+    console.log("CLosed without save");
     setOpen(false);
   };
 
-  const handleConfirmClose = ({ sf, tp }) => {
-    console.log(sf, tp);
+  const handleConfirmClose = () => {
+    console.log("Closed with success");
     setOpen(false);
   };
 

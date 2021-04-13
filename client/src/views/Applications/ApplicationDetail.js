@@ -5,14 +5,7 @@ import { getApplicationDetail } from "../../actions/application";
 import { resetSelectedResult } from "../../actions/shared";
 import Loading from "../Loading";
 import NoRecourse from "../NoResource";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
+import ApplicationSettingsModal from "./ApplicationSettingsModal";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import PDRProgress from "../../components/PDRProgress";
@@ -33,6 +26,7 @@ export const ApplicationDetail = ({
   handleSettingsClose,
   openSettings,
   classes,
+  handleConfirmClose,
 }) => {
   let { id } = useParams();
 
@@ -59,47 +53,12 @@ export const ApplicationDetail = ({
 
   return (
     <React.Fragment>
-      <Dialog
+      <ApplicationSettingsModal
         open={openSettings}
-        onClose={handleSettingsClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Application settings</DialogTitle>
-
-        <DialogTitle style={{ paddingTop: 0 }}>
-          <Typography component="div">
-            <Box
-              fontSize="fontSize"
-              m={1}
-              style={{ marginLeft: 0, marginTop: 0 }}
-            >
-              {selected.data.name}
-            </Box>
-          </Typography>
-        </DialogTitle>
-
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="settings"
-            label="Todo settings"
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleSettingsClose} color="primary">
-            CANCEL
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleSettingsClose}
-            color="primary"
-          >
-            SAVE
-          </Button>
-        </DialogActions>
-      </Dialog>
+        handleClose={handleSettingsClose}
+        application={selected.data}
+        handleConfirmClose={handleConfirmClose}
+      />
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>

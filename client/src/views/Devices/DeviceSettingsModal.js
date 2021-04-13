@@ -6,7 +6,7 @@ import MuiDialogContent from "@material-ui/core/DialogContent";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@material-ui/core/styles";
-import Title from "./Title";
+import Title from "../../components/Title";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
@@ -35,6 +35,12 @@ const DownlinkMessagesModal = ({
   if (device === null) {
     return null;
   }
+
+  const handleSaveClick = () => {
+    // TODO: call request here and then close modal
+    // https://github.com/formium/formik/issues/446
+    handleConfirmClose();
+  };
 
   return (
     <div>
@@ -138,13 +144,7 @@ const DownlinkMessagesModal = ({
           <Button onClick={handleClose} color="primary">
             CANCEL
           </Button>
-          <Button
-            variant="contained"
-            onClick={() =>
-              handleConfirmClose({ sf: spreadingFactor, tp: transmissionPower })
-            }
-            color="primary"
-          >
+          <Button variant="contained" onClick={handleSaveClick} color="primary">
             SAVE
           </Button>
         </DialogActions>
