@@ -15,7 +15,7 @@ services:
       - "${DB_PORT}:5432"
     networks:
       - postgres
-    restart: unless-stopped
+    restart: always
 
   pgadmin:
     container_name: pgadmin_container
@@ -30,18 +30,20 @@ services:
       - "${PGADMIN_PORT}:80"
     networks:
       - postgres
-    restart: unless-stopped
+    restart: always
 
   server:
     container_name: server_container
     build:
-      context: ./
+      context: .
       dockerfile: Dockerfile
+    depends_on:
+      - postgres
     ports:
       - "${SERVER_PORT}:${SERVER_PORT}"
     networks:
       - postgres
-    restart: unless-stopped
+    restart: always
 
 networks:
   postgres:
