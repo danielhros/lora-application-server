@@ -62,14 +62,12 @@ const MessageForm = ({
         margin="normal"
         required
         fullWidth
-        id="band"
+        id={`band_${msgType}`}
         label="Band"
-        name="band"
+        name={`band_${msgType}`}
         type="number"
         value={band}
-        autoFocus
         onChange={handleChange}
-        // disabled={updateCredentialsLoading}
         error={bandTouch && Boolean(bandError)}
         helperText={bandTouch && bandError}
       />
@@ -113,7 +111,6 @@ const MessageForm = ({
           value={spreadingFactor}
           onChange={(event) => setSpreadingFactor(event.target.value)}
           label="Spreading Factor"
-          style={{ marginBottom: 30 }}
         >
           {[7, 8, 9, 10, 11, 12].map((sf) => {
             return (

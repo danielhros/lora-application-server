@@ -29,22 +29,40 @@ const GatewaySettingsModal = ({
 }) => {
   const localClasses = useStyles();
 
-  const [codingRate, setCodingRate] = React.useState("4/5");
-  const [transmissionPower, setTransmissionPower] = React.useState(5);
-  const [spreadingFactor, setSpreadingFactor] = React.useState(7);
+  const [codingRateNORMAL, setCodingRateNORMAL] = React.useState("4/5");
+  const [transmissionPowerNORMAL, setTransmissionPowerNORMAL] = React.useState(
+    5
+  );
+  const [spreadingFactorNORMAL, setSpreadingFactorNORMAL] = React.useState(7);
 
-  const validationSchema = yup.object({
-    band: yup
-      .number("Field has to be number")
-      .positive("Number has to be positive")
-      .integer("Number has to be integer")
-      .required("The Coding Rate field is required"),
-  });
+  const [codingRateREG, setCodingRateREG] = React.useState("4/5");
+  const [transmissionPowerREG, setTransmissionPowerREG] = React.useState(5);
+  const [spreadingFactorREG, setSpreadingFactorREG] = React.useState(7);
+
+  const [codingRateEMER, setCodingRateEMER] = React.useState("4/5");
+  const [transmissionPowerEMER, setTransmissionPowerEMER] = React.useState(5);
+  const [spreadingFactorEMER, setSpreadingFactorEMER] = React.useState(7);
+
+  const validationSchema = yup.object(
+    Object.assign(
+      {},
+      ...["NORMAL", "REG", "EMER"].map((msg) => {
+        return {
+          [`band_${msg}`]: yup
+            .number("Field has to be number")
+            .positive("Number has to be positive")
+            .integer("Number has to be integer")
+            .required("The Coding Rate field is required"),
+        };
+      })
+    )
+  );
 
   const formik = useFormik({
     initialValues: {
-      codingRate: "4/5",
-      band: "",
+      band_NORMAL: "",
+      band_REG: "",
+      band_EMER: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -97,46 +115,46 @@ const GatewaySettingsModal = ({
               <Grid item xs={12} sm={6} md={4}>
                 <MessageForm
                   msgType={"NORMAL"}
-                  codingRate={codingRate}
-                  setCodingRate={setCodingRate}
-                  transmissionPower={transmissionPower}
-                  setTransmissionPower={setTransmissionPower}
-                  spreadingFactor={spreadingFactor}
-                  setSpreadingFactor={setSpreadingFactor}
-                  band={formik.values.band}
+                  codingRate={codingRateNORMAL}
+                  setCodingRate={setCodingRateNORMAL}
+                  transmissionPower={transmissionPowerNORMAL}
+                  setTransmissionPower={setTransmissionPowerNORMAL}
+                  spreadingFactor={spreadingFactorNORMAL}
+                  setSpreadingFactor={setSpreadingFactorNORMAL}
+                  band={formik.values.band_NORMAL}
                   handleChange={formik.handleChange}
-                  bandTouch={formik.touched.band}
-                  bandError={formik.errors.band}
+                  bandTouch={formik.touched.band_NORMAL}
+                  bandError={formik.errors.band_NORMAL}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <MessageForm
-                  msgType={"NORMAL"}
-                  codingRate={codingRate}
-                  setCodingRate={setCodingRate}
-                  transmissionPower={transmissionPower}
-                  setTransmissionPower={setTransmissionPower}
-                  spreadingFactor={spreadingFactor}
-                  setSpreadingFactor={setSpreadingFactor}
-                  band={formik.values.band}
+                  msgType={"REG"}
+                  codingRate={codingRateREG}
+                  setCodingRate={setCodingRateREG}
+                  transmissionPower={transmissionPowerREG}
+                  setTransmissionPower={setTransmissionPowerREG}
+                  spreadingFactor={spreadingFactorREG}
+                  setSpreadingFactor={setSpreadingFactorREG}
+                  band={formik.values.band_REG}
                   handleChange={formik.handleChange}
-                  bandTouch={formik.touched.band}
-                  bandError={formik.errors.band}
+                  bandTouch={formik.touched.band_REG}
+                  bandError={formik.errors.band_REG}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <MessageForm
-                  msgType={"NORMAL"}
-                  codingRate={codingRate}
-                  setCodingRate={setCodingRate}
-                  transmissionPower={transmissionPower}
-                  setTransmissionPower={setTransmissionPower}
-                  spreadingFactor={spreadingFactor}
-                  setSpreadingFactor={setSpreadingFactor}
-                  band={formik.values.band}
+                  msgType={"EMER"}
+                  codingRate={codingRateEMER}
+                  setCodingRate={setCodingRateEMER}
+                  transmissionPower={transmissionPowerEMER}
+                  setTransmissionPower={setTransmissionPowerEMER}
+                  spreadingFactor={spreadingFactorEMER}
+                  setSpreadingFactor={setSpreadingFactorEMER}
+                  band={formik.values.band_EMER}
                   handleChange={formik.handleChange}
-                  bandTouch={formik.touched.band}
-                  bandError={formik.errors.band}
+                  bandTouch={formik.touched.band_EMER}
+                  bandError={formik.errors.band_EMER}
                 />
               </Grid>
             </Grid>

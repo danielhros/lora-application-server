@@ -70,7 +70,7 @@ const ApplicationSettingsModal = ({
             subtitle={application?.name || "Without name"}
             style={{ margin: 0 }}
           >
-            Device Settings
+            Application Settings
           </Title>
 
           <IconButton
