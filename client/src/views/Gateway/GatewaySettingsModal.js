@@ -26,26 +26,66 @@ const GatewaySettingsModal = ({
 }) => {
   const localClasses = useStyles();
 
-  const [codingRateNORMAL, setCodingRateNORMAL] = React.useState("4/5");
-  const [transmissionPowerNORMAL, setTransmissionPowerNORMAL] = React.useState(
-    5
-  );
-  const [spreadingFactorNORMAL, setSpreadingFactorNORMAL] = React.useState(7);
+  const defaultCodingRate = "4/5";
 
-  const [codingRateREG, setCodingRateREG] = React.useState("4/5");
-  const [transmissionPowerREG, setTransmissionPowerREG] = React.useState(5);
-  const [spreadingFactorREG, setSpreadingFactorREG] = React.useState(7);
+  const [codingRate, setCodingRate] = React.useState({
+    NORMAL: defaultCodingRate,
+    EMER: defaultCodingRate,
+    REG: defaultCodingRate,
+  });
 
-  const [codingRateEMER, setCodingRateEMER] = React.useState("4/5");
-  const [transmissionPowerEMER, setTransmissionPowerEMER] = React.useState(5);
-  const [spreadingFactorEMER, setSpreadingFactorEMER] = React.useState(7);
+  const defaultTransmissionPower = 5;
+  const [transmissionPower, setTransmissionPower] = React.useState({
+    NORMAL: defaultTransmissionPower,
+    EMER: defaultTransmissionPower,
+    REG: defaultTransmissionPower,
+  });
 
-  const [bandNORMAL, setBandNORMAL] = React.useState(125);
-  const [bandREG, setBandREG] = React.useState(125);
-  const [bandEMER, setBandEMER] = React.useState(125);
+  const defaultSpreadingFactor = 7;
+  const [spreadingFactor, setSpreadingFactor] = React.useState({
+    NORMAL: defaultSpreadingFactor,
+    EMER: defaultSpreadingFactor,
+    REG: defaultSpreadingFactor,
+  });
+
+  const defaultBandwidth = 125;
+  const [bandwidth, setBandwidth] = React.useState({
+    NORMAL: defaultBandwidth,
+    EMER: defaultBandwidth,
+    REG: defaultBandwidth,
+  });
+
+  const handleSetBandwidth = (value, type) => {
+    setBandwidth({
+      ...bandwidth,
+      [type]: value,
+    });
+  };
+
+  const handleSetCodingRate = (value, type) => {
+    setCodingRate({
+      ...codingRate,
+      [type]: value,
+    });
+  };
+
+  const handleSetTransmissionPower = (value, type) => {
+    setTransmissionPower({
+      ...transmissionPower,
+      [type]: value,
+    });
+  };
+
+  const handleSetSpreadingFactor = (value, type) => {
+    setSpreadingFactor({
+      ...spreadingFactor,
+      [type]: value,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleConfirmClose();
   };
 
   if (gateway === null) {
@@ -91,40 +131,40 @@ const GatewaySettingsModal = ({
               <Grid item xs={12} sm={6} md={4}>
                 <MessageForm
                   msgType={"NORMAL"}
-                  codingRate={codingRateNORMAL}
-                  setCodingRate={setCodingRateNORMAL}
-                  transmissionPower={transmissionPowerNORMAL}
-                  setTransmissionPower={setTransmissionPowerNORMAL}
-                  spreadingFactor={spreadingFactorNORMAL}
-                  setSpreadingFactor={setSpreadingFactorNORMAL}
-                  band={bandNORMAL}
-                  setBand={setBandNORMAL}
+                  codingRate={codingRate.NORMAL}
+                  setCodingRate={handleSetCodingRate}
+                  transmissionPower={transmissionPower.NORMAL}
+                  setTransmissionPower={handleSetTransmissionPower}
+                  spreadingFactor={spreadingFactor.NORMAL}
+                  setSpreadingFactor={handleSetSpreadingFactor}
+                  band={bandwidth.NORMAL}
+                  setBand={handleSetBandwidth}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <MessageForm
                   msgType={"REG"}
-                  codingRate={codingRateREG}
-                  setCodingRate={setCodingRateREG}
-                  transmissionPower={transmissionPowerREG}
-                  setTransmissionPower={setTransmissionPowerREG}
-                  spreadingFactor={spreadingFactorREG}
-                  setSpreadingFactor={setSpreadingFactorREG}
-                  band={bandREG}
-                  setBand={setBandREG}
+                  codingRate={codingRate.REG}
+                  setCodingRate={handleSetCodingRate}
+                  transmissionPower={transmissionPower.REG}
+                  setTransmissionPower={handleSetTransmissionPower}
+                  spreadingFactor={spreadingFactor.REG}
+                  setSpreadingFactor={handleSetSpreadingFactor}
+                  band={bandwidth.REG}
+                  setBand={handleSetBandwidth}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <MessageForm
                   msgType={"EMER"}
-                  codingRate={codingRateEMER}
-                  setCodingRate={setCodingRateEMER}
-                  transmissionPower={transmissionPowerEMER}
-                  setTransmissionPower={setTransmissionPowerEMER}
-                  spreadingFactor={spreadingFactorEMER}
-                  setSpreadingFactor={setSpreadingFactorEMER}
-                  band={bandEMER}
-                  setBand={setBandEMER}
+                  codingRate={codingRate.EMER}
+                  setCodingRate={handleSetCodingRate}
+                  transmissionPower={transmissionPower.EMER}
+                  setTransmissionPower={handleSetTransmissionPower}
+                  spreadingFactor={spreadingFactor.EMER}
+                  setSpreadingFactor={handleSetSpreadingFactor}
+                  band={bandwidth.EMER}
+                  setBand={handleSetBandwidth}
                 />
               </Grid>
             </Grid>

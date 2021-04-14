@@ -42,7 +42,7 @@ const MessageForm = ({
           labelId="coding-rate-select"
           id="coding-rate-select"
           value={codingRate}
-          onChange={(event) => setCodingRate(event.target.value)}
+          onChange={(event) => setCodingRate(event.target.value, msgType)}
           label="Coding rate"
         >
           {["4/5"].map((sf) => {
@@ -65,7 +65,7 @@ const MessageForm = ({
           labelId="bandwidth-select"
           id="bandwidth-select"
           value={band}
-          onChange={(event) => setBand(event.target.value)}
+          onChange={(event) => setBand(event.target.value, msgType)}
           label="Bandwidth"
         >
           {[125, 250, 500].map((bw) => {
@@ -90,7 +90,9 @@ const MessageForm = ({
           labelId="transmission-power-select"
           id="transmission-power-select"
           value={transmissionPower}
-          onChange={(event) => setTransmissionPower(event.target.value)}
+          onChange={(event) =>
+            setTransmissionPower(event.target.value, msgType)
+          }
           label="Transmission Power"
         >
           {[5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(
@@ -115,7 +117,7 @@ const MessageForm = ({
           labelId="spreading-factor-select"
           id="spreading-factor-select"
           value={spreadingFactor}
-          onChange={(event) => setSpreadingFactor(event.target.value)}
+          onChange={(event) => setSpreadingFactor(event.target.value, msgType)}
           label="Spreading Factor"
         >
           {[7, 8, 9, 10, 11, 12].map((sf) => {
