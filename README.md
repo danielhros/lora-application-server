@@ -14,8 +14,9 @@
 1. Change value of DB_HOST from `.env` to: `localhost`
 2. Run db and pgadmin containers in console: `docker-compose -f docker-compose.dev.yml up`
 3. Run server in console: `npm run server`
-4. Run client in console: `npm run client`
-5. App is available at: `localhost:3000`
+4. Do not forget to adjust port of `${REACT_APP_BASE_URL}` variable in `client/.env.development` file accordingly to `${SERVER_PORT}` specified in `.env` file
+5. Run client in console: `npm run client`
+6. App is available at: `localhost:3000`
 
 ### Build and deploy:
 
