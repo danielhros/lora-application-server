@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -15,9 +14,7 @@ const MessageForm = ({
   spreadingFactor,
   setSpreadingFactor,
   band,
-  handleChange,
-  bandTouch,
-  bandError,
+  setBand,
   msgType,
 }) => {
   const localClasses = useStyles();
@@ -40,10 +37,10 @@ const MessageForm = ({
         className={localClasses.formControl}
         margin="normal"
       >
-        <InputLabel id="coding-rate-select-normal">Coding Rate</InputLabel>
+        <InputLabel id="coding-rate-select">Coding Rate</InputLabel>
         <Select
-          labelId="coding-rate-select-normal"
-          id="coding-rate-select-normal"
+          labelId="coding-rate-select"
+          id="coding-rate-select"
           value={codingRate}
           onChange={(event) => setCodingRate(event.target.value)}
           label="Coding rate"
@@ -57,20 +54,29 @@ const MessageForm = ({
           })}
         </Select>
       </FormControl>
-      <TextField
+
+      <FormControl
         variant="outlined"
         margin="normal"
-        required
-        fullWidth
-        id={`band_${msgType}`}
-        label="Band"
-        name={`band_${msgType}`}
-        type="number"
-        value={band}
-        onChange={handleChange}
-        error={bandTouch && Boolean(bandError)}
-        helperText={bandTouch && bandError}
-      />
+        className={localClasses.formControl}
+      >
+        <InputLabel id="bandwidth-select">Bandwidth</InputLabel>
+        <Select
+          labelId="bandwidth-select"
+          id="bandwidth-select"
+          value={band}
+          onChange={(event) => setBand(event.target.value)}
+          label="Bandwidth"
+        >
+          {[125, 250, 500].map((bw) => {
+            return (
+              <MenuItem key={bw} value={bw}>
+                {bw}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
 
       <FormControl
         variant="outlined"
