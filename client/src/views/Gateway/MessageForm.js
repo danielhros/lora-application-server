@@ -5,6 +5,9 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import Box from "@material-ui/core/Box";
 
 const MessageForm = ({
   codingRate,
@@ -18,6 +21,88 @@ const MessageForm = ({
   msgType,
 }) => {
   const localClasses = useStyles();
+
+  const availableFrequencies = [
+    "none",
+    868.1,
+    868.3,
+    868.5,
+    867.1,
+    867.3,
+    867.5,
+    867.7,
+    867.9,
+    868.8,
+  ];
+
+  const [selectedFrequencies, setSelectedFrequencies] = React.useState([
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+  ]);
+
+  const [numOfFrequencies, setNumOfFrequencies] = React.useState(1);
+
+  const setFrequency = (value, index) => {
+    const newSelectedFrequencies = [...selectedFrequencies];
+    newSelectedFrequencies[index] = value;
+    setSelectedFrequencies(newSelectedFrequencies);
+  };
+
+  const handleAddFrequency = () => {
+    if (numOfFrequencies < 9) {
+      setNumOfFrequencies(numOfFrequencies + 1);
+    }
+  };
+
+  const renderFrequencyFields = () => {
+    const frequencies = [];
+
+    for (let i = 0; i < numOfFrequencies; i++) {
+      frequencies.push(
+        <FormControl
+          key={i}
+          variant="outlined"
+          className={localClasses.formControl}
+          margin="normal"
+        >
+          <InputLabel id={`coding-rate-select-${i + 1}`}>{`Frequency ${
+            i + 1
+          }`}</InputLabel>
+          <Select
+            labelId={`coding-rate-select-${i + 1}`}
+            id={`coding-rate-select-${i + 1}`}
+            value={selectedFrequencies[i]}
+            onChange={(event) => setFrequency(event.target.value, i)}
+            label={`Frequency ${i + 1}`}
+          >
+            {availableFrequencies.map((f, j) => {
+              if (
+                f === "none" ||
+                f === selectedFrequencies[i] ||
+                !selectedFrequencies.includes(f)
+              ) {
+                return (
+                  <MenuItem key={f} value={f}>
+                    {f}
+                  </MenuItem>
+                );
+              }
+              return null;
+            })}
+          </Select>
+        </FormControl>
+      );
+    }
+    return frequencies;
+  };
+
   return (
     <React.Fragment>
       <div
@@ -129,7 +214,14 @@ const MessageForm = ({
           })}
         </Select>
       </FormControl>
-      {/* Dynamic fields: https://jasonwatmore.com/post/2020/09/28/react-formik-dynamic-form-example */}
+
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Typography>Frequencies</Typography>
+        <IconButton aria-label="add" onClick={handleAddFrequency}>
+          <AddCircleIcon />
+        </IconButton>
+      </Box>
+      {renderFrequencyFields()}
     </React.Fragment>
   );
 };
