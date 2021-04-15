@@ -26,26 +26,112 @@ const GatewaySettingsModal = ({
 }) => {
   const localClasses = useStyles();
 
-  const [codingRateNORMAL, setCodingRateNORMAL] = React.useState("4/5");
-  const [transmissionPowerNORMAL, setTransmissionPowerNORMAL] = React.useState(
-    5
-  );
-  const [spreadingFactorNORMAL, setSpreadingFactorNORMAL] = React.useState(7);
+  const defaultCodingRate = "4/5";
 
-  const [codingRateREG, setCodingRateREG] = React.useState("4/5");
-  const [transmissionPowerREG, setTransmissionPowerREG] = React.useState(5);
-  const [spreadingFactorREG, setSpreadingFactorREG] = React.useState(7);
+  const [codingRate, setCodingRate] = React.useState({
+    NORMAL: defaultCodingRate,
+    EMER: defaultCodingRate,
+    REG: defaultCodingRate,
+  });
 
-  const [codingRateEMER, setCodingRateEMER] = React.useState("4/5");
-  const [transmissionPowerEMER, setTransmissionPowerEMER] = React.useState(5);
-  const [spreadingFactorEMER, setSpreadingFactorEMER] = React.useState(7);
+  const defaultTransmissionPower = 5;
+  const [transmissionPower, setTransmissionPower] = React.useState({
+    NORMAL: defaultTransmissionPower,
+    EMER: defaultTransmissionPower,
+    REG: defaultTransmissionPower,
+  });
 
-  const [bandNORMAL, setBandNORMAL] = React.useState(125);
-  const [bandREG, setBandREG] = React.useState(125);
-  const [bandEMER, setBandEMER] = React.useState(125);
+  const defaultSpreadingFactor = 7;
+  const [spreadingFactor, setSpreadingFactor] = React.useState({
+    NORMAL: defaultSpreadingFactor,
+    EMER: defaultSpreadingFactor,
+    REG: defaultSpreadingFactor,
+  });
+
+  const defaultBandwidth = 125;
+  const [bandwidth, setBandwidth] = React.useState({
+    NORMAL: defaultBandwidth,
+    EMER: defaultBandwidth,
+    REG: defaultBandwidth,
+  });
+
+  const availableFrequencies = [
+    "none",
+    868.1,
+    868.3,
+    868.5,
+    867.1,
+    867.3,
+    867.5,
+    867.7,
+    867.9,
+    868.8,
+  ];
+
+  const defaultSelectedFrequencies = Array(9).fill("none");
+  const [selectedFrequencies, setSelectedFrequencies] = React.useState({
+    NORMAL: defaultSelectedFrequencies,
+    EMER: defaultSelectedFrequencies,
+    REG: defaultSelectedFrequencies,
+  });
+
+  // console.log(selectedFrequencies);
+  const defaultNumberOfFrequencies = 1;
+  const [numOfFrequencies, setNumOfFrequencies] = React.useState({
+    NORMAL: defaultNumberOfFrequencies,
+    EMER: defaultNumberOfFrequencies,
+    REG: defaultNumberOfFrequencies,
+  });
+
+  const handleSetFrequency = (value, index, type) => {
+    const newSelectedFrequencies = [...selectedFrequencies[type]];
+    newSelectedFrequencies[index] = value;
+    setSelectedFrequencies({
+      ...selectedFrequencies,
+      [type]: newSelectedFrequencies,
+    });
+  };
+
+  const handleAddFrequency = (type) => {
+    if (numOfFrequencies[type] < availableFrequencies.length - 1) {
+      setNumOfFrequencies({
+        ...numOfFrequencies,
+        [type]: numOfFrequencies[type] + 1,
+      });
+    }
+  };
+
+  const handleSetBandwidth = (value, type) => {
+    setBandwidth({
+      ...bandwidth,
+      [type]: value,
+    });
+  };
+
+  const handleSetCodingRate = (value, type) => {
+    setCodingRate({
+      ...codingRate,
+      [type]: value,
+    });
+  };
+
+  const handleSetTransmissionPower = (value, type) => {
+    setTransmissionPower({
+      ...transmissionPower,
+      [type]: value,
+    });
+  };
+
+  const handleSetSpreadingFactor = (value, type) => {
+    setSpreadingFactor({
+      ...spreadingFactor,
+      [type]: value,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleConfirmClose();
   };
 
   if (gateway === null) {
@@ -81,50 +167,81 @@ const GatewaySettingsModal = ({
             <CloseIcon />
           </IconButton>
         </MuiDialogTitle>
-        <form
-          // className={classes.form}
-          noValidate
-          onSubmit={handleSubmit}
-        >
+        <form noValidate onSubmit={handleSubmit}>
           <DialogContent style={{ paddingTop: 0 }}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6} md={4}>
                 <MessageForm
                   msgType={"NORMAL"}
-                  codingRate={codingRateNORMAL}
-                  setCodingRate={setCodingRateNORMAL}
-                  transmissionPower={transmissionPowerNORMAL}
-                  setTransmissionPower={setTransmissionPowerNORMAL}
-                  spreadingFactor={spreadingFactorNORMAL}
-                  setSpreadingFactor={setSpreadingFactorNORMAL}
-                  band={bandNORMAL}
-                  setBand={setBandNORMAL}
+                  codingRate={codingRate.NORMAL}
+                  setCodingRate={(value) =>
+                    handleSetCodingRate(value, "NORMAL")
+                  }
+                  transmissionPower={transmissionPower.NORMAL}
+                  setTransmissionPower={(value) =>
+                    handleSetTransmissionPower(value, "NORMAL")
+                  }
+                  spreadingFactor={spreadingFactor.NORMAL}
+                  setSpreadingFactor={(value) =>
+                    handleSetSpreadingFactor(value, "NORMAL")
+                  }
+                  band={bandwidth.NORMAL}
+                  setBand={(value) => handleSetBandwidth(value, "NORMAL")}
+                  selectedFrequencies={selectedFrequencies.NORMAL}
+                  handleSetFrequency={(value, index) =>
+                    handleSetFrequency(value, index, "NORMAL")
+                  }
+                  numOfFrequencies={numOfFrequencies.NORMAL}
+                  handleAddFrequency={() => handleAddFrequency("NORMAL")}
+                  availableFrequencies={availableFrequencies}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <MessageForm
                   msgType={"REG"}
-                  codingRate={codingRateREG}
-                  setCodingRate={setCodingRateREG}
-                  transmissionPower={transmissionPowerREG}
-                  setTransmissionPower={setTransmissionPowerREG}
-                  spreadingFactor={spreadingFactorREG}
-                  setSpreadingFactor={setSpreadingFactorREG}
-                  band={bandREG}
-                  setBand={setBandREG}
+                  codingRate={codingRate.REG}
+                  setCodingRate={(value) => handleSetCodingRate(value, "REG")}
+                  transmissionPower={transmissionPower.REG}
+                  setTransmissionPower={(value) =>
+                    handleSetTransmissionPower(value, "REG")
+                  }
+                  spreadingFactor={spreadingFactor.REG}
+                  setSpreadingFactor={(value) =>
+                    handleSetSpreadingFactor(value, "REG")
+                  }
+                  band={bandwidth.REG}
+                  setBand={(value) => handleSetBandwidth(value, "REG")}
+                  selectedFrequencies={selectedFrequencies.REG}
+                  handleSetFrequency={(value, index) =>
+                    handleSetFrequency(value, index, "REG")
+                  }
+                  numOfFrequencies={numOfFrequencies.REG}
+                  handleAddFrequency={() => handleAddFrequency("REG")}
+                  availableFrequencies={availableFrequencies}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <MessageForm
                   msgType={"EMER"}
-                  codingRate={codingRateEMER}
-                  setCodingRate={setCodingRateEMER}
-                  transmissionPower={transmissionPowerEMER}
-                  setTransmissionPower={setTransmissionPowerEMER}
-                  spreadingFactor={spreadingFactorEMER}
-                  setSpreadingFactor={setSpreadingFactorEMER}
-                  band={bandEMER}
-                  setBand={setBandEMER}
+                  codingRate={codingRate.EMER}
+                  setCodingRate={(value) => handleSetCodingRate(value, "EMER")}
+                  transmissionPower={transmissionPower.EMER}
+                  setTransmissionPower={(value) =>
+                    handleSetTransmissionPower(value, "EMER")
+                  }
+                  spreadingFactor={spreadingFactor.EMER}
+                  setSpreadingFactor={(value) =>
+                    handleSetSpreadingFactor(value, "EMER")
+                  }
+                  band={bandwidth.EMER}
+                  setBand={(value) => handleSetBandwidth(value, "EMER")}
+                  selectedFrequencies={selectedFrequencies.EMER}
+                  handleSetFrequency={(value, index) =>
+                    handleSetFrequency(value, index, "EMER")
+                  }
+                  numOfFrequencies={numOfFrequencies.EMER}
+                  handleAddFrequency={() => handleAddFrequency("EMER")}
+                  availableFrequencies={availableFrequencies}
                 />
               </Grid>
             </Grid>
