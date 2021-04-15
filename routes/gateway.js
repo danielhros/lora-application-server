@@ -187,7 +187,7 @@ router.post("/setap", auth, async (req, res) => {
     };
 
     await db.query(query.text);
-    res.status(200);
+    res.status(200).send("OK");
   } catch (err) {
     console.log(err);
     res.status(500).send("Server error");

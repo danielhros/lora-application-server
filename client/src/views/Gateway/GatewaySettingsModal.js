@@ -11,6 +11,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import MessageForm from "./MessageForm";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import gatewayApi from "../../api/gatewayApi";
+import devConsole from "../../devConsole";
 
 const DialogContent = withStyles((theme) => ({
   root: {
@@ -25,6 +28,8 @@ const GatewaySettingsModal = ({
   gateway = null,
 }) => {
   const localClasses = useStyles();
+
+  const [loading, setLoading] = React.useState(false);
 
   const defaultCodingRate = "4/5";
 
@@ -129,9 +134,37 @@ const GatewaySettingsModal = ({
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleConfirmClose();
+
+    const setap = {
+      message_name: "SETAP",
+      ap_id: gateway.id,
+      message_body: [
+        ...["NORMAL", "EMER", "REG"].map((type) => {
+          return {
+            type,
+            cr: codingRate[type],
+            freqs: selectedFrequencies[type],
+            band: bandwidth[type],
+            power: transmissionPower[type],
+            sf: spreadingFactor[type],
+          };
+        }),
+      ],
+    };
+    setLoading(true);
+    try {
+      await gatewayApi.sendSetap({
+        setap: JSON.stringify(setap),
+        gatewayId: gateway.id,
+      });
+      handleConfirmClose();
+    } catch (error) {
+      devConsole.log(error);
+      handleClose();
+    }
+    setLoading(false);
   };
 
   if (gateway === null) {
@@ -172,6 +205,7 @@ const GatewaySettingsModal = ({
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6} md={4}>
                 <MessageForm
+                  disabled={loading}
                   msgType={"NORMAL"}
                   codingRate={codingRate.NORMAL}
                   setCodingRate={(value) =>
@@ -198,6 +232,7 @@ const GatewaySettingsModal = ({
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <MessageForm
+                  disabled={loading}
                   msgType={"REG"}
                   codingRate={codingRate.REG}
                   setCodingRate={(value) => handleSetCodingRate(value, "REG")}
@@ -222,6 +257,7 @@ const GatewaySettingsModal = ({
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <MessageForm
+                  disabled={loading}
                   msgType={"EMER"}
                   codingRate={codingRate.EMER}
                   setCodingRate={(value) => handleSetCodingRate(value, "EMER")}
@@ -250,9 +286,22 @@ const GatewaySettingsModal = ({
             <Button onClick={handleClose} color="primary">
               CANCEL
             </Button>
-            <Button variant="contained" type="submit" color="primary">
-              SAVE
-            </Button>
+            <div className={localClasses.wrapper}>
+              <Button
+                disabled={loading}
+                variant="contained"
+                type="submit"
+                color="primary"
+              >
+                SAVE
+              </Button>
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  className={localClasses.buttonProgress}
+                />
+              )}
+            </div>
           </DialogActions>
         </form>
       </Dialog>
@@ -284,6 +333,16 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+  wrapper: {
+    position: "relative",
+  },
+  buttonProgress: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -12,
+    marginLeft: -12,
   },
 }));
 

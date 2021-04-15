@@ -331,7 +331,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxf
 Content-Type: application/json
 
 {
-    "setup": "i am not valid json format",
+    "setap": "i am not valid json format",
     "gatewayId": "000000"
 }
 

@@ -40,4 +40,8 @@ export default {
     );
     return appApi.post(`${GATEWAY}/downlinkMessages`, payload);
   },
+  sendSetap(payload) {
+    devConsole.log("Sending SETAP message to server..");
+    return appApi.post(`${GATEWAY}/setap`, payload);
+  },
 };

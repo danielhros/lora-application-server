@@ -24,6 +24,7 @@ const MessageForm = ({
   numOfFrequencies,
   handleAddFrequency,
   availableFrequencies,
+  disabled,
 }) => {
   const localClasses = useStyles();
 
@@ -42,6 +43,7 @@ const MessageForm = ({
             i + 1
           }`}</InputLabel>
           <Select
+            disabled={disabled}
             labelId={`coding-rate-select-${i + 1}`}
             id={`coding-rate-select-${i + 1}`}
             value={selectedFrequencies[i]}
@@ -95,6 +97,7 @@ const MessageForm = ({
           value={codingRate}
           onChange={(event) => setCodingRate(event.target.value)}
           label="Coding rate"
+          disabled={disabled}
         >
           {["4/5"].map((sf) => {
             return (
@@ -118,6 +121,7 @@ const MessageForm = ({
           value={band}
           onChange={(event) => setBand(event.target.value)}
           label="Bandwidth"
+          disabled={disabled}
         >
           {[125, 250, 500].map((bw) => {
             return (
@@ -143,6 +147,7 @@ const MessageForm = ({
           value={transmissionPower}
           onChange={(event) => setTransmissionPower(event.target.value)}
           label="Transmission Power"
+          disabled={disabled}
         >
           {[5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(
             (tp) => {
@@ -168,6 +173,7 @@ const MessageForm = ({
           value={spreadingFactor}
           onChange={(event) => setSpreadingFactor(event.target.value)}
           label="Spreading Factor"
+          disabled={disabled}
         >
           {[7, 8, 9, 10, 11, 12].map((sf) => {
             return (
@@ -181,7 +187,11 @@ const MessageForm = ({
 
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography>Frequencies</Typography>
-        <IconButton aria-label="add" onClick={handleAddFrequency}>
+        <IconButton
+          disabled={disabled}
+          aria-label="add"
+          onClick={handleAddFrequency}
+        >
           <AddCircleIcon />
         </IconButton>
       </Box>

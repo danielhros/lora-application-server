@@ -17,6 +17,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
+import devConsole from "../../devConsole";
 
 const DialogContent = withStyles((theme) => ({
   root: {
@@ -61,6 +62,7 @@ const ApplicationSettingsModal = ({
         handleConfirmClose();
         resetForm({});
       } catch (error) {
+        devConsole.log(error);
         setErrors({ serverError: "Something went wrong" });
       }
       setLoading(false);
