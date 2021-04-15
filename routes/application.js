@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const auth = require("../middleware/auth");
+var faker = require("faker");
 
 router.post("/", auth, async (req, res) => {
   try {
@@ -218,6 +219,25 @@ router.post("/rename", auth, async (req, res) => {
         "UPDATE applications " +
         `SET name='${req.body.newApplicationName}', description='${req.body.newApplicationDescription}' ` +
         `WHERE applications.id = ${req.body.applicationId}`,
+    };
+
+    let { rows } = await db.query(query.text);
+    res.json(rows[0]);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.post("/addApplication", auth, async (req, res) => {
+  const applicationName = faker.commerce.productName();
+  const applicationDescription = faker.commerce.productDescription();
+
+  try {
+    const query = {
+      text:
+        "INSERT INTO applications (name, description)" +
+        `VALUES ('${applicationName}', '${applicationDescription}')`,
     };
 
     let { rows } = await db.query(query.text);

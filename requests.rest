@@ -321,3 +321,7 @@ Content-Type: application/json
     "newApplicationName": "newName",
     "applicationId": 1
 }
+
+### Rename application
+POST http://localhost:5000/api/application/addApplication
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4NTEwMjUxLCJleHAiOjE2MTg1MTUyNTF9.8GXf1ZilYmfqbeN58rbX9fMq75HWtuEy6x_Pa9sjNRI
