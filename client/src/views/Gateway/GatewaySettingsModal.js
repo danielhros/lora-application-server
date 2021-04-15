@@ -55,6 +55,52 @@ const GatewaySettingsModal = ({
     REG: defaultBandwidth,
   });
 
+  const availableFrequencies = [
+    "none",
+    868.1,
+    868.3,
+    868.5,
+    867.1,
+    867.3,
+    867.5,
+    867.7,
+    867.9,
+    868.8,
+  ];
+
+  const defaultSelectedFrequencies = Array(9).fill("none");
+  const [selectedFrequencies, setSelectedFrequencies] = React.useState({
+    NORMAL: defaultSelectedFrequencies,
+    EMER: defaultSelectedFrequencies,
+    REG: defaultSelectedFrequencies,
+  });
+
+  // console.log(selectedFrequencies);
+  const defaultNumberOfFrequencies = 1;
+  const [numOfFrequencies, setNumOfFrequencies] = React.useState({
+    NORMAL: defaultNumberOfFrequencies,
+    EMER: defaultNumberOfFrequencies,
+    REG: defaultNumberOfFrequencies,
+  });
+
+  const handleSetFrequency = (value, index, type) => {
+    const newSelectedFrequencies = [...selectedFrequencies[type]];
+    newSelectedFrequencies[index] = value;
+    setSelectedFrequencies({
+      ...selectedFrequencies,
+      [type]: newSelectedFrequencies,
+    });
+  };
+
+  const handleAddFrequency = (type) => {
+    if (numOfFrequencies[type] < availableFrequencies.length - 1) {
+      setNumOfFrequencies({
+        ...numOfFrequencies,
+        [type]: numOfFrequencies[type] + 1,
+      });
+    }
+  };
+
   const handleSetBandwidth = (value, type) => {
     setBandwidth({
       ...bandwidth,
@@ -121,11 +167,7 @@ const GatewaySettingsModal = ({
             <CloseIcon />
           </IconButton>
         </MuiDialogTitle>
-        <form
-          // className={classes.form}
-          noValidate
-          onSubmit={handleSubmit}
-        >
+        <form noValidate onSubmit={handleSubmit}>
           <DialogContent style={{ paddingTop: 0 }}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6} md={4}>
@@ -139,6 +181,13 @@ const GatewaySettingsModal = ({
                   setSpreadingFactor={handleSetSpreadingFactor}
                   band={bandwidth.NORMAL}
                   setBand={handleSetBandwidth}
+                  selectedFrequencies={selectedFrequencies.NORMAL}
+                  handleSetFrequency={(value, index) =>
+                    handleSetFrequency(value, index, "NORMAL")
+                  }
+                  numOfFrequencies={numOfFrequencies.NORMAL}
+                  handleAddFrequency={() => handleAddFrequency("NORMAL")}
+                  availableFrequencies={availableFrequencies}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
@@ -152,6 +201,13 @@ const GatewaySettingsModal = ({
                   setSpreadingFactor={handleSetSpreadingFactor}
                   band={bandwidth.REG}
                   setBand={handleSetBandwidth}
+                  selectedFrequencies={selectedFrequencies.REG}
+                  handleSetFrequency={(value, index) =>
+                    handleSetFrequency(value, index, "REG")
+                  }
+                  numOfFrequencies={numOfFrequencies.REG}
+                  handleAddFrequency={() => handleAddFrequency("REG")}
+                  availableFrequencies={availableFrequencies}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
@@ -165,6 +221,13 @@ const GatewaySettingsModal = ({
                   setSpreadingFactor={handleSetSpreadingFactor}
                   band={bandwidth.EMER}
                   setBand={handleSetBandwidth}
+                  selectedFrequencies={selectedFrequencies.EMER}
+                  handleSetFrequency={(value, index) =>
+                    handleSetFrequency(value, index, "EMER")
+                  }
+                  numOfFrequencies={numOfFrequencies.EMER}
+                  handleAddFrequency={() => handleAddFrequency("EMER")}
+                  availableFrequencies={availableFrequencies}
                 />
               </Grid>
             </Grid>
