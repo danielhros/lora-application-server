@@ -38,7 +38,7 @@ function ApplicationsWrapper({ refresh, selected, classes, callRefresh }) {
           <MyBreadcrumbs>
             <Typography color="textPrimary">Applications</Typography>
           </MyBreadcrumbs>
-          <Applications refresh={refresh} />
+          <Applications refresh={refresh} callRefresh={callRefresh} />
         </Route>
         <Route exact path={`${path}/:id`}>
           <React.Fragment>

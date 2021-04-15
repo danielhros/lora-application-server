@@ -16,8 +16,10 @@ import {
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
+import applicationApi from "../../api/applicationApi";
 
 import { withRouter } from "react-router-dom";
+import devConsole from "../../devConsole";
 
 const getColumnName = (column) => {
   switch (column) {
@@ -59,6 +61,7 @@ export const Applications = ({
   rowsPerPage,
   cleanApplications,
   classes,
+  callRefresh,
 }) => {
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
@@ -94,6 +97,15 @@ export const Applications = ({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cleanApplications, getApplications, getCountOfApplications]);
+
+  const handleAddApplication = async () => {
+    try {
+      await applicationApi.addApplication();
+      callRefresh();
+    } catch (error) {
+      devConsole.log(error);
+    }
+  };
 
   const handleOnRowClick = (index) => {
     history.push(`/applications/${applications[index].id}`);
@@ -166,7 +178,7 @@ export const Applications = ({
                   variant="outlined"
                   className={classes.tableButton}
                   startIcon={<AddIcon />}
-                  onClick={() => console.log("hello")}
+                  onClick={handleAddApplication}
                 >
                   add
                 </Button>
