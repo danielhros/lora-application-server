@@ -216,7 +216,7 @@ router.post("/rename", auth, async (req, res) => {
     const query = {
       text:
         "UPDATE applications " +
-        `SET name='${req.body.newApplicationName}' ` +
+        `SET name='${req.body.newApplicationName}', description='${req.body.newApplicationDescription}' ` +
         `WHERE applications.id = ${req.body.applicationId}`,
     };
 

@@ -39,11 +39,15 @@ const ApplicationSettingsModal = ({
       .string("New Application Name")
       .max(20, "Application Name shouldn't be more then 20 characters length")
       .required("New Application Name is required"),
+    newApplicationDescription: yup
+      .string("New Application Description")
+      .required("New Application Description is required"),
   });
 
   const formik = useFormik({
     initialValues: {
-      newApplicationName: "",
+      newApplicationName: application?.name || "",
+      newApplicationDescription: application?.description || "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm, setErrors }) => {
@@ -51,6 +55,7 @@ const ApplicationSettingsModal = ({
       try {
         await applicationApi.setNewApplicationName({
           newApplicationName: values.newApplicationName,
+          newApplicationDescription: values.newApplicationDescription,
           applicationId: application.id,
         });
         handleConfirmClose();
@@ -125,6 +130,27 @@ const ApplicationSettingsModal = ({
                 helperText={
                   formik.touched.newApplicationName &&
                   formik.errors.newApplicationName
+                }
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="newApplicationDescription"
+                label="New Application Description"
+                name="newApplicationDescription"
+                value={formik.values.newApplicationDescription}
+                onChange={formik.handleChange}
+                disabled={loading}
+                // disabled={updateCredentialsLoading}
+                error={
+                  formik.touched.newApplicationDescription &&
+                  Boolean(formik.errors.newApplicationDescription)
+                }
+                helperText={
+                  formik.touched.newApplicationDescription &&
+                  formik.errors.newApplicationDescription
                 }
               />
             </Grid>
