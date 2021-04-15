@@ -212,7 +212,6 @@ router.post("/devicesCount", auth, async (req, res) => {
 });
 
 router.post("/rename", auth, async (req, res) => {
-  console.log("som tu");
   try {
     const query = {
       text:

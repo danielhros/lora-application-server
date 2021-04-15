@@ -13,7 +13,7 @@ import Button from "@material-ui/core/Button";
 import Applications from "./Applications";
 import ApplicationDetail from "./ApplicationDetail";
 
-function ApplicationsWrapper({ refresh, selected, classes }) {
+function ApplicationsWrapper({ refresh, selected, classes, callRefresh }) {
   let { path } = useRouteMatch();
   const [open, setOpen] = React.useState(false);
 
@@ -27,7 +27,7 @@ function ApplicationsWrapper({ refresh, selected, classes }) {
   };
 
   const handleConfirmClose = () => {
-    console.log("Closed with success");
+    callRefresh();
     setOpen(false);
   };
 
