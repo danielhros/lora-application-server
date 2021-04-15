@@ -211,4 +211,22 @@ router.post("/devicesCount", auth, async (req, res) => {
   }
 });
 
+router.post("/rename", auth, async (req, res) => {
+  console.log("som tu");
+  try {
+    const query = {
+      text:
+        "UPDATE applications " +
+        `SET name='${req.body.newApplicationName}' ` +
+        `WHERE applications.id = ${req.body.applicationId}`,
+    };
+
+    let { rows } = await db.query(query.text);
+    res.json(rows[0]);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
