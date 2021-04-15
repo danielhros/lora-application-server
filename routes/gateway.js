@@ -176,4 +176,22 @@ router.post("/downlinkMessages", auth, async (req, res) => {
   }
 });
 
+router.post("/setap", auth, async (req, res) => {
+  const { setap, gatewayId } = req.body;
+
+  try {
+    const query = {
+      text:
+        "INSERT INTO aps_config (setap, gateway_id) " +
+        `VALUES ('${setap}'::json, '${gatewayId}')`,
+    };
+
+    await db.query(query.text);
+    res.status(200);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
