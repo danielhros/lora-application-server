@@ -174,13 +174,19 @@ const GatewaySettingsModal = ({
                 <MessageForm
                   msgType={"NORMAL"}
                   codingRate={codingRate.NORMAL}
-                  setCodingRate={handleSetCodingRate}
+                  setCodingRate={(value) =>
+                    handleSetCodingRate(value, "NORMAL")
+                  }
                   transmissionPower={transmissionPower.NORMAL}
-                  setTransmissionPower={handleSetTransmissionPower}
+                  setTransmissionPower={(value) =>
+                    handleSetTransmissionPower(value, "NORMAL")
+                  }
                   spreadingFactor={spreadingFactor.NORMAL}
-                  setSpreadingFactor={handleSetSpreadingFactor}
+                  setSpreadingFactor={(value) =>
+                    handleSetSpreadingFactor(value, "NORMAL")
+                  }
                   band={bandwidth.NORMAL}
-                  setBand={handleSetBandwidth}
+                  setBand={(value) => handleSetBandwidth(value, "NORMAL")}
                   selectedFrequencies={selectedFrequencies.NORMAL}
                   handleSetFrequency={(value, index) =>
                     handleSetFrequency(value, index, "NORMAL")
@@ -194,13 +200,17 @@ const GatewaySettingsModal = ({
                 <MessageForm
                   msgType={"REG"}
                   codingRate={codingRate.REG}
-                  setCodingRate={handleSetCodingRate}
+                  setCodingRate={(value) => handleSetCodingRate(value, "REG")}
                   transmissionPower={transmissionPower.REG}
-                  setTransmissionPower={handleSetTransmissionPower}
+                  setTransmissionPower={(value) =>
+                    handleSetTransmissionPower(value, "REG")
+                  }
                   spreadingFactor={spreadingFactor.REG}
-                  setSpreadingFactor={handleSetSpreadingFactor}
+                  setSpreadingFactor={(value) =>
+                    handleSetSpreadingFactor(value, "REG")
+                  }
                   band={bandwidth.REG}
-                  setBand={handleSetBandwidth}
+                  setBand={(value) => handleSetBandwidth(value, "REG")}
                   selectedFrequencies={selectedFrequencies.REG}
                   handleSetFrequency={(value, index) =>
                     handleSetFrequency(value, index, "REG")
@@ -214,13 +224,17 @@ const GatewaySettingsModal = ({
                 <MessageForm
                   msgType={"EMER"}
                   codingRate={codingRate.EMER}
-                  setCodingRate={handleSetCodingRate}
+                  setCodingRate={(value) => handleSetCodingRate(value, "EMER")}
                   transmissionPower={transmissionPower.EMER}
-                  setTransmissionPower={handleSetTransmissionPower}
+                  setTransmissionPower={(value) =>
+                    handleSetTransmissionPower(value, "EMER")
+                  }
                   spreadingFactor={spreadingFactor.EMER}
-                  setSpreadingFactor={handleSetSpreadingFactor}
+                  setSpreadingFactor={(value) =>
+                    handleSetSpreadingFactor(value, "EMER")
+                  }
                   band={bandwidth.EMER}
-                  setBand={handleSetBandwidth}
+                  setBand={(value) => handleSetBandwidth(value, "EMER")}
                   selectedFrequencies={selectedFrequencies.EMER}
                   handleSetFrequency={(value, index) =>
                     handleSetFrequency(value, index, "EMER")
