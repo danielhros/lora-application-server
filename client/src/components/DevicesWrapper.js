@@ -50,7 +50,7 @@ const headCells = [
           title="The time when the duty cycle of device is planned. It tells you the minute and second of refresh of this or upcoming hour based on the actual time. Example: Imagine actual time is 16:20:00 and the value of the row is 25:00, the refresh is then planned to 16:25:00. If the value would be set to 15:00, the refresh is planned to 17:15:00."
           arrow
         >
-          <HelpOutlineOutlinedIcon style={{ marginLeft: 5 }} />
+          <HelpOutlineOutlinedIcon style={{ marginLeft: 5, height: 20 }} />
         </Tooltip>
         dc_refresh
       </React.Fragment>
@@ -158,7 +158,8 @@ export const Devices = ({
                     alignItems: "center",
                   }}
                 >
-                  {`${e.pdr} %`}
+                  <nobr>{`${e.pdr} %`}</nobr>
+
                   {e.pdr < 75 ? (
                     <Tooltip title="Low PDR" arrow>
                       <ErrorOutlineIcon
