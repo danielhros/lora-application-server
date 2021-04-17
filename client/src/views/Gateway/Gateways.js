@@ -15,6 +15,9 @@ import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import moment from "moment";
+import { truncate } from "../../utils/utils";
+import Typography from "@material-ui/core/Typography";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
 import { withRouter } from "react-router-dom";
 
@@ -52,7 +55,7 @@ const headCells = [
           title="The time when the duty cycle of gateway is planned. It tells you the minute and second of refresh of this or upcoming hour based on the actual time. Example: Imagine actual time is 16:20:00 and the value of the row is 25:00, the refresh is then planned to 16:25:00. If the value would be set to 15:00, the refresh is planned to 17:15:00."
           arrow
         >
-          <HelpOutlineOutlinedIcon style={{ marginLeft: 5 }} />
+          <HelpOutlineOutlinedIcon style={{ marginLeft: 5, height: 20 }} />
         </Tooltip>
         dc_refresh
       </React.Fragment>
@@ -119,7 +122,7 @@ export const Gateways = ({
       },
       {
         name: e?.name || "none",
-        content: e?.name || "none",
+        content: e.hasOwnProperty("name") ? truncate(e.name, 50) : "none",
       },
       {
         name: e?.protocol_ver || "none",
@@ -130,8 +133,47 @@ export const Gateways = ({
         content: e?.lora_protocol_ver || "none",
       },
       {
-        name: e?.firmware || "none",
-        content: e?.firmware || "none",
+        name: "",
+        content: (
+          <React.Fragment>
+            {e.hasOwnProperty("firmware") ? (
+              <React.Fragment>
+                <Typography
+                  color={
+                    e.firmware.split(".")[0] > 1 ||
+                    (e.firmware.split(".")[0] >= 1 &&
+                      e.firmware.split(".")[1] >= 5)
+                      ? "inherit"
+                      : "error"
+                  }
+                  variant="body2"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <nobr>{`${e.firmware}`}</nobr>
+
+                  {e.firmware.split(".")[0] > 1 ||
+                  (e.firmware.split(".")[0] >= 1 &&
+                    e.firmware.split(".")[1] >= 5) ? null : (
+                    <Tooltip
+                      title="Firmware older then (1.15.0), consider upgrading"
+                      arrow
+                    >
+                      <ErrorOutlineIcon
+                        color="error"
+                        style={{ marginLeft: 5, height: 20 }}
+                      />
+                    </Tooltip>
+                  )}
+                </Typography>
+              </React.Fragment>
+            ) : (
+              "none"
+            )}
+          </React.Fragment>
+        ),
       },
       {
         name: e.hasOwnProperty("bandwidth")

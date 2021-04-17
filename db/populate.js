@@ -22,7 +22,10 @@ const addNamesToAps = async () => {
   let { rows } = await db.query(query.text);
 
   for (let i = 1; i <= rows[0].count; i++) {
-    await db.query(`UPDATE aps SET name = 'Gateway ${i}' where dev_id = ${i}`);
+    await db.query(
+      `UPDATE aps SET name = '${faker.commerce.productName()}' where dev_id = ${i}`
+    );
+    console.log(i);
   }
 };
 
@@ -34,7 +37,16 @@ const adFirmwareToAps = async () => {
   let { rows } = await db.query(query.text);
 
   for (let i = 1; i <= rows[0].count; i++) {
-    await db.query(`UPDATE aps SET firmware = '1.0.${i}' where dev_id = ${i}`);
+    await db.query(
+      `UPDATE aps SET firmware = '${randomIntFromInterval(
+        0,
+        3
+      )}.${randomIntFromInterval(0, 15)}.${randomIntFromInterval(
+        1,
+        20
+      )}' where dev_id = ${i}`
+    );
+    console.log(i);
   }
 };
 
