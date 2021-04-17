@@ -25,17 +25,17 @@ import devConsole from "../../devConsole";
 
 const getColumnName = (column) => {
   switch (column) {
-    case "Created":
+    case "created":
       return "created";
-    case "Name":
+    case "name":
       return "name";
-    case "Description":
+    case "description":
       return "description";
-    case "Devices":
+    case "devices":
       return "num_of_devices";
-    case "Uplink":
+    case "uplink":
       return "num_of_uplink_messages";
-    case "Downlink":
+    case "downlink":
       return "num_of_downlink_messages";
     default:
       return "id";
@@ -43,13 +43,13 @@ const getColumnName = (column) => {
 };
 
 const headCells = [
-  { name: "Id", content: "Id" },
-  { name: "Created", content: "Created" },
-  { name: "Name", content: "Name" },
-  { name: "Description", content: "Description" },
-  { name: "Devices", content: "Devices" },
-  { name: "Uplink", content: "Uplink" },
-  { name: "Downlink", content: "Downlink" },
+  { name: "id", content: "id" },
+  { name: "created", content: "created" },
+  { name: "name", content: "name" },
+  { name: "description", content: "description" },
+  { name: "devices", content: "devices" },
+  { name: "uplink", content: "uplink" },
+  { name: "downlink", content: "downlink" },
 ];
 
 export const Applications = ({
