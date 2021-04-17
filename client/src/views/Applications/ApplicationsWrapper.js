@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Applications from "./Applications";
 import ApplicationDetail from "./ApplicationDetail";
+import devConsole from "../../devConsole";
 
 function ApplicationsWrapper({ refresh, selected, classes, callRefresh }) {
   let { path } = useRouteMatch();
@@ -22,7 +23,7 @@ function ApplicationsWrapper({ refresh, selected, classes, callRefresh }) {
   };
 
   const handleClose = () => {
-    console.log("CLosed without save");
+    devConsole.log("CLosed without save");
     setOpen(false);
   };
 
