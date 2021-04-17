@@ -9,16 +9,17 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import UplinkMessageModal from "./UplinkMessageModal";
+import moment from "moment";
 
 const headCells = [
-  "Date",
-  "device_id",
-  "snr",
-  "rssi",
-  "spf",
-  "power",
-  "gateway",
-  "dc_remaining",
+  { name: "Date", content: "Date" },
+  { name: "device_id", content: "device_id" },
+  { name: "snr", content: "snr" },
+  { name: "rssi", content: "rssi" },
+  { name: "spf", content: "spf" },
+  { name: "power", content: "power" },
+  { name: "gateway", content: "gateway" },
+  { name: "dc_remaining", content: "dc_remaining" },
 ];
 
 const getColumnName = (column) => {
@@ -75,7 +76,7 @@ export const UplinkMessagesWrapper = ({
         order,
         rowsPerPage,
         page: 1,
-        column: getColumnName(headCells[orderBy]),
+        column: getColumnName(headCells[orderBy].name),
       });
       setPage(0);
     }
@@ -110,44 +111,52 @@ export const UplinkMessagesWrapper = ({
   const rows = messages.map((e, i) => {
     return [
       {
-        name: e.receive_time,
-        content: e.receive_time,
+        name: e.hasOwnProperty("receive_time")
+          ? moment(e.receive_time).format("DD.MM.YY, HH:mm:ss")
+          : "none",
+        content: e.hasOwnProperty("receive_time")
+          ? moment(e.receive_time).format("DD.MM.YY, HH:mm:ss")
+          : "none",
       },
       {
-        name: e.node_id,
-        content: hideId ? "*****" : e.node_id,
+        name: e?.node_id || "none",
+        content: hideId ? "*****" : e?.node_id || "none",
       },
       {
-        name: e.snr,
-        content: e.snr,
+        name: e?.snr || "none",
+        content: e?.snr || "none",
       },
       {
-        name: e.rssi,
-        content: e.rssi,
+        name: e?.rssi || "none",
+        content: e?.rssi || "none",
       },
       {
-        name: e.spf,
-        content: e.spf,
+        name: e?.spf || "none",
+        content: e?.spf || "none",
       },
       {
-        name: e.power,
-        content: e.power,
+        name: e.hasOwnProperty("power") ? `${e.power} dBm` : "none",
+        content: e.hasOwnProperty("power") ? `${e.power} dBm` : "none",
       },
       {
-        name: e.gateway_name,
-        content: e.gateway_name,
+        name: e?.gateway_name || "none",
+        content: e?.gateway_name || "none",
       },
       {
-        name: e.duty_cycle_remaining,
-        content: (
+        name: e.hasOwnProperty("duty_cycle_remaining")
+          ? `${e.duty_cycle_remaining} ms`
+          : "none",
+        content: e.hasOwnProperty("duty_cycle_remaining") ? (
           <div className={classes.tableProgressBarWrapper}>
             <LinearProgress
               className={classes.tableProgressBar}
               variant="determinate"
-              value={12}
-            />{" "}
-            {e.duty_cycle_remaining}
+              value={e.duty_cycle_remaining / 360}
+            />
+            {`${e.duty_cycle_remaining} ms`}
           </div>
+        ) : (
+          "none"
         ),
       },
     ];

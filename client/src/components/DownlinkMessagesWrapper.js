@@ -8,15 +8,16 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import DownlinkMessageModal from "./DownlinkMessageModal";
+import moment from "moment";
 
 const headCells = [
-  "Date",
-  "device_id",
-  "ack_req",
-  "spf",
-  "power",
-  "gateway",
-  "dc_remaining",
+  { name: "Date", content: "Date" },
+  { name: "device_id", content: "device_id" },
+  { name: "ack_req", content: "ack_req" },
+  { name: "spf", content: "spf" },
+  { name: "power", content: "power" },
+  { name: "gateway", content: "gateway" },
+  { name: "dc_remaining", content: "dc_remaining" },
 ];
 
 const getColumnName = (column) => {
@@ -111,40 +112,56 @@ export const DownlinkMessagesWrapper = ({
   const rows = messages.map((e, i) => {
     return [
       {
-        name: e.send_time,
-        content: e.send_time,
+        name: e.hasOwnProperty("send_time")
+          ? moment(e.send_time).format("DD.MM.YY, HH:mm:ss")
+          : "none",
+        content: e.hasOwnProperty("send_time")
+          ? moment(e.send_time).format("DD.MM.YY, HH:mm:ss")
+          : "none",
       },
       {
-        name: e.node_id,
-        content: hideId ? "*****" : e.node_id,
+        name: e?.node_id || "none",
+        content: hideId ? "*****" : e?.node_id || "none",
       },
       {
-        name: e.ack_required ? "true" : "false",
-        content: e.ack_required ? "true" : "false",
+        name: e.hasOwnProperty("ack_required")
+          ? e.ack_required
+            ? "yes"
+            : "no"
+          : "none",
+        content: e.hasOwnProperty("ack_required")
+          ? e.ack_required
+            ? "yes"
+            : "no"
+          : "none",
       },
       {
-        name: e.spf,
-        content: e.spf,
+        name: e?.spf || "none",
+        content: e.spf || "none",
       },
       {
-        name: e.power,
-        content: e.power,
+        name: e.hasOwnProperty("power") ? `${e.power} dBm` : "none",
+        content: e.hasOwnProperty("power") ? `${e.power} dBm` : "none",
       },
       {
-        name: e.gateway_name,
-        content: e.gateway_name,
+        name: e?.gateway_name || "none",
+        content: e?.gateway_name || "none",
       },
       {
-        name: e.duty_cycle_remaining,
-        content: (
+        name: e.hasOwnProperty("duty_cycle_remaining")
+          ? `${e.duty_cycle_remaining} ms`
+          : "none",
+        content: e.hasOwnProperty("duty_cycle_remaining") ? (
           <div className={classes.tableProgressBarWrapper}>
             <LinearProgress
               className={classes.tableProgressBar}
               variant="determinate"
-              value={12}
+              value={e.duty_cycle_remaining / 360}
             />{" "}
-            {e.duty_cycle_remaining}
+            {`${e.duty_cycle_remaining} ms`}
           </div>
+        ) : (
+          "none"
         ),
       },
     ];

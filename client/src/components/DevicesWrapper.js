@@ -7,19 +7,24 @@ import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import MyTable from "./MyTable";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import { withRouter } from "react-router-dom";
+import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
+import moment from "moment";
 
 const getColumnName = (column) => {
   switch (column) {
-    case "Name":
+    case "name":
       return "name";
-    case "Firmware":
+    case "firmware":
       return "firmware";
-    case "App_name":
+    case "app_name":
       return "application_name";
     case "dc_refresh":
       return "duty_cycle_refresh";
+    case "upstream_power":
+      return "upstream_power";
+    case "downstream_power":
+      return "downstream_power";
     case "pdr":
       return "pdr";
     default:
@@ -28,12 +33,27 @@ const getColumnName = (column) => {
 };
 
 const headCells = [
-  "device_id",
-  "Name",
-  "Firmware",
-  "App_name",
-  "pdr",
-  "dc_refresh",
+  { name: "device_id", content: "device_id" },
+  { name: "name", content: "name" },
+  { name: "firmware", content: "firmware" },
+  { name: "app_name", content: "app_name" },
+  { name: "upstream_power", content: "upstream_power" },
+  { name: "downstream_power", content: "downstream_power" },
+  { name: "pdr", content: "pdr" },
+  {
+    name: "dc_refresh",
+    content: (
+      <React.Fragment>
+        <Tooltip
+          title="The time when the duty cycle of device is planned. It tells you the minute and second of refresh of this or upcoming hour based on the actual time. Example: Imagine actual time is 16:20:00 and the value of the row is 25:00, the refresh is then planned to 16:25:00. If the value would be set to 15:00, the refresh is planned to 17:15:00."
+          arrow
+        >
+          <HelpOutlineOutlinedIcon style={{ marginLeft: 5 }} />
+        </Tooltip>
+        dc_refresh
+      </React.Fragment>
+    ),
+  },
 ];
 
 export const Devices = ({
@@ -60,7 +80,7 @@ export const Devices = ({
         order,
         rowsPerPage,
         page: 1,
-        column: getColumnName(headCells[orderBy]),
+        column: getColumnName(headCells[orderBy].name),
       });
       setPage(0);
     }
@@ -91,37 +111,48 @@ export const Devices = ({
   const rows = devices.map((e, i) => {
     return [
       {
-        name: e.id,
-        content: hideId ? "*****" : e.id,
+        name: e?.id || "none",
+        content: hideId ? "*****" : e?.id || "none",
       },
       {
-        name: e.name,
-        content: e.name,
+        name: e?.name || "none",
+        content: e?.name || "none",
       },
       {
-        name: e.firmware,
-        content: e.firmware,
+        name: e?.firmware || "none",
+        content: e?.firmware || "none",
       },
       {
-        name: e.application_name,
-        content: e.application_name,
+        name: e?.application_name || "none",
+        content: e?.application_name || "none",
       },
       {
-        name: e.pdr,
-        content: e.pdr,
+        name: e.hasOwnProperty("upstream_power")
+          ? `${e.upstream_power} dBm`
+          : "none",
+        content: e.hasOwnProperty("upstream_power")
+          ? `${e.upstream_power} dBm`
+          : "none",
       },
       {
-        name: e.duty_cycle_refresh,
-        content: (
-          <div className={classes.tableProgressBarWrapper}>
-            <LinearProgress
-              className={classes.tableProgressBar}
-              variant="determinate"
-              value={12}
-            />{" "}
-            {e.duty_cycle_refresh}
-          </div>
-        ),
+        name: e.hasOwnProperty("upstream_power")
+          ? `${e.downstream_power} dBm`
+          : "none",
+        content: e.hasOwnProperty("upstream_power")
+          ? `${e.downstream_power} dBm`
+          : "none",
+      },
+      {
+        name: e.hasOwnProperty("pdr") ? `${e.pdr} %` : "none",
+        content: e.hasOwnProperty("pdr") ? `${e.pdr} %` : "none",
+      },
+      {
+        name: e.hasOwnProperty("duty_cycle_refresh")
+          ? moment(e.duty_cycle_refresh, "HH:mm:ss").format("mm:ss")
+          : "none",
+        content: e.hasOwnProperty("duty_cycle_refresh")
+          ? moment(e.duty_cycle_refresh, "HH:mm:ss").format("mm:ss")
+          : "none",
       },
     ];
   });

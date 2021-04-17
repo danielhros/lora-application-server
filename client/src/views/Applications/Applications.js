@@ -17,6 +17,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import applicationApi from "../../api/applicationApi";
+import { truncate } from "../../utils/utils";
+import moment from "moment";
 
 import { withRouter } from "react-router-dom";
 import devConsole from "../../devConsole";
@@ -41,13 +43,13 @@ const getColumnName = (column) => {
 };
 
 const headCells = [
-  "Id",
-  "Created",
-  "Name",
-  "Description",
-  "Devices",
-  "Uplink",
-  "Downlink",
+  { name: "Id", content: "Id" },
+  { name: "Created", content: "Created" },
+  { name: "Name", content: "Name" },
+  { name: "Description", content: "Description" },
+  { name: "Devices", content: "Devices" },
+  { name: "Uplink", content: "Uplink" },
+  { name: "Downlink", content: "Downlink" },
 ];
 
 export const Applications = ({
@@ -114,32 +116,38 @@ export const Applications = ({
   const rows = applications.map((e, i) => {
     return [
       {
-        name: e.id,
-        content: e.id,
+        name: e?.id || "none",
+        content: e?.id || "none",
       },
       {
-        name: e.created,
-        content: e.created,
+        name: e.hasOwnProperty("created")
+          ? moment(e.created).format("DD.MM.YY, HH:mm:ss")
+          : "none",
+        content: e.hasOwnProperty("created")
+          ? moment(e.created).format("DD.MM.YY, HH:mm:ss")
+          : "none",
       },
       {
-        name: e.name,
-        content: e.name,
+        name: e?.name || "none",
+        content: e?.name || "none",
       },
       {
-        name: e.description,
-        content: e.description,
+        name: e?.description || "none",
+        content: e.hasOwnProperty("description")
+          ? truncate(e.description, 40)
+          : "none",
       },
       {
-        name: e.num_of_devices,
-        content: e.num_of_devices,
+        name: e?.num_of_devices || "none",
+        content: e?.num_of_devices || "none",
       },
       {
-        name: e.num_of_uplink_messages,
-        content: e.num_of_uplink_messages,
+        name: e?.num_of_uplink_messages || "none",
+        content: e?.num_of_uplink_messages || "none",
       },
       {
-        name: e.num_of_downlink_messages,
-        content: e.num_of_downlink_messages,
+        name: e?.num_of_downlink_messages || "none",
+        content: e?.num_of_downlink_messages || "none",
       },
     ];
   });

@@ -8,12 +8,14 @@ router.post("/", auth, async (req, res) => {
     const { order, rowsPerPage, column, page } = req.body;
 
     const select =
-      "id, protocol_ver, max_power, duty_cycle_refresh, lora_protocol_ver, name, firmware, dev_id";
+      "aps.id AS id, protocol_ver, max_power, duty_cycle_refresh, lora_protocol_ver, name, " +
+      "firmware, dev_id, transmission_params.bandwidth AS bandwidth";
 
     const query = {
       text:
         `SELECT ${select} ` +
         "FROM aps " +
+        "LEFT JOIN transmission_params ON aps.transmission_param_id = transmission_params.id " +
         `ORDER BY ${column} ${order.toUpperCase()}, dev_id ${order.toUpperCase()} ` +
         `LIMIT ${rowsPerPage} OFFSET ${rowsPerPage * page - rowsPerPage}`,
     };

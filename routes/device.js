@@ -13,7 +13,7 @@ router.post("/", auth, async (req, res) => {
 
     const select =
       "nodes.id, nodes.name, nodes.firmware, applications.name as application_name, " +
-      "nodes.duty_cycle_refresh, nodes.dev_id";
+      "nodes.duty_cycle_refresh, nodes.dev_id, nodes.upstream_power, nodes.downstream_power";
 
     const query = {
       text:

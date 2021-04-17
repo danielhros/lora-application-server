@@ -13,6 +13,7 @@ import { withStyles } from "@material-ui/core";
 import NotFound from "../NotFound";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
+import devConsole from "../../devConsole";
 
 function GatewayWrapper({ refresh, selected, classes }) {
   let { path } = useRouteMatch();
@@ -24,12 +25,12 @@ function GatewayWrapper({ refresh, selected, classes }) {
   };
 
   const handleClose = () => {
-    console.log("CLosed without save");
+    devConsole.log("CLosed without save");
     setOpen(false);
   };
 
   const handleConfirmClose = () => {
-    console.log("Closed with success");
+    devConsole.log("Closed with success");
     setOpen(false);
   };
 
