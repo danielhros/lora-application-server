@@ -181,4 +181,28 @@ router.post("/downlinkMessages", auth, async (req, res) => {
   }
 });
 
+router.post("/config", auth, async (req, res) => {
+  const {
+    deviceId,
+    newDeviceName,
+    newSpreadingFactor,
+    newTransmissionPower,
+  } = req.body;
+
+  try {
+    const query = {
+      text:
+        `UPDATE nodes ` +
+        `SET name='${newDeviceName}' ` +
+        `WHERE id='${deviceId}'`,
+    };
+
+    await db.query(query.text);
+    res.status(200).send("OK");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;

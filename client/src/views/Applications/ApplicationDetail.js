@@ -53,12 +53,14 @@ export const ApplicationDetail = ({
 
   return (
     <React.Fragment>
-      <ApplicationSettingsModal
-        open={openSettings}
-        handleClose={handleSettingsClose}
-        application={selected.data}
-        handleConfirmClose={handleConfirmClose}
-      />
+      {openSettings ? (
+        <ApplicationSettingsModal
+          open={openSettings}
+          handleClose={handleSettingsClose}
+          application={selected.data}
+          handleConfirmClose={handleConfirmClose}
+        />
+      ) : null}
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>

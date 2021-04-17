@@ -58,6 +58,7 @@ const DownlinkMessagesModal = ({
       setLoading(true);
       try {
         await deviceApi.sendDeviceConfig({
+          deviceId: device.id,
           newDeviceName: values.newDeviceName,
           newSpreadingFactor: spreadingFactor,
           newTransmissionPower: transmissionPower,

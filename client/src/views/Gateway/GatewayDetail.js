@@ -57,12 +57,14 @@ const GatewayDetail = ({
 
   return (
     <React.Fragment>
-      <GatewaySettingsModal
-        open={openSettings}
-        handleClose={handleSettingsClose}
-        gateway={selected.data}
-        handleConfirmClose={handleConfirmClose}
-      />
+      {openSettings ? (
+        <GatewaySettingsModal
+          open={openSettings}
+          handleClose={handleSettingsClose}
+          gateway={selected.data}
+          handleConfirmClose={handleConfirmClose}
+        />
+      ) : null}
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
