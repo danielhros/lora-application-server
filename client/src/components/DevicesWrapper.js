@@ -12,6 +12,7 @@ import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import moment from "moment";
 import Typography from "@material-ui/core/Typography";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import { truncate } from "../utils/utils";
 
 const getColumnName = (column) => {
   switch (column) {
@@ -118,7 +119,7 @@ export const Devices = ({
       },
       {
         name: e?.name || "none",
-        content: e?.name || "none",
+        content: e.hasOwnProperty("name") ? truncate(e.name, 20) : "none",
       },
       {
         name: "",
