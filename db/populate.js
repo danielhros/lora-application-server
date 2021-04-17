@@ -7,6 +7,8 @@ const populateDatabase = async () => {
   // await addNamesToNodes();
   // await addFirmwareNodes();
   // await addPDRToNodes();
+  // await setRandomDutyCycleRemainingDownlink();
+  // await setRandomDutyCycleRemainingUplink();
 };
 
 // min and max included
@@ -45,6 +47,42 @@ const adFirmwareToAps = async () => {
         1,
         20
       )}' where dev_id = ${i}`
+    );
+    console.log(i);
+  }
+};
+
+const setRandomDutyCycleRemainingDownlink = async () => {
+  const query = {
+    text: "SELECT COUNT(*) FROM downlink_messages",
+  };
+
+  let { rows } = await db.query(query.text);
+
+  for (let i = 1; i <= rows[0].count; i++) {
+    await db.query(
+      `UPDATE downlink_messages set duty_cycle_remaining=${randomIntFromInterval(
+        0,
+        36000
+      )} where dev_id = ${i}`
+    );
+    console.log(i);
+  }
+};
+
+const setRandomDutyCycleRemainingUplink = async () => {
+  const query = {
+    text: "SELECT COUNT(*) FROM uplink_messages",
+  };
+
+  let { rows } = await db.query(query.text);
+
+  for (let i = 1; i <= rows[0].count; i++) {
+    await db.query(
+      `UPDATE uplink_messages set duty_cycle_remaining=${randomIntFromInterval(
+        0,
+        36000
+      )} where dev_id = ${i}`
     );
     console.log(i);
   }

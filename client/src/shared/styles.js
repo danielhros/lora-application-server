@@ -12,16 +12,14 @@ const globalStyles = (theme) => ({
     height: "100%",
   },
   tableProgressBarWrapper: {
-    display: "flex",
-    flex: "1",
-    alignItems: "center",
-    justifyContent: "flex-end",
+    // display: "flex",
+    // flex: "1",
+    // alignItems: "center",
+    // justifyContent: "flex-end",
   },
   tableProgressBar: {
-    height: 5,
-    maxWidth: 70,
-    width: "100%",
-    marginRight: theme.spacing(1),
+    // height: 2,
+    marginBottom: 2,
   },
   breadCrumpsLink: {
     color: "inherit",
