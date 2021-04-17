@@ -10,6 +10,8 @@ import Button from "@material-ui/core/Button";
 import { withRouter } from "react-router-dom";
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import moment from "moment";
+import Typography from "@material-ui/core/Typography";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
 const getColumnName = (column) => {
   switch (column) {
@@ -144,7 +146,34 @@ export const Devices = ({
       },
       {
         name: e.hasOwnProperty("pdr") ? `${e.pdr} %` : "none",
-        content: e.hasOwnProperty("pdr") ? `${e.pdr} %` : "none",
+        content: (
+          <React.Fragment>
+            {e.hasOwnProperty("pdr") ? (
+              <React.Fragment>
+                <Typography
+                  color={e.pdr < 75 ? "error" : "inherit"}
+                  variant="body2"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  {`${e.pdr} %`}
+                  {e.pdr < 75 ? (
+                    <Tooltip title="Low PDR" arrow>
+                      <ErrorOutlineIcon
+                        color="error"
+                        style={{ marginLeft: 5, height: 20 }}
+                      />
+                    </Tooltip>
+                  ) : null}
+                </Typography>
+              </React.Fragment>
+            ) : (
+              "none"
+            )}
+          </React.Fragment>
+        ),
       },
       {
         name: e.hasOwnProperty("duty_cycle_refresh")

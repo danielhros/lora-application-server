@@ -142,7 +142,9 @@ export const Gateways = ({
           : "none",
       },
       {
-        name: e?.duty_cycle_refresh || "none",
+        name: e.hasOwnProperty("duty_cycle_refresh")
+          ? moment(e.duty_cycle_refresh, "HH:mm:ss").format("mm:ss")
+          : "none",
         content: e.hasOwnProperty("duty_cycle_refresh")
           ? moment(e.duty_cycle_refresh, "HH:mm:ss").format("mm:ss")
           : "none",
