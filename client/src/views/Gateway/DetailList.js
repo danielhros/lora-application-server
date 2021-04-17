@@ -23,15 +23,15 @@ export const DetailList = ({ gateway, width }) => {
         <tbody>
           <tr className={classes.tableRow}>
             <td>id</td>
-            <td>{gateway.id}</td>
+            <td>{gateway?.id || "none"}</td>
           </tr>
           <tr className={classes.tableRow}>
             <td>gateway name</td>
-            <td>{gateway.name}</td>
+            <td>{gateway?.name || "none"}</td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>firmware</td>
-            <td>{gateway.firmware}</td>
+            <td>{gateway?.firmware || "none"}</td>
           </tr>
         </tbody>
       </table>
@@ -46,7 +46,7 @@ export const DetailList = ({ gateway, width }) => {
         <tbody>
           <tr className={classes.tableRow}>
             <td>protocol_ver</td>
-            <td>{gateway.lora_protocol_ver}</td>
+            <td>{gateway?.lora_protocol_ver || "none"}</td>
           </tr>
           <tr className={classes.tableRow}>
             <td>max_power</td>
@@ -57,19 +57,19 @@ export const DetailList = ({ gateway, width }) => {
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>channels_num</td>
-            <td>{gateway.channels_num}</td>
+            <td>{gateway?.channels_num || "none"}</td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>duty_cycle_refresh in</td>
-            <td>{gateway.duty_cycle_refresh}</td>
+            <td>{gateway?.duty_cycle_refresh || "none"}</td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>lora_protocol</td>
-            <td>{gateway.lora_protocol}</td>
+            <td>{gateway?.lora_protocol || "none"}</td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>lora_protocol_ver</td>
-            <td>{gateway.lora_protocol_ver}</td>
+            <td>{gateway?.lora_protocol_ver || "none"}</td>
           </tr>
 
           {isWidthUp("sm", width) ? (
@@ -79,7 +79,7 @@ export const DetailList = ({ gateway, width }) => {
                 <td>
                   <TextareaAutosize
                     className={classes.textArea}
-                    value={gateway.stat_model.map((e) =>
+                    value={gateway?.stat_model?.map((e) =>
                       JSON.stringify(e, undefined, 2)
                     )}
                     readOnly
@@ -99,7 +99,7 @@ export const DetailList = ({ gateway, width }) => {
                 <td colSpan={2}>
                   <TextareaAutosize
                     className={classes.textArea}
-                    value={gateway.stat_model.map((e) =>
+                    value={gateway?.stat_model?.map((e) =>
                       JSON.stringify(e, undefined, 2)
                     )}
                     readOnly
@@ -123,23 +123,52 @@ export const DetailList = ({ gateway, width }) => {
         <tbody>
           <tr className={classes.tableRow}>
             <td>registration_freq</td>
-            <td>{gateway?.registration_freq?.join(", ") || "unknown"}</td>
+            <td>
+              {gateway.hasOwnProperty("registration_freq")
+                ? gateway.registration_freq
+                    .map((reg_freq) => {
+                      return `${reg_freq / (1.0 * 1000000)} MHz`;
+                    })
+                    .join(", ")
+                : "none"}
+            </td>
           </tr>
           <tr className={classes.tableRow}>
             <td>emergency_freq</td>
-            <td>{gateway?.emergency_freq?.join(", ") || "unknown"}</td>
+            <td>
+              {gateway.hasOwnProperty("emergency_freq")
+                ? gateway.emergency_freq
+                    .map((em_freq) => {
+                      return `${em_freq / (1.0 * 1000000)} MHz`;
+                    })
+                    .join(", ")
+                : "none"}
+            </td>
           </tr>
           <tr className={classes.tableRow}>
             <td>standard_freq</td>
-            <td>{gateway?.standard_freq?.join(", ") || "unknown"}</td>
+            <td>
+              {gateway.hasOwnProperty("standard_freq")
+                ? gateway.standard_freq
+                    .map((s_freq) => {
+                      return `${s_freq / (1.0 * 1000000)} MHz`;
+                    })
+                    .join(", ")
+                : "none"}
+            </td>
           </tr>
           <tr className={classes.tableRow}>
             <td>coderate</td>
-            <td>{gateway?.coderate || "unknown"}</td>
+            <td>{gateway?.coderate || "none"}</td>
           </tr>
           <tr className={classes.tableRow}>
             <td>bandwidth</td>
-            <td>{gateway?.bandwidth || "unknown"}</td>
+            <td>
+              {" "}
+              {gateway.hasOwnProperty("bandwidth")
+                ? `${gateway.bandwidth / (1.0 * 1000)} kHz`
+                : "none"}
+            </td>
           </tr>
         </tbody>
       </table>
