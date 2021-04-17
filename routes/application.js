@@ -168,7 +168,7 @@ router.post("/devices", auth, async (req, res) => {
 
     const select =
       "nodes.id, nodes.name, nodes.firmware, applications.name as application_name, " +
-      "nodes.duty_cycle_refresh, nodes.dev_id";
+      "nodes.duty_cycle_refresh, nodes.dev_id, nodes.upstream_power, nodes.downstream_power, nodes.pdr";
 
     const query = {
       text:
@@ -180,14 +180,6 @@ router.post("/devices", auth, async (req, res) => {
     };
 
     let { rows } = await db.query(query.text);
-
-    // TODO compute this for real
-    rows = rows.map((row) => {
-      return {
-        ...row,
-        pdr: "66",
-      };
-    });
 
     res.json(rows);
   } catch (err) {
