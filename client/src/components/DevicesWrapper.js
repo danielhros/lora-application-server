@@ -121,8 +121,47 @@ export const Devices = ({
         content: e?.name || "none",
       },
       {
-        name: e?.firmware || "none",
-        content: e?.firmware || "none",
+        name: "",
+        content: (
+          <React.Fragment>
+            {e.hasOwnProperty("firmware") ? (
+              <React.Fragment>
+                <Typography
+                  color={
+                    e.firmware.split(".")[0] > 1 ||
+                    (e.firmware.split(".")[0] >= 1 &&
+                      e.firmware.split(".")[1] >= 5)
+                      ? "inherit"
+                      : "error"
+                  }
+                  variant="body2"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <nobr>{`${e.firmware}`}</nobr>
+
+                  {e.firmware.split(".")[0] > 1 ||
+                  (e.firmware.split(".")[0] >= 1 &&
+                    e.firmware.split(".")[1] >= 5) ? null : (
+                    <Tooltip
+                      title="Firmware older then (1.15.0), consider upgrading"
+                      arrow
+                    >
+                      <ErrorOutlineIcon
+                        color="error"
+                        style={{ marginLeft: 5, height: 20 }}
+                      />
+                    </Tooltip>
+                  )}
+                </Typography>
+              </React.Fragment>
+            ) : (
+              "none"
+            )}
+          </React.Fragment>
+        ),
       },
       {
         name: e?.application_name || "none",
