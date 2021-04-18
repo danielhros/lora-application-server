@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import PDRProgress from "../../components/PDRProgress";
 import Devices from "./Devices";
+import MyChart from "../../components/MyChart";
 
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -64,13 +65,13 @@ export const ApplicationDetail = ({
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
-          <Paper className={classes.paper} style={{ height: "100%" }}>
-            Chart coming soon!
+          <Paper className={classes.paper} style={{ height: 340 }}>
+            <MyChart />
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper className={classes.paper}>
-            <PDRProgress value={100} />
+            <PDRProgress value={66} />
           </Paper>
         </Grid>
         <Grid item xs={12}>
