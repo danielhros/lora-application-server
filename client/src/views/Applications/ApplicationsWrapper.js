@@ -12,8 +12,9 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Applications from "./Applications";
 import ApplicationDetail from "./ApplicationDetail";
+import devConsole from "../../devConsole";
 
-function ApplicationsWrapper({ refresh, selected, classes }) {
+function ApplicationsWrapper({ refresh, selected, classes, callRefresh }) {
   let { path } = useRouteMatch();
   const [open, setOpen] = React.useState(false);
 
@@ -22,12 +23,12 @@ function ApplicationsWrapper({ refresh, selected, classes }) {
   };
 
   const handleClose = () => {
-    console.log("CLosed without save");
+    devConsole.log("CLosed without save");
     setOpen(false);
   };
 
   const handleConfirmClose = () => {
-    console.log("Closed with success");
+    callRefresh();
     setOpen(false);
   };
 
@@ -38,7 +39,7 @@ function ApplicationsWrapper({ refresh, selected, classes }) {
           <MyBreadcrumbs>
             <Typography color="textPrimary">Applications</Typography>
           </MyBreadcrumbs>
-          <Applications refresh={refresh} />
+          <Applications refresh={refresh} callRefresh={callRefresh} />
         </Route>
         <Route exact path={`${path}/:id`}>
           <React.Fragment>

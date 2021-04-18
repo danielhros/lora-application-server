@@ -13,28 +13,55 @@ import {
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
+import moment from "moment";
+import { truncate } from "../../utils/utils";
+import Typography from "@material-ui/core/Typography";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
 import { withRouter } from "react-router-dom";
 
 const getColumnName = (column) => {
   switch (column) {
-    case "Name":
+    case "name":
       return "name";
-    case "STIOT":
+    case "stiot":
       return "protocol_ver";
-    case "LoRa":
+    case "lora":
       return "lora_protocol_ver";
-    case "Firmware":
+    case "firmware":
       return "firmware";
-    case "DC_refresh":
+    case "bandwidth":
+      return "bandwidth";
+    case "dc_refresh":
       return "duty_cycle_refresh";
     default:
       return "id";
   }
 };
 
-const headCells = ["id", "Name", "STIOT", "LoRa", "Firmware", "DC_refresh"];
+const headCells = [
+  { name: "id", content: "id" },
+  { name: "name", content: "name" },
+  { name: "stiot", content: "stiot" },
+  { name: "lora", content: "lora" },
+  { name: "firmware", content: "firmware" },
+  { name: "bandwidth", content: "bandwidth" },
+  {
+    name: "dc_refresh",
+    content: (
+      <React.Fragment>
+        <Tooltip
+          title="The time when the duty cycle of gateway is planned. It tells you the minute and second of refresh of this or upcoming hour based on the actual time. Example: Imagine actual time is 16:20:00 and the value of the row is 25:00, the refresh is then planned to 16:25:00. If the value would be set to 15:00, the refresh is planned to 17:15:00."
+          arrow
+        >
+          <HelpOutlineOutlinedIcon style={{ marginLeft: 5, height: 20 }} />
+        </Tooltip>
+        dc_refresh
+      </React.Fragment>
+    ),
+  },
+];
 
 export const Gateways = ({
   gateways,
@@ -59,7 +86,7 @@ export const Gateways = ({
         order,
         rowsPerPage,
         page: 1,
-        column: getColumnName(headCells[orderBy]),
+        column: getColumnName(headCells[orderBy].name),
       });
       setPage(0);
     }
@@ -90,37 +117,79 @@ export const Gateways = ({
   const rows = gateways.map((e, i) => {
     return [
       {
-        name: e.id,
-        content: e.id,
+        name: e?.id || "none",
+        content: e?.id || "none",
       },
       {
-        name: e.name,
-        content: e.name,
+        name: e?.name || "none",
+        content: e.hasOwnProperty("name") ? truncate(e.name, 50) : "none",
       },
       {
-        name: e.protocol_ver,
-        content: e.protocol_ver,
+        name: e?.protocol_ver || "none",
+        content: e?.protocol_ver || "none",
       },
       {
-        name: e.lora_protocol_ver,
-        content: e.lora_protocol_ver,
+        name: e?.lora_protocol_ver || "none",
+        content: e?.lora_protocol_ver || "none",
       },
       {
-        name: e.firmware,
-        content: e.firmware,
-      },
-      {
-        name: e.duty_cycle_refresh,
+        name: "",
         content: (
-          <div className={classes.tableProgressBarWrapper}>
-            <LinearProgress
-              className={classes.tableProgressBar}
-              variant="determinate"
-              value={12}
-            />{" "}
-            {e.duty_cycle_refresh}
-          </div>
+          <React.Fragment>
+            {e.hasOwnProperty("firmware") ? (
+              <React.Fragment>
+                <Typography
+                  color={
+                    e.firmware.split(".")[0] > 1 ||
+                    (e.firmware.split(".")[0] >= 1 &&
+                      e.firmware.split(".")[1] >= 5)
+                      ? "inherit"
+                      : "error"
+                  }
+                  variant="body2"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <nobr>{`${e.firmware}`}</nobr>
+
+                  {e.firmware.split(".")[0] > 1 ||
+                  (e.firmware.split(".")[0] >= 1 &&
+                    e.firmware.split(".")[1] >= 5) ? null : (
+                    <Tooltip
+                      title="Firmware older then (1.15.0), consider upgrading"
+                      arrow
+                    >
+                      <ErrorOutlineIcon
+                        color="error"
+                        style={{ marginLeft: 5, height: 20 }}
+                      />
+                    </Tooltip>
+                  )}
+                </Typography>
+              </React.Fragment>
+            ) : (
+              "none"
+            )}
+          </React.Fragment>
         ),
+      },
+      {
+        name: e.hasOwnProperty("bandwidth")
+          ? `${e.bandwidth / (1.0 * 1000)} kHz`
+          : "none",
+        content: e.hasOwnProperty("bandwidth")
+          ? `${e.bandwidth / (1.0 * 1000)} kHz`
+          : "none",
+      },
+      {
+        name: e.hasOwnProperty("duty_cycle_refresh")
+          ? moment(e.duty_cycle_refresh, "HH:mm:ss").format("mm:ss")
+          : "none",
+        content: e.hasOwnProperty("duty_cycle_refresh")
+          ? moment(e.duty_cycle_refresh, "HH:mm:ss").format("mm:ss")
+          : "none",
       },
     ];
   });

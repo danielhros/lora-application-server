@@ -14,6 +14,14 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import deviceApi from "../../api/deviceApi";
+
+import { useFormik } from "formik";
+import * as yup from "yup";
+import devConsole from "../../devConsole";
 
 const DialogContent = withStyles((theme) => ({
   root: {
@@ -32,15 +40,42 @@ const DownlinkMessagesModal = ({
   const [spreadingFactor, setSpreadingFactor] = React.useState(7);
   const [transmissionPower, setTransmissionPower] = React.useState(5);
 
+  const [loading, setLoading] = React.useState(false);
+
+  const validationSchema = yup.object({
+    newDeviceName: yup
+      .string("New Device Name")
+      .max(20, "Device Name shouldn't be more then 20 characters length")
+      .required("New Device Name is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      newDeviceName: device?.name || "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values, { resetForm, setErrors }) => {
+      setLoading(true);
+      try {
+        await deviceApi.sendDeviceConfig({
+          deviceId: device.id,
+          newDeviceName: values.newDeviceName,
+          newSpreadingFactor: spreadingFactor,
+          newTransmissionPower: transmissionPower,
+        });
+        handleConfirmClose();
+        resetForm({});
+      } catch (error) {
+        devConsole.log(error);
+        setErrors({ serverError: "Something went wrong" });
+      }
+      setLoading(false);
+    },
+  });
+
   if (device === null) {
     return null;
   }
-
-  const handleSaveClick = () => {
-    // TODO: call request here and then close modal
-    // https://github.com/formium/formik/issues/446
-    handleConfirmClose();
-  };
 
   return (
     <div>
@@ -71,83 +106,129 @@ const DownlinkMessagesModal = ({
             <CloseIcon />
           </IconButton>
         </MuiDialogTitle>
-        <DialogContent>
-          <Grid container justify="center">
-            <FormControl
-              variant="outlined"
-              className={localClasses.formControl}
-            >
-              <InputLabel id="spreading-factor-select">
-                Spreading Factor
-              </InputLabel>
-              <Select
-                labelId="spreading-factor-select"
-                id="spreading-factor-select"
-                value={spreadingFactor}
-                onChange={(event) => setSpreadingFactor(event.target.value)}
-                label="Spreading Factor"
-                style={{ marginBottom: 30 }}
-              >
-                {[7, 8, 9, 10, 11, 12].map((sf) => {
-                  return (
-                    <MenuItem key={sf} value={sf}>
-                      {sf}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+        <form noValidate onSubmit={formik.handleSubmit}>
+          <DialogContent style={{ paddingTop: 0 }}>
+            <Grid container>
+              {!!formik.errors.serverError ? (
+                <Typography color={"error"}>
+                  {formik.errors.serverError}
+                </Typography>
+              ) : null}
 
-            <FormControl
-              variant="outlined"
-              className={localClasses.formControl}
-            >
-              <InputLabel id="transmission-power-select">
-                Transmission Power
-              </InputLabel>
-              <Select
-                labelId="transmission-power-select"
-                id="transmission-power-select"
-                value={transmissionPower}
-                onChange={(event) => setTransmissionPower(event.target.value)}
-                label="Transmission Power"
+              <TextField
+                margin="normal"
+                variant="outlined"
+                required
+                fullWidth
+                id="newDeviceName"
+                label="New Device Name"
+                name="newDeviceName"
+                value={formik.values.newDeviceName}
+                autoFocus
+                onChange={formik.handleChange}
+                disabled={loading}
+                // disabled={updateCredentialsLoading}
+                error={
+                  formik.touched.newDeviceName &&
+                  Boolean(formik.errors.newDeviceName)
+                }
+                helperText={
+                  formik.touched.newDeviceName && formik.errors.newDeviceName
+                }
+              />
+
+              <FormControl
+                margin="normal"
+                variant="outlined"
+                disabled={loading}
+                className={localClasses.formControl}
               >
-                {[
-                  5,
-                  6,
-                  7,
-                  8,
-                  9,
-                  10,
-                  11,
-                  12,
-                  13,
-                  14,
-                  15,
-                  16,
-                  17,
-                  18,
-                  19,
-                  20,
-                ].map((tp) => {
-                  return (
-                    <MenuItem key={tp} value={tp}>
-                      {tp}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            CANCEL
-          </Button>
-          <Button variant="contained" onClick={handleSaveClick} color="primary">
-            SAVE
-          </Button>
-        </DialogActions>
+                <InputLabel id="spreading-factor-select">
+                  Spreading Factor
+                </InputLabel>
+                <Select
+                  labelId="spreading-factor-select"
+                  id="spreading-factor-select"
+                  value={spreadingFactor}
+                  onChange={(event) => setSpreadingFactor(event.target.value)}
+                  label="Spreading Factor"
+                >
+                  {[7, 8, 9, 10, 11, 12].map((sf) => {
+                    return (
+                      <MenuItem key={sf} value={sf}>
+                        {sf}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+
+              <FormControl
+                margin="normal"
+                variant="outlined"
+                disabled={loading}
+                className={localClasses.formControl}
+              >
+                <InputLabel id="transmission-power-select">
+                  Transmission Power
+                </InputLabel>
+                <Select
+                  labelId="transmission-power-select"
+                  id="transmission-power-select"
+                  value={transmissionPower}
+                  onChange={(event) => setTransmissionPower(event.target.value)}
+                  label="Transmission Power"
+                >
+                  {[
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                  ].map((tp) => {
+                    return (
+                      <MenuItem key={tp} value={tp}>
+                        {tp}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Grid>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              CANCEL
+            </Button>
+            <div className={localClasses.wrapper}>
+              <Button
+                disabled={loading}
+                variant="contained"
+                type="submit"
+                color="primary"
+              >
+                SAVE
+              </Button>
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  className={localClasses.buttonProgress}
+                />
+              )}
+            </div>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );
@@ -172,11 +253,20 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: 0,
   },
   formControl: {
-    maxWidth: 220,
     width: "100%",
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+  wrapper: {
+    position: "relative",
+  },
+  buttonProgress: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -12,
+    marginLeft: -12,
   },
 }));
 

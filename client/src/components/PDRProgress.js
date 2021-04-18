@@ -4,22 +4,29 @@ import Title from "./Title";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
+import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 
-export const PDRProgress = ({ value = 0 }) => {
+export const PDRProgress = ({ value = 0, width }) => {
   return (
     <React.Fragment>
       <Title subtitle={"median of all messages"}>PDR</Title>
+
       <Box
         position="relative"
-        display="inline-flex"
-        style={{ marginTop: 15 }}
+        display="flex"
+        style={{
+          flexGrow: 1,
+          padding: 20,
+          minWidth: 200,
+        }}
         alignItems="center"
         justifyContent="center"
       >
         <CircularProgress
           variant="determinate"
           value={value === 0 ? value + 1 : value}
-          size={150}
+          style={{}}
+          size={isWidthDown("xs", width) ? 130 : 170}
         />
         <Box
           top={0}
@@ -32,7 +39,7 @@ export const PDRProgress = ({ value = 0 }) => {
           justifyContent="center"
         >
           <Typography
-            variant="h4"
+            variant={isWidthDown("xs", width) ? "h6" : "h4"}
             component="div"
             color="textSecondary"
           >{`${Math.round(value)}%`}</Typography>
@@ -46,4 +53,4 @@ const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(PDRProgress);
+export default withWidth()(PDRProgress);

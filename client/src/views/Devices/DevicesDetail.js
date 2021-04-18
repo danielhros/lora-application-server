@@ -50,12 +50,14 @@ export const DevicesDetail = ({
 
   return (
     <React.Fragment>
-      <DeviceSettingsModal
-        open={openSettings}
-        handleClose={handleSettingsClose}
-        device={selected.data}
-        handleConfirmClose={handleConfirmClose}
-      />
+      {openSettings ? (
+        <DeviceSettingsModal
+          open={openSettings}
+          handleClose={handleSettingsClose}
+          device={selected.data}
+          handleConfirmClose={handleConfirmClose}
+        />
+      ) : null}
 
       <Grid container spacing={3}>
         <Grid item xs={12}>

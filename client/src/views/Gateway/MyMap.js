@@ -1,12 +1,17 @@
 import React from "react";
-import { connect } from "react-redux";
+import MyMapWrapper from "../../components/MyMapWrapper";
 
-export const MyMap = (props) => {
-  return <div>Map coming soon</div>;
-};
+const markers = [
+  {
+    id: 1,
+    name: "Gateway name",
+    lat: 49.423781,
+    lng: 18.696487,
+  },
+];
 
-const mapStateToProps = (state) => ({});
+function MyMap() {
+  return <MyMapWrapper markers={markers} wrapperStyle={{ minHeight: 420 }} />;
+}
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyMap);
+export default MyMap;

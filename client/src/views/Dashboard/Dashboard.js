@@ -14,6 +14,7 @@ import Title from "../../components/Title";
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
 import TopList from "./TopList";
+import MyApp from "./MyMap";
 
 export const Dashboard = ({ refresh, classes }) => {
   const localClasses = useStyles();
@@ -23,7 +24,7 @@ export const Dashboard = ({ refresh, classes }) => {
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Paper className={clsx(classes.paper, localClasses.chartPaper)}>
-            Map coming soon
+            <MyApp />
           </Paper>
         </Grid>
 

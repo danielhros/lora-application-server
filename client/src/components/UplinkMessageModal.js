@@ -11,6 +11,7 @@ import Divider from "@material-ui/core/Divider";
 import clsx from "clsx";
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import moment from "moment";
 
 const DialogContent = withStyles((theme) => ({
   root: {
@@ -66,7 +67,13 @@ const DownlinkMessagesModal = ({
             <tbody>
               <tr className={localClasses.tableRow}>
                 <td>received</td>
-                <td>{message?.receive_time || "none"}</td>
+                <td>
+                  {message.hasOwnProperty("receive_time")
+                    ? moment(message.receive_time).format(
+                        "DD.MM.YY, HH:mm:ss.SSS"
+                      )
+                    : "none"}
+                </td>
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>device_id</td>
@@ -113,7 +120,11 @@ const DownlinkMessagesModal = ({
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>duty_cycle_remaining</td>
-                <td>{message?.duty_cycle_remaining || "none"}</td>
+                <td>
+                  {message.hasOwnProperty("duty_cycle_remaining")
+                    ? `${message.duty_cycle_remaining} ms`
+                    : "none"}
+                </td>
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>is_primary</td>
@@ -131,7 +142,11 @@ const DownlinkMessagesModal = ({
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>frequency</td>
-                <td>{message?.frequency || "none"}</td>
+                <td>
+                  {message.hasOwnProperty("frequency")
+                    ? `${message.frequency / (1.0 * 1000000)} MHz`
+                    : "none"}
+                </td>
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>spreading_factor</td>
@@ -139,11 +154,19 @@ const DownlinkMessagesModal = ({
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>transition_power</td>
-                <td>{message?.power || "none"}</td>
+                <td>
+                  {message.hasOwnProperty("power")
+                    ? `${message.power} dBm`
+                    : "none"}
+                </td>
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>airtime</td>
-                <td>{message?.airtime || "none"}</td>
+                <td>
+                  {message.hasOwnProperty("airtime")
+                    ? `${message.airtime} ms`
+                    : "none"}
+                </td>
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>coding_rate</td>
@@ -151,7 +174,11 @@ const DownlinkMessagesModal = ({
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>bandwidth</td>
-                <td>{message?.bandwidth || "none"}</td>
+                <td>
+                  {message.hasOwnProperty("bandwidth")
+                    ? `${message.bandwidth / (1.0 * 1000)} kHz`
+                    : "none"}
+                </td>
               </tr>
               <tr className={localClasses.tableRow}>
                 <td>message_group_number</td>

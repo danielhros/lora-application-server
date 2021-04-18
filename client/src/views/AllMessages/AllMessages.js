@@ -14,13 +14,13 @@ export const AllMessages = ({ refresh, classes }) => {
     <React.Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
-          <Paper className={classes.paper} style={{ height: "100%" }}>
+          <Paper className={classes.paper} style={{ height: 340 }}>
             <MyChart />
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper className={classes.paper}>
-            <PDRProgress value={100} />
+            <PDRProgress value={86} />
           </Paper>
         </Grid>
         <Grid item xs={12}>

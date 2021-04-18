@@ -16,22 +16,26 @@ import {
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
+import applicationApi from "../../api/applicationApi";
+import { truncate } from "../../utils/utils";
+import moment from "moment";
 
 import { withRouter } from "react-router-dom";
+import devConsole from "../../devConsole";
 
 const getColumnName = (column) => {
   switch (column) {
-    case "Created":
+    case "created":
       return "created";
-    case "Name":
+    case "name":
       return "name";
-    case "Description":
+    case "description":
       return "description";
-    case "Devices":
+    case "devices":
       return "num_of_devices";
-    case "Uplink":
+    case "uplink":
       return "num_of_uplink_messages";
-    case "Downlink":
+    case "downlink":
       return "num_of_downlink_messages";
     default:
       return "id";
@@ -39,13 +43,13 @@ const getColumnName = (column) => {
 };
 
 const headCells = [
-  "Id",
-  "Created",
-  "Name",
-  "Description",
-  "Devices",
-  "Uplink",
-  "Downlink",
+  { name: "id", content: "id" },
+  { name: "created", content: "created" },
+  { name: "name", content: "name" },
+  { name: "description", content: "description" },
+  { name: "devices", content: "devices" },
+  { name: "uplink", content: "uplink" },
+  { name: "downlink", content: "downlink" },
 ];
 
 export const Applications = ({
@@ -59,6 +63,7 @@ export const Applications = ({
   rowsPerPage,
   cleanApplications,
   classes,
+  callRefresh,
 }) => {
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState(0);
@@ -95,6 +100,15 @@ export const Applications = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cleanApplications, getApplications, getCountOfApplications]);
 
+  const handleAddApplication = async () => {
+    try {
+      await applicationApi.addApplication();
+      callRefresh();
+    } catch (error) {
+      devConsole.log(error);
+    }
+  };
+
   const handleOnRowClick = (index) => {
     history.push(`/applications/${applications[index].id}`);
   };
@@ -102,32 +116,38 @@ export const Applications = ({
   const rows = applications.map((e, i) => {
     return [
       {
-        name: e.id,
-        content: e.id,
+        name: e?.id || "none",
+        content: e?.id || "none",
       },
       {
-        name: e.created,
-        content: e.created,
+        name: e.hasOwnProperty("created")
+          ? moment(e.created).format("DD.MM.YY, HH:mm:ss")
+          : "none",
+        content: e.hasOwnProperty("created")
+          ? moment(e.created).format("DD.MM.YY, HH:mm:ss")
+          : "none",
       },
       {
-        name: e.name,
-        content: e.name,
+        name: e?.name || "none",
+        content: e?.name || "none",
       },
       {
-        name: e.description,
-        content: e.description,
+        name: e?.description || "none",
+        content: e.hasOwnProperty("description")
+          ? truncate(e.description, 40)
+          : "none",
       },
       {
-        name: e.num_of_devices,
-        content: e.num_of_devices,
+        name: e?.num_of_devices || "none",
+        content: e?.num_of_devices || "none",
       },
       {
-        name: e.num_of_uplink_messages,
-        content: e.num_of_uplink_messages,
+        name: e?.num_of_uplink_messages || "none",
+        content: e?.num_of_uplink_messages || "none",
       },
       {
-        name: e.num_of_downlink_messages,
-        content: e.num_of_downlink_messages,
+        name: e?.num_of_downlink_messages || "none",
+        content: e?.num_of_downlink_messages || "none",
       },
     ];
   });
@@ -166,7 +186,7 @@ export const Applications = ({
                   variant="outlined"
                   className={classes.tableButton}
                   startIcon={<AddIcon />}
-                  onClick={() => console.log("hello")}
+                  onClick={handleAddApplication}
                 >
                   add
                 </Button>

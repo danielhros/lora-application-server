@@ -56,4 +56,14 @@ export default {
     );
     return appApi.post(`${APPLICATION}/devicesCount`, payload);
   },
+  setNewApplicationName(payload) {
+    devConsole.log("Sending request to set new application name..");
+    return appApi.post(`${APPLICATION}/rename`, payload);
+  },
+  addApplication() {
+    devConsole.log(
+      "Sending request to add new randomly generated application name.."
+    );
+    return appApi.post(`${APPLICATION}/addApplication`);
+  },
 };

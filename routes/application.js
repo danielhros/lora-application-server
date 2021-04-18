@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const auth = require("../middleware/auth");
+var faker = require("faker");
 
 router.post("/", auth, async (req, res) => {
   try {
@@ -167,7 +168,7 @@ router.post("/devices", auth, async (req, res) => {
 
     const select =
       "nodes.id, nodes.name, nodes.firmware, applications.name as application_name, " +
-      "nodes.duty_cycle_refresh, nodes.dev_id";
+      "nodes.duty_cycle_refresh, nodes.dev_id, nodes.upstream_power, nodes.downstream_power, nodes.pdr";
 
     const query = {
       text:
@@ -179,14 +180,6 @@ router.post("/devices", auth, async (req, res) => {
     };
 
     let { rows } = await db.query(query.text);
-
-    // TODO compute this for real
-    rows = rows.map((row) => {
-      return {
-        ...row,
-        pdr: "66",
-      };
-    });
 
     res.json(rows);
   } catch (err) {
@@ -207,6 +200,42 @@ router.post("/devicesCount", auth, async (req, res) => {
     let { rows } = await db.query(query.text);
     res.json(rows[0]);
   } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+
+router.post("/rename", auth, async (req, res) => {
+  try {
+    const query = {
+      text:
+        "UPDATE applications " +
+        `SET name='${req.body.newApplicationName}', description='${req.body.newApplicationDescription}' ` +
+        `WHERE applications.id = ${req.body.applicationId}`,
+    };
+
+    let { rows } = await db.query(query.text);
+    res.json(rows[0]);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.post("/addApplication", auth, async (req, res) => {
+  const applicationName = faker.commerce.productName();
+  const applicationDescription = faker.commerce.productDescription();
+
+  try {
+    const query = {
+      text:
+        "INSERT INTO applications (name, description)" +
+        `VALUES ('${applicationName}', '${applicationDescription}')`,
+    };
+
+    let { rows } = await db.query(query.text);
+    res.json(rows[0]);
+  } catch (err) {
+    console.log(err);
     res.status(500).send("Server error");
   }
 });

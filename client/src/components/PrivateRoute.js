@@ -24,7 +24,11 @@ const PrivateRoute = ({
           <Redirect to="/login" />
         ) : (
           <Layout setRefresh={() => setRefresh(true)}>
-            <Component {...props} refresh={refresh} />
+            <Component
+              {...props}
+              refresh={refresh}
+              callRefresh={() => setRefresh(true)}
+            />
           </Layout>
         )
       }

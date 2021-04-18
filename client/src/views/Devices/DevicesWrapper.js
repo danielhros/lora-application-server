@@ -14,8 +14,9 @@ import Devices from "./Devices";
 import DevicesDetail from "./DevicesDetail";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import devConsole from "../../devConsole";
 
-function DevicesWrapper({ refresh, selected, classes }) {
+function DevicesWrapper({ refresh, selected, classes, callRefresh }) {
   let { path } = useRouteMatch();
 
   const [open, setOpen] = React.useState(false);
@@ -25,12 +26,12 @@ function DevicesWrapper({ refresh, selected, classes }) {
   };
 
   const handleClose = () => {
-    console.log("CLosed without save");
+    devConsole.log("CLosed without save");
     setOpen(false);
   };
 
   const handleConfirmClose = () => {
-    console.log("Closed with success");
+    callRefresh();
     setOpen(false);
   };
 

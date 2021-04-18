@@ -70,7 +70,7 @@ const MyTable = ({
       order: isAsc ? "desc" : "asc",
       rowsPerPage,
       page: 1,
-      column: headCells[index],
+      column: headCells[index].name,
     });
   };
 
@@ -79,7 +79,7 @@ const MyTable = ({
       order,
       rowsPerPage,
       page: newPage + 1,
-      column: headCells[orderBy],
+      column: headCells[orderBy].name,
     });
     setPage(newPage);
   };
@@ -92,7 +92,7 @@ const MyTable = ({
       order,
       rowsPerPage: newRowsPerPage,
       page: 1,
-      column: headCells[orderBy],
+      column: headCells[orderBy].name,
     });
   };
 
@@ -134,9 +134,9 @@ const MyTable = ({
                 Array.from(Array(rowsPerPage)).map((x, i) => {
                   return (
                     <TableRow key={i} hover>
-                      {headCells.map((name) => {
+                      {headCells.map((cell) => {
                         return (
-                          <TableCell key={name}>
+                          <TableCell key={cell.name}>
                             <Skeleton />
                           </TableCell>
                         );

@@ -13,7 +13,7 @@ router.post("/", auth, async (req, res) => {
 
     const select =
       "nodes.id, nodes.name, nodes.firmware, applications.name as application_name, " +
-      "nodes.duty_cycle_refresh, nodes.dev_id";
+      "nodes.duty_cycle_refresh, nodes.dev_id, nodes.upstream_power, nodes.downstream_power, nodes.pdr";
 
     const query = {
       text:
@@ -24,15 +24,6 @@ router.post("/", auth, async (req, res) => {
     };
 
     let { rows } = await db.query(query.text);
-
-    // TODO compute this for real
-    rows = rows.map((row) => {
-      return {
-        ...row,
-        pdr: "66",
-      };
-    });
-
     res.json(rows);
   } catch (err) {
     console.log(err);
@@ -175,6 +166,30 @@ router.post("/downlinkMessages", auth, async (req, res) => {
 
     let { rows } = await db.query(query.text);
     res.json(rows);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.post("/config", auth, async (req, res) => {
+  const {
+    deviceId,
+    newDeviceName,
+    newSpreadingFactor,
+    newTransmissionPower,
+  } = req.body;
+
+  try {
+    const query = {
+      text:
+        `UPDATE nodes ` +
+        `SET name='${newDeviceName}' ` +
+        `WHERE id='${deviceId}'`,
+    };
+
+    await db.query(query.text);
+    res.status(200).send("OK");
   } catch (err) {
     console.log(err);
     res.status(500).send("Server error");

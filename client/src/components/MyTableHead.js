@@ -19,9 +19,9 @@ function MyTableHead({
   return (
     <TableHead>
       <TableRow>
-        {headCells.map((cellTitle, index) => (
+        {headCells.map((cell, index) => (
           <TableCell
-            key={cellTitle + index}
+            key={cell.name + index}
             align={index + 1 === headCellsLen ? "right" : "left"}
             sortDirection={orderBy === index ? order : false}
           >
@@ -38,10 +38,10 @@ function MyTableHead({
                       : "sorted ascending"}
                   </span>
                 ) : null}
-                {cellTitle}
+                {cell.content}
               </TableSortLabel>
             ) : (
-              cellTitle
+              cell.name
             )}
           </TableCell>
         ))}
