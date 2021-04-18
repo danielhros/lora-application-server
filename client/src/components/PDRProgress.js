@@ -18,7 +18,6 @@ export const PDRProgress = ({ value = 0, width }) => {
           flexGrow: 1,
           padding: 20,
           minWidth: 200,
-          backgroundColor: "pink",
         }}
         alignItems="center"
         justifyContent="center"
