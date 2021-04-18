@@ -31,8 +31,6 @@ export default function Title(props) {
 
 const useStyles = makeStyles({
   pdrContext: {
-    flex: 1,
-    // marginTop: -8,
-    marginBottom: 0,
+    marginBottom: 5,
   },
 });
