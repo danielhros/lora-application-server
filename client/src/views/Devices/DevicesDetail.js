@@ -14,6 +14,14 @@ import UplinkMessages from "./UplinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import DeviceSettingsModal from "./DeviceSettingsModal";
+import MyMap from "./MyMap";
+import TopList from "./TopList";
+import Battery from "./Battery";
+import DCRefresh from "./DCRefresh";
+import DCRemaining from "./DCRemaining";
+
+import PDRProgress from "./PDRProgress";
+import MyChart from "./MyChart";
 
 export const DevicesDetail = ({
   refresh,
@@ -60,9 +68,45 @@ export const DevicesDetail = ({
       ) : null}
 
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={8}>
+          <Paper className={classes.paper} style={{ height: 340 }}>
+            <MyChart />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={4}>
           <Paper className={classes.paper}>
-            <p>Device header coming soon!</p>
+            <PDRProgress />
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={12}>
+              <Paper className={classes.paper}>
+                <TopList />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={6} md={12}>
+              <Paper className={classes.paper}>
+                <Battery />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={6} md={12}>
+              <Paper className={classes.paper}>
+                <DCRefresh />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={6} md={12}>
+              <Paper className={classes.paper}>
+                <DCRemaining />
+              </Paper>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12} md={8}>
+          <Paper className={classes.paper}>
+            <MyMap />
           </Paper>
         </Grid>
 

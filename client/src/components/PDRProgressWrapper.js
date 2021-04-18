@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import Title from "./Title";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -48,9 +47,5 @@ export const PDRProgress = ({ value = 0, width }) => {
     </React.Fragment>
   );
 };
-
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
 
 export default withWidth()(PDRProgress);
