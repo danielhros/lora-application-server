@@ -10,11 +10,8 @@ import SentDownlinkMessages from "./SentDownlinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
-import Title from "../../components/Title";
-import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
-import Tooltip from "@material-ui/core/Tooltip";
 import TopList from "./TopList";
-import MyApp from "./MyMap";
+import MyMap from "./MyMap";
 
 export const Dashboard = ({ refresh, classes }) => {
   const localClasses = useStyles();
@@ -24,7 +21,7 @@ export const Dashboard = ({ refresh, classes }) => {
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Paper className={clsx(classes.paper, localClasses.chartPaper)}>
-            <MyApp />
+            <MyMap />
           </Paper>
         </Grid>
 
@@ -37,17 +34,6 @@ export const Dashboard = ({ refresh, classes }) => {
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
               <Paper className={clsx(classes.paper)}>
-                <Title
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  Top{" "}
-                  <Tooltip title="Most used values" arrow>
-                    <HelpOutlineOutlinedIcon style={{ marginLeft: 5 }} />
-                  </Tooltip>
-                </Title>
                 <TopList />
               </Paper>
             </Grid>

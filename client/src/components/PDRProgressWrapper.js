@@ -5,7 +5,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 
-export const PDRProgressWrapper = ({ value = 0, width }) => {
+export const PDRProgress = ({ value = 0, width }) => {
   return (
     <React.Fragment>
       <Title subtitle={"median of all messages"}>PDR</Title>
@@ -48,4 +48,4 @@ export const PDRProgressWrapper = ({ value = 0, width }) => {
   );
 };
 
-export default withWidth()(PDRProgressWrapper);
+export default withWidth()(PDRProgress);
