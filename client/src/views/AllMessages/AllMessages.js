@@ -3,8 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import PDRProgress from "../../components/PDRProgress";
-import MyChart from "../../components/MyChart";
+import PDRProgress from "./PDRProgress";
+import MyChart from "./MyChart";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import UplinkMessages from "./UplinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
@@ -20,7 +20,7 @@ export const AllMessages = ({ refresh, classes }) => {
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper className={classes.paper}>
-            <PDRProgress value={86} />
+            <PDRProgress />
           </Paper>
         </Grid>
         <Grid item xs={12}>

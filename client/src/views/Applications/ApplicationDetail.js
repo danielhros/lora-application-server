@@ -8,9 +8,9 @@ import NoRecourse from "../NoResource";
 import ApplicationSettingsModal from "./ApplicationSettingsModal";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import PDRProgress from "../../components/PDRProgress";
+import PDRProgress from "./PDRProgress";
 import Devices from "./Devices";
-import MyChart from "../../components/MyChart";
+import MyChart from "./MyChart";
 
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -71,7 +71,7 @@ export const ApplicationDetail = ({
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper className={classes.paper}>
-            <PDRProgress value={66} />
+            <PDRProgress />
           </Paper>
         </Grid>
         <Grid item xs={12}>

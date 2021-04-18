@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import Title from "./Title";
 import { useTheme } from "@material-ui/core/styles";
 import withWidth, { isWidthDown, isWidthUp } from "@material-ui/core/withWidth";
@@ -12,35 +11,7 @@ import {
   Legend,
 } from "recharts";
 
-const data = [
-  {
-    name: "10:00",
-    uplink: 40,
-    downlink: 24,
-  },
-  {
-    name: "11:00",
-    uplink: 30,
-    downlink: 13,
-  },
-  {
-    name: "12:00",
-    uplink: 20,
-    downlink: 58,
-  },
-  {
-    name: "13:00",
-    uplink: 27,
-    downlink: 39,
-  },
-  {
-    name: "14:00",
-    uplink: 18,
-    downlink: 48,
-  },
-];
-
-export const MyChart = ({ width }) => {
+export const MyChartWrapper = ({ width, data = [] }) => {
   const theme = useTheme();
   let graphData = data;
 
@@ -91,4 +62,4 @@ export const MyChart = ({ width }) => {
   );
 };
 
-export default withWidth()(MyChart);
+export default withWidth()(MyChartWrapper);

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
-import PDRProgress from "../../components/PDRProgress";
+import PDRProgress from "./PDRProgress";
 import UplinkMessages from "./UplinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
@@ -32,7 +32,7 @@ export const Dashboard = ({ refresh, classes }) => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={12}>
               <Paper className={clsx(classes.paper)}>
-                <PDRProgress value={100} />
+                <PDRProgress />
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
