@@ -5,9 +5,11 @@
 ### General
 
 1. Copy and rename `.env.example` file to `.env`
-2. Fulfill missing values in `.env` file
+3. Copy and rename `client/.env.development.example` to `.env.development` if you want to **run app in develop mode**
+4. Copy and rename `client/.env.production.example` to `.env.production` if you want to **build and deploy app**
+5. Fulfill missing values in those files
 
-### Run in develop mode:
+### Run app in develop mode:
 
     This will just run db and pgadmin container, React and Server are running separately on local machine
 
@@ -18,7 +20,7 @@
 5. Run client in console: `npm run client`
 6. App is available at: `localhost:3000`
 
-### Build and deploy:
+### Build and deploy app:
 
     This will run db, pgadmin, server and build react with disabled redux devtools
 
