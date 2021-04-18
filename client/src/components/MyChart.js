@@ -73,7 +73,7 @@ export const MyChart = ({ width }) => {
               wrapperStyle={isWidthUp("sm", width) ? { right: 0 } : {}}
             />
             <XAxis dataKey="name" stroke={theme.palette.text.secondary} />
-            <Tooltip />
+            <Tooltip contentStyle={{ color: "black" }} />
             <Bar
               dataKey="uplink"
               fill="#8783D1"

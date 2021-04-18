@@ -16,11 +16,11 @@ import Title from "../../components/Title";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import PRDList from "./PRDList";
 import Upload from "./Upload";
-import MyMap from "./MyMap";
 import UplinkMessages from "./UplinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import GatewaySettingsModal from "./GatewaySettingsModal";
+import MyMap from "./MyMap";
 
 const GatewayDetail = ({
   refresh,
