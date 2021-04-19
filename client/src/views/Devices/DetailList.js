@@ -9,8 +9,6 @@ import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 export const DetailList = ({ device, width }) => {
   const classes = useStyles();
 
-  console.log(device);
-
   return (
     <React.Fragment>
       <Title>Device detail</Title>
