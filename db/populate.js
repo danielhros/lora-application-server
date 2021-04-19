@@ -9,6 +9,7 @@ const populateDatabase = async () => {
   // await addPDRToNodes();
   // await setRandomDutyCycleRemainingDownlink();
   // await setRandomDutyCycleRemainingUplink();
+  // await addGeoToNodes();
 };
 
 // min and max included
@@ -138,6 +139,23 @@ const addPDRToNodes = async () => {
         100
       )} where dev_id = ${i}`
     );
+  }
+};
+
+const addGeoToNodes = async () => {
+  const query = {
+    text: "SELECT COUNT(*) FROM nodes",
+  };
+
+  let { rows } = await db.query(query.text);
+
+  for (let i = 1; i <= rows[0].count; i++) {
+    await db.query(
+      `UPDATE nodes ` +
+        `SET lat = ${faker.address.latitude()}, lng = ${faker.address.longitude()} ` +
+        `WHERE dev_id = ${i}`
+    );
+    console.log(i);
   }
 };
 

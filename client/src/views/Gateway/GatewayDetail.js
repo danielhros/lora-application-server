@@ -107,7 +107,16 @@ const GatewayDetail = ({
         {/* Map */}
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <MyMap />
+            <MyMap
+              markers={[
+                {
+                  id: 1,
+                  name: selected?.data?.name || "none",
+                  lat: selected?.data?.lat || 49.423781,
+                  lng: selected?.data?.lng || 18.696487,
+                },
+              ]}
+            />
           </Paper>
         </Grid>
         {/* Uplink messages */}
