@@ -38,7 +38,11 @@ export const DetailList = ({ device, width }) => {
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>battery</td>
-            <td>{device?.battery || "none"}</td>
+            <td>
+              {device.hasOwnProperty("battery")
+                ? `${device.battery} %`
+                : "none"}
+            </td>
           </tr>
         </tbody>
       </table>
