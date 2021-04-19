@@ -46,9 +46,18 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.post("/detail", auth, async (req, res) => {
+  const select =
+    "nodes.*, applications.name as application_name, transmission_params.registration_freq, " +
+    "transmission_params.emergency_freq, transmission_params.standard_freq, " +
+    "transmission_params.coderate, transmission_params.bandwidth";
+
   try {
     const query = {
-      text: "SELECT * FROM nodes " + "WHERE nodes.dev_id = $1",
+      text:
+        `SELECT ${select} FROM nodes ` +
+        "LEFT JOIN applications ON applications.id = nodes.application_id " +
+        "LEFT JOIN transmission_params on transmission_params.id = nodes.transmission_param_id " +
+        "WHERE nodes.dev_id = $1",
       values: [req.body.devId],
     };
     let { rows } = await db.query(query.text, query.values);

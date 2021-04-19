@@ -19,6 +19,7 @@ import TopList from "./TopList";
 import Battery from "./Battery";
 import DCRefresh from "./DCRefresh";
 import DCRemaining from "./DCRemaining";
+import DetailList from "./DetailList";
 
 import PDRProgress from "./PDRProgress";
 import MyChart from "./MyChart";
@@ -87,18 +88,8 @@ export const DevicesDetail = ({
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
-              <Paper className={classes.paper} style={{ overflowY: "hidden" }}>
-                <Battery />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6} md={12}>
               <Paper className={classes.paper}>
-                <DCRefresh />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6} md={12}>
-              <Paper className={classes.paper}>
-                <DCRemaining />
+                <DetailList device={selected?.data} />
               </Paper>
             </Grid>
           </Grid>
