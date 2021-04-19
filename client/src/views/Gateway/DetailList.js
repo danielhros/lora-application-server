@@ -50,9 +50,11 @@ export const DetailList = ({ gateway, width }) => {
           </tr>
           <tr className={classes.tableRow}>
             <td>max_power</td>
-            {gateway.hasOwnProperty("max_power")
-              ? `${gateway.max_power} dBm`
-              : "none"}
+            <td>
+              {gateway.hasOwnProperty("max_power")
+                ? `${gateway.max_power} dBm`
+                : "none"}
+            </td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>channels_num</td>

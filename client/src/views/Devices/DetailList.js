@@ -67,10 +67,11 @@ export const DetailList = ({ device, width }) => {
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>downstream_power</td>
-            {/* <td>{device?.downstream_power || "none"}</td> */}
-            {device.hasOwnProperty("downstream_power")
-              ? `${device.downstream_power} dBm`
-              : "none"}
+            <td>
+              {device.hasOwnProperty("downstream_power")
+                ? `${device.downstream_power} dBm`
+                : "none"}
+            </td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>spf</td>
