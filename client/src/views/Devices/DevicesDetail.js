@@ -87,7 +87,7 @@ export const DevicesDetail = ({
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
-              <Paper className={classes.paper}>
+              <Paper className={classes.paper} style={{ overflowY: "hidden" }}>
                 <Battery />
               </Paper>
             </Grid>
