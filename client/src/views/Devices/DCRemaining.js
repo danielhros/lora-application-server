@@ -4,7 +4,7 @@ import Title from "../../components/Title";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
-function DCReaming() {
+function DCReaming({ dc = 0 }) {
   const localClasses = useStyles();
   return (
     <React.Fragment>
@@ -13,10 +13,10 @@ function DCReaming() {
         <LinearProgress
           className={localClasses.tableProgressBar}
           variant="determinate"
-          value={12}
+          value={dc / 360}
         />{" "}
         <Typography variant="h5" component="div" color="textSecondary">
-          <nobr>33980 ms</nobr>
+          <nobr>{dc} ms</nobr>
         </Typography>
       </div>
     </React.Fragment>

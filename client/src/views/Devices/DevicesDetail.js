@@ -16,9 +16,7 @@ import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import DeviceSettingsModal from "./DeviceSettingsModal";
 import MyMap from "./MyMap";
 import TopList from "./TopList";
-import Battery from "./Battery";
-import DCRefresh from "./DCRefresh";
-import DCRemaining from "./DCRemaining";
+import DetailList from "./DetailList";
 
 import PDRProgress from "./PDRProgress";
 import MyChart from "./MyChart";
@@ -88,17 +86,7 @@ export const DevicesDetail = ({
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
               <Paper className={classes.paper}>
-                <Battery />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6} md={12}>
-              <Paper className={classes.paper}>
-                <DCRefresh />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6} md={12}>
-              <Paper className={classes.paper}>
-                <DCRemaining />
+                <DetailList device={selected?.data} />
               </Paper>
             </Grid>
           </Grid>
@@ -106,7 +94,16 @@ export const DevicesDetail = ({
 
         <Grid item xs={12} md={8}>
           <Paper className={classes.paper}>
-            <MyMap />
+            <MyMap
+              markers={[
+                {
+                  id: 1,
+                  name: selected?.data?.name || "none",
+                  lat: selected?.data?.lat || 49.423781,
+                  lng: selected?.data?.lng || 18.696487,
+                },
+              ]}
+            />
           </Paper>
         </Grid>
 

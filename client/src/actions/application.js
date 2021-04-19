@@ -61,7 +61,6 @@ export const getApplicationDetail = ({ id }) => async (dispatch) => {
         },
       });
     } else {
-      console.log("som tu");
       dispatch({
         type: SELECT_RESULT,
         payload: {

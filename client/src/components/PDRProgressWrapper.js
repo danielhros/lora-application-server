@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
+import { getPDRColor } from "../utils/utils";
 
 export const PDRProgress = ({ value = 0, width }) => {
   return (
@@ -24,7 +25,7 @@ export const PDRProgress = ({ value = 0, width }) => {
         <CircularProgress
           variant="determinate"
           value={value === 0 ? value + 1 : value}
-          style={{}}
+          style={{ color: getPDRColor(value) }}
           size={isWidthDown("xs", width) ? 130 : 170}
         />
         <Box

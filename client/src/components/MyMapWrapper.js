@@ -9,13 +9,16 @@ import {
 } from "react-google-maps";
 import mapStyles from "../shared/mapStyles";
 
-function Map({ markers }) {
+function Map({ markers = [], defaultZoom = 15 }) {
   const [selected, setSelected] = React.useState(null);
 
   return (
     <GoogleMap
-      defaultZoom={15}
-      defaultCenter={{ lat: 49.42172, lng: 18.69529 }}
+      defaultZoom={defaultZoom}
+      defaultCenter={{
+        lat: markers[0]?.lat || 49.42172,
+        lng: markers[0]?.lng || 18.69529,
+      }}
       defaultOptions={{
         styles: mapStyles,
         gestureHandling: "cooperative",
@@ -49,7 +52,7 @@ function Map({ markers }) {
 
 const WrappedMap = withScriptjs(withGoogleMap(Map));
 
-const MyMapWrapper = ({ markers, wrapperStyle }) => {
+const MyMapWrapper = ({ markers, wrapperStyle, defaultZoom }) => {
   return (
     <div
       style={{
@@ -66,6 +69,7 @@ const MyMapWrapper = ({ markers, wrapperStyle }) => {
         containerElement={<div style={{ height: "100%" }} />}
         mapElement={<div style={{ height: "100%" }} />}
         markers={markers}
+        defaultZoom={defaultZoom}
       />
     </div>
   );

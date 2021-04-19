@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import Title from "../../components/Title";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -7,12 +6,12 @@ import Divider from "@material-ui/core/Divider";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 
-export const DetailList = ({ gateway, width }) => {
+export const DetailList = ({ device, width }) => {
   const classes = useStyles();
 
   return (
     <React.Fragment>
-      <Title>Gateway detail</Title>
+      <Title>Device detail</Title>
       <table>
         <thead className={classes.tableHead}>
           <tr>
@@ -23,15 +22,27 @@ export const DetailList = ({ gateway, width }) => {
         <tbody>
           <tr className={classes.tableRow}>
             <td>id</td>
-            <td>{gateway?.id || "none"}</td>
+            <td>{device?.id || "none"}</td>
           </tr>
           <tr className={classes.tableRow}>
             <td>gateway name</td>
-            <td>{gateway?.name || "none"}</td>
+            <td>{device?.name || "none"}</td>
+          </tr>
+          <tr className={clsx(classes.tableRow)}>
+            <td>application name</td>
+            <td>{device?.application_name || "none"}</td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>firmware</td>
-            <td>{gateway?.firmware || "none"}</td>
+            <td>{device?.firmware || "none"}</td>
+          </tr>
+          <tr className={clsx(classes.tableRow)}>
+            <td>battery</td>
+            <td>
+              {device.hasOwnProperty("battery")
+                ? `${device.battery} %`
+                : "none"}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -45,34 +56,33 @@ export const DetailList = ({ gateway, width }) => {
         </thead>
         <tbody>
           <tr className={classes.tableRow}>
-            <td>protocol_ver</td>
-            <td>{gateway?.lora_protocol_ver || "none"}</td>
+            <td>last_seq</td>
+            <td>{device?.last_seq || "none"}</td>
           </tr>
           <tr className={classes.tableRow}>
-            <td>max_power</td>
+            <td>upstream_power</td>
             <td>
-              {gateway.hasOwnProperty("max_power")
-                ? `${gateway.max_power} dBm`
+              {device.hasOwnProperty("upstream_power")
+                ? `${device.upstream_power} dBm`
                 : "none"}
             </td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
-            <td>channels_num</td>
-            <td>{gateway?.channels_num || "none"}</td>
+            <td>downstream_power</td>
+            <td>
+              {device.hasOwnProperty("downstream_power")
+                ? `${device.downstream_power} dBm`
+                : "none"}
+            </td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
-            <td>duty_cycle_refresh in</td>
-            <td>{gateway?.duty_cycle_refresh || "none"}</td>
+            <td>spf</td>
+            <td>{device?.spf || "none"}</td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
-            <td>lora_protocol</td>
-            <td>{gateway?.lora_protocol || "none"}</td>
+            <td>duty_cycle_refresh</td>
+            <td>{device?.duty_cycle_refresh || "none"}</td>
           </tr>
-          <tr className={clsx(classes.tableRow)}>
-            <td>lora_protocol_ver</td>
-            <td>{gateway?.lora_protocol_ver || "none"}</td>
-          </tr>
-
           {isWidthUp("sm", width) ? (
             <>
               <tr className={clsx(classes.tableRow)}>
@@ -80,11 +90,11 @@ export const DetailList = ({ gateway, width }) => {
                 <td>
                   <TextareaAutosize
                     className={classes.textArea}
-                    value={gateway?.stat_model?.map((e) =>
+                    value={device?.stat_model?.map((e) =>
                       JSON.stringify(e, undefined, 2)
                     )}
                     readOnly
-                    rowsMax={9}
+                    rowsMax={5}
                     aria-label="maximum height"
                   />
                 </td>
@@ -100,11 +110,11 @@ export const DetailList = ({ gateway, width }) => {
                 <td colSpan={2}>
                   <TextareaAutosize
                     className={classes.textArea}
-                    value={gateway?.stat_model?.map((e) =>
+                    value={device?.stat_model?.map((e) =>
                       JSON.stringify(e, undefined, 2)
                     )}
                     readOnly
-                    rowsMax={9}
+                    rowsMax={5}
                     aria-label="maximum height"
                   />
                 </td>
@@ -125,8 +135,8 @@ export const DetailList = ({ gateway, width }) => {
           <tr className={classes.tableRow}>
             <td>registration_freq</td>
             <td>
-              {gateway.hasOwnProperty("registration_freq")
-                ? gateway.registration_freq
+              {device.hasOwnProperty("registration_freq")
+                ? device.registration_freq
                     .map((reg_freq) => {
                       return `${reg_freq / (1.0 * 1000000)} MHz`;
                     })
@@ -137,8 +147,8 @@ export const DetailList = ({ gateway, width }) => {
           <tr className={classes.tableRow}>
             <td>emergency_freq</td>
             <td>
-              {gateway.hasOwnProperty("emergency_freq")
-                ? gateway.emergency_freq
+              {device.hasOwnProperty("emergency_freq")
+                ? device.emergency_freq
                     .map((em_freq) => {
                       return `${em_freq / (1.0 * 1000000)} MHz`;
                     })
@@ -149,8 +159,8 @@ export const DetailList = ({ gateway, width }) => {
           <tr className={classes.tableRow}>
             <td>standard_freq</td>
             <td>
-              {gateway.hasOwnProperty("standard_freq")
-                ? gateway.standard_freq
+              {device.hasOwnProperty("standard_freq")
+                ? device.standard_freq
                     .map((s_freq) => {
                       return `${s_freq / (1.0 * 1000000)} MHz`;
                     })
@@ -160,14 +170,14 @@ export const DetailList = ({ gateway, width }) => {
           </tr>
           <tr className={classes.tableRow}>
             <td>coderate</td>
-            <td>{gateway?.coderate || "none"}</td>
+            <td>{device?.coderate || "none"}</td>
           </tr>
           <tr className={classes.tableRow}>
             <td>bandwidth</td>
             <td>
               {" "}
-              {gateway.hasOwnProperty("bandwidth")
-                ? `${gateway.bandwidth / (1.0 * 1000)} kHz`
+              {device.hasOwnProperty("bandwidth")
+                ? `${device.bandwidth / (1.0 * 1000)} kHz`
                 : "none"}
             </td>
           </tr>
@@ -188,10 +198,10 @@ const useStyles = makeStyles((theme) => ({
     "& > td:first-child": {
       textAlign: "right",
       paddingRight: 15,
-      width: 250,
+      width: "50%",
       verticalAlign: "top",
       fontWeight: theme.typography.fontWeightBold,
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down("md")]: {
         width: 120,
         textAlign: "left",
         whiteSpace: "nowrap",
@@ -212,11 +222,4 @@ const useStyles = makeStyles((theme) => ({
   tableBody: {},
 }));
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withWidth()(DetailList));
+export default withWidth()(DetailList);
