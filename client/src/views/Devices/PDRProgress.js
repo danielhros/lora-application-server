@@ -3,10 +3,12 @@ import { connect } from "react-redux";
 import PDRProgressWrapper from "../../components/PDRProgressWrapper";
 
 export const PDRProgress = (props) => {
-  return <PDRProgressWrapper {...props} value={96} />;
+  return <PDRProgressWrapper {...props} />;
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = ({ result }) => ({
+  value: result?.selected?.data?.pdr || 0,
+});
 
 const mapDispatchToProps = {};
 

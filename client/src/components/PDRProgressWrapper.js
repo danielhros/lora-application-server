@@ -5,6 +5,18 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 
+const getColor = (value) => {
+  if (value >= 75) {
+    return "#72C040";
+  }
+
+  if (value >= 60) {
+    return "#EFAF41";
+  }
+
+  return "#EC5B56";
+};
+
 export const PDRProgress = ({ value = 0, width }) => {
   return (
     <React.Fragment>
@@ -24,7 +36,7 @@ export const PDRProgress = ({ value = 0, width }) => {
         <CircularProgress
           variant="determinate"
           value={value === 0 ? value + 1 : value}
-          style={{}}
+          style={{ color: getColor(value) }}
           size={isWidthDown("xs", width) ? 130 : 170}
         />
         <Box
