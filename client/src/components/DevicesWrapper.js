@@ -185,7 +185,11 @@ export const Devices = ({
           : "none",
       },
       {
-        name: e.hasOwnProperty("pdr") ? `${e.pdr} %` : "none",
+        name: e.hasOwnProperty("pdr")
+          ? e.pdr < 75
+            ? ""
+            : `${e.pdr} %`
+          : "none",
         content: (
           <React.Fragment>
             {e.hasOwnProperty("pdr") ? (
