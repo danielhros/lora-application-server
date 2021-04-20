@@ -6,6 +6,10 @@ import clsx from "clsx";
 import Divider from "@material-ui/core/Divider";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
+import moment from "moment";
+import Tooltip from "@material-ui/core/Tooltip";
+import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
+import Firmware from "../../components/Firmware";
 
 export const DetailList = ({ gateway, width }) => {
   const classes = useStyles();
@@ -31,7 +35,13 @@ export const DetailList = ({ gateway, width }) => {
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>firmware</td>
-            <td>{gateway?.firmware || "none"}</td>
+            <td>
+              {gateway.hasOwnProperty("firmware") ? (
+                <Firmware firmware={gateway.firmware} />
+              ) : (
+                "none"
+              )}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -61,8 +71,24 @@ export const DetailList = ({ gateway, width }) => {
             <td>{gateway?.channels_num || "none"}</td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
-            <td>duty_cycle_refresh in</td>
-            <td>{gateway?.duty_cycle_refresh || "none"}</td>
+            <td>
+              <React.Fragment>
+                duty_cycle_refresh
+                <Tooltip
+                  title="The time when the duty cycle of gateway is planned. It tells you the minute and second of refresh of this or upcoming hour based on the actual time. Example: Imagine actual time is 16:20:00 and the value of the row is 25:00, the refresh is then planned to 16:25:00. If the value would be set to 15:00, the refresh is planned to 17:15:00."
+                  arrow
+                >
+                  <HelpOutlineOutlinedIcon
+                    style={{ marginLeft: 2, height: 20, marginBottom: -5 }}
+                  />
+                </Tooltip>
+              </React.Fragment>
+            </td>
+            <td>
+              {gateway.hasOwnProperty("duty_cycle_refresh")
+                ? moment(gateway.duty_cycle_refresh, "HH:mm:ss").format("mm:ss")
+                : "none"}
+            </td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>lora_protocol</td>

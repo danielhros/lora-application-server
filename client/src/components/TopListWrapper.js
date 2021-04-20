@@ -6,7 +6,8 @@ import Title from "./Title";
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
 
-export const TopListWrapper = ({ classes }) => {
+export const TopListWrapper = ({ classes, top }) => {
+  console.log(top.frequency);
   return (
     <React.Fragment>
       <Title
@@ -31,15 +32,21 @@ export const TopListWrapper = ({ classes }) => {
         <tbody>
           <tr className={classes.tableRow}>
             <td>message_type</td>
-            <td>Emergency</td>
+            <td>{top.message_type}</td>
           </tr>
           <tr className={classes.tableRow}>
             <td>frequency</td>
-            <td>868 MHz</td>
+            <td>
+              {top.frequency === "error" ||
+              top.frequency === "loading.." ||
+              top.frequency === "none"
+                ? top.frequency
+                : `${top.frequency / (1.0 * 1000000)} MHz`}
+            </td>
           </tr>
           <tr className={classes.tableRow}>
             <td>SF</td>
-            <td>7</td>
+            <td>{top.spf}</td>
           </tr>
         </tbody>
       </table>

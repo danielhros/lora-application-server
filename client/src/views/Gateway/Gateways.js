@@ -11,15 +11,12 @@ import {
   cleanResults as cleanGateways,
 } from "../../actions/shared";
 import Tooltip from "@material-ui/core/Tooltip";
-import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import moment from "moment";
 import { truncate } from "../../utils/utils";
-import Typography from "@material-ui/core/Typography";
-import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
 import { withRouter } from "react-router-dom";
+import Firmware from "../../components/Firmware";
 
 const getColumnName = (column) => {
   switch (column) {
@@ -137,38 +134,7 @@ export const Gateways = ({
         content: (
           <React.Fragment>
             {e.hasOwnProperty("firmware") ? (
-              <React.Fragment>
-                <Typography
-                  color={
-                    e.firmware.split(".")[0] > 1 ||
-                    (e.firmware.split(".")[0] >= 1 &&
-                      e.firmware.split(".")[1] >= 5)
-                      ? "inherit"
-                      : "error"
-                  }
-                  variant="body2"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <nobr>{`${e.firmware}`}</nobr>
-
-                  {e.firmware.split(".")[0] > 1 ||
-                  (e.firmware.split(".")[0] >= 1 &&
-                    e.firmware.split(".")[1] >= 5) ? null : (
-                    <Tooltip
-                      title="Firmware older then (1.15.0), consider upgrading"
-                      arrow
-                    >
-                      <ErrorOutlineIcon
-                        color="error"
-                        style={{ marginLeft: 5, height: 20 }}
-                      />
-                    </Tooltip>
-                  )}
-                </Typography>
-              </React.Fragment>
+              <Firmware firmware={e.firmware} />
             ) : (
               "none"
             )}
@@ -222,18 +188,18 @@ export const Gateways = ({
                 column: getColumnName(column),
               });
             }}
-            rightNode={
-              <Tooltip title="Add gateway">
-                <Button
-                  variant="outlined"
-                  className={classes.tableButton}
-                  startIcon={<AddIcon />}
-                  onClick={() => console.log("hello")}
-                >
-                  add
-                </Button>
-              </Tooltip>
-            }
+            // rightNode={
+            //   <Tooltip title="Add gateway">
+            //     <Button
+            //       variant="outlined"
+            //       className={classes.tableButton}
+            //       startIcon={<AddIcon />}
+            //       onClick={() => console.log("hello")}
+            //     >
+            //       add
+            //     </Button>
+            //   </Tooltip>
+            // }
           />
         </Paper>
       </Grid>

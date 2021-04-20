@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
     "username": "admin",
-    "password": "admin"
+    "password": "VRjekeJeOnadatra125."
 }
 
 ### Get user
@@ -336,4 +336,15 @@ Content-Type: application/json
 }
 
 
+### Get top values dashboard
+GET http://localhost:5000/api/dashboard/top
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4OTI1ODc1LCJleHAiOjE2MTg5MzA4NzV9.XRRx5AHfakOl05FISXiXTLFKvlryG1blCxaldMdypR4
 
+### Get op values device detial
+POST http://localhost:5000/api/device/top
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4OTM0NTgyLCJleHAiOjE2MTg5Mzk1ODJ9.ciP04LujUJjXwray5x0XRbJJh2lB7r8Marqp3lA2Zsc
+Content-Type: application/json
+
+{
+    "deviceId": "01qc"
+}

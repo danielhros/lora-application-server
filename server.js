@@ -17,6 +17,7 @@ app.use("/api/gateway", require("./routes/gateway"));
 app.use("/api/device", require("./routes/device"));
 app.use("/api/application", require("./routes/application"));
 app.use("/api/messages", require("./routes/messages"));
+app.use("/api/dashboard", require("./routes/dashboard"));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {

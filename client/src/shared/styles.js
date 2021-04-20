@@ -8,6 +8,7 @@ const globalStyles = (theme) => ({
     padding: theme.spacing(2),
     display: "flex",
     overflow: "auto",
+    overflowY: "hidden",
     flexDirection: "column",
     height: "100%",
   },
