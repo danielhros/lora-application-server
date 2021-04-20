@@ -11,8 +11,6 @@ import {
   cleanResults as cleanGateways,
 } from "../../actions/shared";
 import Tooltip from "@material-ui/core/Tooltip";
-import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import moment from "moment";
 import { truncate } from "../../utils/utils";
@@ -222,18 +220,18 @@ export const Gateways = ({
                 column: getColumnName(column),
               });
             }}
-            rightNode={
-              <Tooltip title="Add gateway">
-                <Button
-                  variant="outlined"
-                  className={classes.tableButton}
-                  startIcon={<AddIcon />}
-                  onClick={() => console.log("hello")}
-                >
-                  add
-                </Button>
-              </Tooltip>
-            }
+            // rightNode={
+            //   <Tooltip title="Add gateway">
+            //     <Button
+            //       variant="outlined"
+            //       className={classes.tableButton}
+            //       startIcon={<AddIcon />}
+            //       onClick={() => console.log("hello")}
+            //     >
+            //       add
+            //     </Button>
+            //   </Tooltip>
+            // }
           />
         </Paper>
       </Grid>
