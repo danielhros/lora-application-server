@@ -23,7 +23,7 @@ export const MyChartWrapper = ({ width, data = [] }) => {
 
   return (
     <React.Fragment>
-      <div style={{ height: 260, minWidth: 400 }}>
+      <div style={{ height: 250, minWidth: 400 }}>
         <Title subtitle={"uplink & downlink"}>
           All messages count per hour
         </Title>
