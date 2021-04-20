@@ -8,6 +8,7 @@ import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 import Tooltip from "@material-ui/core/Tooltip";
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import moment from "moment";
+import Firmware from "../../components/Firmware";
 
 export const DetailList = ({ device, width }) => {
   const classes = useStyles();
@@ -37,7 +38,13 @@ export const DetailList = ({ device, width }) => {
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>firmware</td>
-            <td>{device?.firmware || "none"}</td>
+            <td>
+              {device.hasOwnProperty("firmware") ? (
+                <Firmware firmware={device.firmware} />
+              ) : (
+                "none"
+              )}
+            </td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>battery</td>
@@ -96,7 +103,6 @@ export const DetailList = ({ device, width }) => {
                 </Tooltip>
               </React.Fragment>
             </td>
-            {/* <td>{device?.duty_cycle_refresh || "none"}</td> */}
             <td>
               {device.hasOwnProperty("duty_cycle_refresh")
                 ? moment(device.duty_cycle_refresh, "HH:mm:ss").format("mm:ss")

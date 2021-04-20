@@ -9,6 +9,7 @@ import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 import moment from "moment";
 import Tooltip from "@material-ui/core/Tooltip";
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
+import Firmware from "../../components/Firmware";
 
 export const DetailList = ({ gateway, width }) => {
   const classes = useStyles();
@@ -34,7 +35,13 @@ export const DetailList = ({ gateway, width }) => {
           </tr>
           <tr className={clsx(classes.tableRow)}>
             <td>firmware</td>
-            <td>{gateway?.firmware || "none"}</td>
+            <td>
+              {gateway.hasOwnProperty("firmware") ? (
+                <Firmware firmware={gateway.firmware} />
+              ) : (
+                "none"
+              )}
+            </td>
           </tr>
         </tbody>
       </table>
