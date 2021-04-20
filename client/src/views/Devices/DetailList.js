@@ -5,6 +5,9 @@ import clsx from "clsx";
 import Divider from "@material-ui/core/Divider";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
+import Tooltip from "@material-ui/core/Tooltip";
+import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
+import moment from "moment";
 
 export const DetailList = ({ device, width }) => {
   const classes = useStyles();
@@ -80,8 +83,25 @@ export const DetailList = ({ device, width }) => {
             <td>{device?.spf || "none"}</td>
           </tr>
           <tr className={clsx(classes.tableRow)}>
-            <td>duty_cycle_refresh</td>
-            <td>{device?.duty_cycle_refresh || "none"}</td>
+            <td>
+              <React.Fragment>
+                duty_cycle_refresh
+                <Tooltip
+                  title="The time when the duty cycle of gateway is planned. It tells you the minute and second of refresh of this or upcoming hour based on the actual time. Example: Imagine actual time is 16:20:00 and the value of the row is 25:00, the refresh is then planned to 16:25:00. If the value would be set to 15:00, the refresh is planned to 17:15:00."
+                  arrow
+                >
+                  <HelpOutlineOutlinedIcon
+                    style={{ marginLeft: 2, height: 20, marginBottom: -5 }}
+                  />
+                </Tooltip>
+              </React.Fragment>
+            </td>
+            {/* <td>{device?.duty_cycle_refresh || "none"}</td> */}
+            <td>
+              {device.hasOwnProperty("duty_cycle_refresh")
+                ? moment(device.duty_cycle_refresh, "HH:mm:ss").format("mm:ss")
+                : "none"}
+            </td>
           </tr>
           {isWidthUp("sm", width) ? (
             <>
