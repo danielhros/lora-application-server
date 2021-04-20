@@ -34,7 +34,7 @@ export const Dashboard = ({ refresh, classes }) => {
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
               <Paper className={clsx(classes.paper)}>
-                <TopList />
+                <TopList refresh={refresh} />
               </Paper>
             </Grid>
           </Grid>

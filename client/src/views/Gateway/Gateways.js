@@ -14,8 +14,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import moment from "moment";
 import { truncate } from "../../utils/utils";
-import Typography from "@material-ui/core/Typography";
-import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
 import { withRouter } from "react-router-dom";
 import Firmware from "../../components/Firmware";

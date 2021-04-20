@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
     "username": "admin",
-    "password": "admin"
+    "password": "VRjekeJeOnadatra125."
 }
 
 ### Get user
@@ -335,5 +335,9 @@ Content-Type: application/json
     "gatewayId": "000000"
 }
 
+
+### Get top values dashboard
+GET http://localhost:5000/api/dashboard/top
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE4OTI1ODc1LCJleHAiOjE2MTg5MzA4NzV9.XRRx5AHfakOl05FISXiXTLFKvlryG1blCxaldMdypR4
 
 
