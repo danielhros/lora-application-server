@@ -21,7 +21,7 @@ export const Dashboard = ({ refresh, classes }) => {
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Paper className={clsx(classes.paper, localClasses.chartPaper)}>
-            <MyMap />
+            <MyMap refresh={refresh} />
           </Paper>
         </Grid>
 

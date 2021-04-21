@@ -21,6 +21,7 @@
     "express-validator": "^6.10.0",
     "faker": "^5.5.3",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "pg": "^8.5.1",
     "react-redux": "^7.2.2",
     "recharts": "^2.0.8",

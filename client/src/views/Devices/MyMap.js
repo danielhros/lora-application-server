@@ -7,6 +7,7 @@ function MyMap({ markers }) {
       defaultZoom={16}
       markers={markers}
       wrapperStyle={{ minHeight: 370 }}
+      title={"Device position"}
     />
   );
 }

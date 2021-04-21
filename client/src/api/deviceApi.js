@@ -40,14 +40,14 @@ export default {
     );
     return appApi.post(`${DEVICE}/downlinkMessages`, payload);
   },
-  sendDeviceConfig(payload) {
-    devConsole.log("Sending request to save new device configuration..");
-    return appApi.post(`${DEVICE}/config`, payload);
-  },
   getTop(payload) {
     devConsole.log(
       "Sending request to get top & most used values for device from server.."
     );
     return appApi.post(`${DEVICE}/top`, payload);
+  },
+  sendDeviceConfig(payload) {
+    devConsole.log("Sending request to set device message..");
+    return appApi.post(`${DEVICE}/config`, payload);
   },
 };

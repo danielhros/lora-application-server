@@ -7,7 +7,6 @@ import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
 
 export const TopListWrapper = ({ classes, top }) => {
-  console.log(top.frequency);
   return (
     <React.Fragment>
       <Title

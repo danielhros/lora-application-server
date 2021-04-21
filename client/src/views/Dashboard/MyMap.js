@@ -1,29 +1,38 @@
 import React from "react";
 import MyMapWrapper from "../../components/MyMapWrapper";
+import dashboardApi from "../../api/dashboard";
+import devConsole from "../../devConsole";
 
-const markers = [
-  {
-    id: 1,
-    name: "Gateway name",
-    lat: 49.423781,
-    lng: 18.696487,
-  },
-  {
-    id: 2,
-    name: "Gateway name 2",
-    lat: 49.422507,
-    lng: 18.697233,
-  },
-  {
-    id: 3,
-    name: "Gateway name 3",
-    lat: 49.423414,
-    lng: 18.693497,
-  },
-];
+function MyMap({ refresh }) {
+  const [markers, setMarkers] = React.useState([]);
 
-function MyMap() {
-  return <MyMapWrapper markers={markers} wrapperStyle={{ minHeight: 370 }} />;
+  const getMarkers = async () => {
+    try {
+      const res = await dashboardApi.getMarkers();
+      setMarkers(res?.data || []);
+    } catch (error) {
+      devConsole.log(error);
+    }
+  };
+  React.useEffect(() => {
+    getMarkers();
+  }, []);
+
+  React.useEffect(() => {
+    if (refresh) {
+      setMarkers([]);
+      getMarkers();
+    }
+  }, [refresh]);
+
+  return (
+    <MyMapWrapper
+      markers={markers}
+      wrapperStyle={{ minHeight: 370 }}
+      defaultZoom={11}
+      title={"Map of gateways"}
+    />
+  );
 }
 
 export default MyMap;

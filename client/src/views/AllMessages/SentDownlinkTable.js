@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import devConsole from "../../devConsole";
 
 const headCells = [
   "Date",
@@ -141,7 +142,7 @@ export const SentDownlinkMessages = ({
   });
 
   const handleOnRowClick = (index) => {
-    console.log(index);
+    devConsole.log(index);
   };
 
   return (

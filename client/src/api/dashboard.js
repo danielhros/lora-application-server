@@ -10,4 +10,10 @@ export default {
     );
     return appApi.get(`${DASHBOARD}/top`);
   },
+  getMarkers() {
+    devConsole.log(
+      "Sending request to get geo of first gateways from server.."
+    );
+    return appApi.get(`${DASHBOARD}/map`);
+  },
 };
