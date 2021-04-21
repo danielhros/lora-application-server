@@ -348,3 +348,8 @@ Content-Type: application/json
 {
     "deviceId": "01qc"
 }
+
+
+### Get 3 first gateways location from all gateways
+GET http://localhost:5000/api/dashboard/map
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5MDIxODM1LCJleHAiOjE2MTkwMjY4MzV9.pozMu8jI7qpkpuc-UYybO_eHZoXEZBc5GrJixwL3JCc

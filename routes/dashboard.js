@@ -21,4 +21,19 @@ router.get("/top", auth, async (req, res) => {
   }
 });
 
+router.get("/map", auth, async (req, res) => {
+  try {
+    const query = {
+      text:
+        "SELECT name, dev_id AS id, lat, lng FROM aps ORDER BY aps.id LIMIT 3",
+    };
+
+    let { rows } = await db.query(query.text);
+    res.json(rows);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
