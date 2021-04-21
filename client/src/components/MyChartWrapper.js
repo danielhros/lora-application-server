@@ -11,7 +11,7 @@ import {
   Legend,
 } from "recharts";
 
-export const MyChartWrapper = ({ width, data = [] }) => {
+export const MyChartWrapper = ({ width, data = [], withCollisions }) => {
   const theme = useTheme();
   let graphData = data;
 
@@ -55,6 +55,13 @@ export const MyChartWrapper = ({ width, data = [] }) => {
               fill="#8B939C"
               label={{ position: "insideBottom", fill: "#fff" }}
             />
+            {withCollisions && (
+              <Bar
+                dataKey="collisions"
+                fill="#EC5B56"
+                label={{ position: "insideBottom", fill: "#fff" }}
+              />
+            )}
           </BarChart>
         </ResponsiveContainer>
       </div>
