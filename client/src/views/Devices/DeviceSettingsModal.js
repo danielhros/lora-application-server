@@ -39,6 +39,7 @@ const DownlinkMessagesModal = ({
 
   const [spreadingFactor, setSpreadingFactor] = React.useState(7);
   const [transmissionPower, setTransmissionPower] = React.useState(5);
+  const [messageType, setMessageType] = React.useState("NORMAL");
 
   const [loading, setLoading] = React.useState(false);
 
@@ -63,8 +64,8 @@ const DownlinkMessagesModal = ({
           newSpreadingFactor: spreadingFactor,
           newTransmissionPower: transmissionPower,
         });
-        handleConfirmClose();
         resetForm({});
+        handleConfirmClose();
       } catch (error) {
         devConsole.log(error);
         setErrors({ serverError: "Something went wrong" });
@@ -136,6 +137,30 @@ const DownlinkMessagesModal = ({
                   formik.touched.newDeviceName && formik.errors.newDeviceName
                 }
               />
+
+              <FormControl
+                margin="normal"
+                variant="outlined"
+                disabled={loading}
+                className={localClasses.formControl}
+              >
+                <InputLabel id="message-type-select">Message type</InputLabel>
+                <Select
+                  labelId="message-type-select"
+                  id="message-type-select"
+                  value={messageType}
+                  onChange={(event) => setMessageType(event.target.value)}
+                  label="Message type"
+                >
+                  {["NORMAL", "EMER", "REG"].map((mt) => {
+                    return (
+                      <MenuItem key={mt} value={mt}>
+                        {mt}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
 
               <FormControl
                 margin="normal"
