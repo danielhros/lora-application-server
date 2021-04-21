@@ -354,12 +354,13 @@ Content-Type: application/json
 GET http://localhost:5000/api/dashboard/map
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5MDIxODM1LCJleHAiOjE2MTkwMjY4MzV9.pozMu8jI7qpkpuc-UYybO_eHZoXEZBc5GrJixwL3JCc
 
-### Setup device
-POST http://localhost:5000/api/device/settings
+### Setup device, do not call this ednpoint, wrong format of netData attribute
+POST http://localhost:5000/api/device/config
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5MDI3NDk2LCJleHAiOjE2MTkwMzI0OTZ9.OIIxjUlbu_-0tggAjD17bWHeU7r4csSlB9auV-CVNss
 Content-Type: application/json
 
 {
     "deviceId": "Dp1Q",
-    "netData": {"sf":7,"power":6,"type":"NORMAL"}
+    "netData": {"sf":7,"power":6,"type":"NORMAL"},
+    "newDeviceName": "newDeviceName"
 }

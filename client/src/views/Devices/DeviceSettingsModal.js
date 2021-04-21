@@ -61,16 +61,22 @@ const DownlinkMessagesModal = ({
         await deviceApi.sendDeviceConfig({
           deviceId: device.id,
           newDeviceName: values.newDeviceName,
-          newSpreadingFactor: spreadingFactor,
-          newTransmissionPower: transmissionPower,
+          netData: JSON.stringify([
+            {
+              sf: spreadingFactor,
+              power: transmissionPower,
+              type: messageType,
+            },
+          ]),
         });
         resetForm({});
+        setLoading(false);
         handleConfirmClose();
       } catch (error) {
         devConsole.log(error);
         setErrors({ serverError: "Something went wrong" });
+        setLoading(false);
       }
-      setLoading(false);
     },
   });
 

@@ -182,30 +182,6 @@ router.post("/downlinkMessages", auth, async (req, res) => {
   }
 });
 
-router.post("/config", auth, async (req, res) => {
-  const {
-    deviceId,
-    newDeviceName,
-    newSpreadingFactor,
-    newTransmissionPower,
-  } = req.body;
-
-  try {
-    const query = {
-      text:
-        `UPDATE nodes ` +
-        `SET name='${newDeviceName}' ` +
-        `WHERE id='${deviceId}'`,
-    };
-
-    await db.query(query.text);
-    res.status(200).send("OK");
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Server error");
-  }
-});
-
 router.post("/top", auth, async (req, res) => {
   const { deviceId } = req.body;
 
@@ -226,29 +202,33 @@ router.post("/top", auth, async (req, res) => {
   }
 });
 
-router.post("/settings", auth, async (req, res) => {
-  const { deviceId } = req.body;
-
-  const netData = JSON.stringify(req.body.netData);
+router.post("/config", auth, async (req, res) => {
+  const { deviceId, netData, newDeviceName } = req.body;
 
   try {
     let query = {
       text:
-        `SELECT uplink_messages.* FROM uplink_messages ` +
-        "INNER JOIN nodes ON nodes.id = uplink_messages.node_id " +
-        `WHERE nodes.id = '${deviceId}' ` +
-        `ORDER BY receive_time DESC, dev_id DESC ` +
-        `LIMIT 1`,
+        `UPDATE nodes ` +
+        `SET name='${newDeviceName}' ` +
+        `WHERE id='${deviceId}'`,
     };
+
+    await db.query(query.text);
+
+    query.text =
+      `SELECT uplink_messages.* FROM uplink_messages ` +
+      "INNER JOIN nodes ON nodes.id = uplink_messages.node_id " +
+      `WHERE nodes.id = '${deviceId}' ` +
+      `ORDER BY receive_time DESC, dev_id DESC ` +
+      `LIMIT 1`;
 
     let { rows } = await db.query(query.text);
     const um = rows[0];
-
     const now = moment().format("YYYY-MM-DD HH:mm:ss.SSS");
 
     query.text =
       "INSERT INTO downlink_messages (app_data, net_data, duty_cycle_remaining, sent, ack_required, delivered, send_time, frequency, spf, power, airtime , coderate, bandwidth, ap_id, node_id, application_id) " +
-      `VALUES ('', '${[netData]}'::json, ${
+      `VALUES ('', '${netData}'::json, ${
         um?.duty_cycle_remaining || 36000
       }, false, ` +
       `true, false, '${now}', ${um?.frequency || 866900000}, ${
