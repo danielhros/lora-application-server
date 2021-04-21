@@ -52,7 +52,12 @@ function Map({ markers = [], defaultZoom = 15 }) {
 
 const WrappedMap = withScriptjs(withGoogleMap(Map));
 
-const MyMapWrapper = ({ markers, wrapperStyle, defaultZoom }) => {
+const MyMapWrapper = ({
+  markers,
+  wrapperStyle,
+  defaultZoom,
+  title = "Signal radius",
+}) => {
   return (
     <div
       style={{
@@ -62,7 +67,7 @@ const MyMapWrapper = ({ markers, wrapperStyle, defaultZoom }) => {
         ...wrapperStyle,
       }}
     >
-      <Title>Signal radius</Title>
+      <Title>{title}</Title>
       <WrappedMap
         googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_API}`}
         loadingElement={<div style={{ height: "100%" }} />}

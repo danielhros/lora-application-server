@@ -172,11 +172,9 @@ const DownlinkMessageModal = ({
               <tr className={localClasses.tableRow}>
                 <td>airtime</td>
                 <td>
-                  <td>
-                    {message.hasOwnProperty("airtime")
-                      ? `${message.airtime} ms`
-                      : "none"}
-                  </td>
+                  {message.hasOwnProperty("airtime")
+                    ? `${message.airtime} ms`
+                    : "none"}
                 </td>
               </tr>
               <tr className={localClasses.tableRow}>

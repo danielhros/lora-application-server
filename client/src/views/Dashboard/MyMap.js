@@ -30,6 +30,7 @@ function MyMap({ refresh }) {
       markers={markers}
       wrapperStyle={{ minHeight: 370 }}
       defaultZoom={11}
+      title={"Map of gateways"}
     />
   );
 }
