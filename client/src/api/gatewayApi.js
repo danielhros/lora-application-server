@@ -44,4 +44,8 @@ export default {
     devConsole.log("Sending SETAP message to server..");
     return appApi.post(`${GATEWAY}/setap`, payload);
   },
+  downloadSetap(payload) {
+    devConsole.log("Downloading SETAP message to server..");
+    return appApi.post(`${GATEWAY}/download`, payload);
+  },
 };

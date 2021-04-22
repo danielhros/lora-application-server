@@ -21,6 +21,8 @@ import SentDownlinkMessages from "./SentDownlinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import GatewaySettingsModal from "./GatewaySettingsModal";
 import MyMap from "./MyMap";
+import gatewayApi from "../../api/gatewayApi";
+import devConsole from "../../devConsole";
 
 const GatewayDetail = ({
   refresh,
@@ -33,6 +35,8 @@ const GatewayDetail = ({
   handleConfirmClose,
 }) => {
   let { id } = useParams();
+
+  const downloadButton = React.useRef(null);
 
   React.useEffect(() => {
     getGatewayDetail({ id });
@@ -54,6 +58,33 @@ const GatewayDetail = ({
   if (selected.data === null || selected.type !== "gateways") {
     return <Loading />;
   }
+
+  const download = async (event) => {
+    event.preventDefault();
+
+    let data;
+    try {
+      const res = await gatewayApi.downloadSetap({
+        gatewayId: selected.data.id,
+      });
+
+      data = res?.data[0]?.setap || undefined;
+    } catch (error) {
+      return devConsole.log("error");
+    }
+
+    if (data === undefined) {
+      return devConsole.log("error");
+    }
+
+    const output = JSON.stringify(data, null, 4);
+    const blob = new Blob([output]);
+    const fileDownloadUrl = URL.createObjectURL(blob);
+
+    downloadButton.current.href = fileDownloadUrl;
+    downloadButton.current.click();
+    URL.revokeObjectURL(fileDownloadUrl);
+  };
 
   return (
     <React.Fragment>
@@ -78,10 +109,22 @@ const GatewayDetail = ({
             <Grid item xs={12} md={12}>
               <Paper className={clsx(classes.paper)}>
                 <Title>Download configuration</Title>
+
+                <a
+                  className="hidden"
+                  style={{ display: "none" }}
+                  download={`apConf-${selected.data.id}.json`}
+                  href={"/"}
+                  ref={downloadButton}
+                >
+                  download it
+                </a>
+
                 <Button
                   variant="contained"
                   color="default"
                   startIcon={<GetAppIcon />}
+                  onClick={download}
                 >
                   Download
                 </Button>

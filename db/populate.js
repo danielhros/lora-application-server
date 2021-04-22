@@ -165,11 +165,13 @@ const addApsConfig = async () => {
 
   while (true) {
     let query = {
-      text: `select id from aps limit 1 offset ${i}`,
+      text: `select id from aps order by id limit 1 offset ${i} `,
     };
 
     let { rows } = await db.query(query.text);
     let apId = rows[0]?.id;
+
+    // console.log(apId);
 
     if (apId == undefined) {
       break;
@@ -181,7 +183,8 @@ const addApsConfig = async () => {
 
     await db.query(query.text);
 
-    console.log(i);
+    console.log(apId);
+
     i += 1;
   }
 };
