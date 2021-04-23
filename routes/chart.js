@@ -29,7 +29,7 @@ router.get("/allMessages", auth, async (req, res) => {
 
     let { rows } = await db.query(query.text);
 
-    const uplinkMessagesRes = rows || [];
+    const uplinkMessagesRes = rows;
 
     data.uplink = uplinkMessagesRes.map((u) => {
       return {
@@ -53,7 +53,7 @@ router.get("/allMessages", auth, async (req, res) => {
       "LIMIT 5";
 
     const result = await db.query(query.text);
-    const downlinkMessages = result.rows || [];
+    const downlinkMessages = result.rows;
 
     data.downlink = downlinkMessages.map((u) => {
       return {
@@ -62,7 +62,16 @@ router.get("/allMessages", auth, async (req, res) => {
       };
     });
 
-    res.json(data);
+    const response = [];
+    for (let i = 0; i < 5; i++) {
+      response.push({
+        name: moment(data.uplink[i].time).format("HH:mm"),
+        uplink: data.uplink[i].count,
+        downlink: data.downlink[i].count,
+      });
+    }
+
+    res.json(response);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server error");
