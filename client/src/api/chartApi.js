@@ -16,4 +16,10 @@ export default {
     );
     return appApi.post(`${CHART}/application`, payload);
   },
+  getDevice(payload) {
+    devConsole.log(
+      "Get count of all uplink and downlink messages for specific device from server.."
+    );
+    return appApi.post(`${CHART}/device`, payload);
+  },
 };

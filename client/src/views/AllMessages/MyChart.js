@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import MyCharWrapper from "../../components/MyChartWrapper";
 import chartApi from "../../api/chartApi";
 import devConsole from "../../devConsole";
@@ -50,8 +49,4 @@ export const MyChart = ({ refresh }) => {
   return <MyCharWrapper data={data} />;
 };
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyChart);
+export default MyChart;
