@@ -238,4 +238,34 @@ router.post("/device", auth, async (req, res) => {
   }
 });
 
+router.post("/deviceMessageRatio", auth, async (req, res) => {
+  const { deviceId } = req.body;
+
+  try {
+    let query = {
+      text:
+        "SELECT nc.normal, ec.emer, rc.reg FROM " +
+        `(SELECT COUNT(*) as normal FROM uplink_messages WHERE message_type_id=1 and ap_id='${deviceId}') as nc, ` +
+        `(SELECT COUNT(*) as emer FROM uplink_messages WHERE message_type_id=2 and ap_id='${deviceId}') as ec, ` +
+        `(SELECT COUNT(*) as reg FROM uplink_messages WHERE message_type_id=3 and ap_id='${deviceId}') as rc`,
+    };
+
+    let { rows } = await db.query(query.text);
+
+    const normal = parseInt(rows[0].normal);
+    const emer = parseInt(rows[0].emer);
+    const reg = parseInt(rows[0].reg);
+    const total = normal + emer + reg;
+
+    res.json({
+      normal: (normal * 100) / total,
+      emer: (emer * 100) / total,
+      reg: (reg * 100) / total,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
