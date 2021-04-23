@@ -153,7 +153,7 @@ const GatewayDetail = ({
             <Grid item xs={12} md={12}>
               <Paper className={clsx(classes.paper)}>
                 <Title>Upload configuration</Title>
-                <Upload />
+                <Upload gatewayId={selected.data.id} />
               </Paper>
             </Grid>
 
