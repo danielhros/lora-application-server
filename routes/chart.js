@@ -245,9 +245,9 @@ router.post("/deviceMessageRatio", auth, async (req, res) => {
     let query = {
       text:
         "SELECT nc.normal, ec.emer, rc.reg FROM " +
-        `(SELECT COUNT(*) as normal FROM uplink_messages WHERE message_type_id=1 and ap_id='${deviceId}') as nc, ` +
-        `(SELECT COUNT(*) as emer FROM uplink_messages WHERE message_type_id=2 and ap_id='${deviceId}') as ec, ` +
-        `(SELECT COUNT(*) as reg FROM uplink_messages WHERE message_type_id=3 and ap_id='${deviceId}') as rc`,
+        `(SELECT COUNT(*) as normal FROM uplink_messages WHERE message_type_id=1 and node_id='${deviceId}') as nc, ` +
+        `(SELECT COUNT(*) as emer FROM uplink_messages WHERE message_type_id=2 and node_id='${deviceId}') as ec, ` +
+        `(SELECT COUNT(*) as reg FROM uplink_messages WHERE message_type_id=3 and node_id='${deviceId}') as rc`,
     };
 
     let { rows } = await db.query(query.text);
@@ -257,10 +257,14 @@ router.post("/deviceMessageRatio", auth, async (req, res) => {
     const reg = parseInt(rows[0].reg);
     const total = normal + emer + reg;
 
+    const normalPer = (normal * 100) / total || 0;
+    const emerPer = (emer * 100) / total || 0;
+    const req = (reg * 100) / total || 0;
+
     res.json({
-      normal: (normal * 100) / total,
-      emer: (emer * 100) / total,
-      reg: (reg * 100) / total,
+      normal: Math.round(normalPer * 100) / 100,
+      emer: Math.round(emerPer * 100) / 100,
+      reg: Math.round(req * 100) / 100,
     });
   } catch (err) {
     console.log(err);

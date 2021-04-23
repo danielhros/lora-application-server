@@ -22,4 +22,10 @@ export default {
     );
     return appApi.post(`${CHART}/device`, payload);
   },
+  getDeviceMessageRatio(payload) {
+    devConsole.log(
+      "Get ratio of messages type for specific device from server.."
+    );
+    return appApi.post(`${CHART}/deviceMessageRatio`, payload);
+  },
 };

@@ -85,7 +85,7 @@ export const DevicesDetail = ({
         </Grid>
         <Grid item xs={12} md={8}>
           <Paper className={classes.paper}>
-            <MyVerticalChart />
+            <MyVerticalChart refresh={refresh} deviceId={selected.data.id} />
           </Paper>
         </Grid>
 
