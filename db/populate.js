@@ -1,5 +1,6 @@
 const db = require("./index");
 const faker = require("faker");
+const moment = require("moment");
 
 const populateDatabase = async () => {
   // await addNamesToAps();
@@ -11,6 +12,7 @@ const populateDatabase = async () => {
   // await setRandomDutyCycleRemainingUplink();
   // await addGeoToNodes();
   // await addApsConfig();
+  // await addBatteryToUplinkMessages();
 };
 
 // min and max included
@@ -186,6 +188,51 @@ const addApsConfig = async () => {
     console.log(apId);
 
     i += 1;
+  }
+};
+
+const addBatteryToUplinkMessages = async () => {
+  try {
+    let query = {
+      text: "UPDATE uplink_messages SET battery=97",
+    };
+    await db.query(query.text);
+
+    query.text = "UPDATE nodes SET battery=97";
+    await db.query(query.text);
+
+    query.text = "select id from nodes order by id desc";
+
+    const { rows: nodeIds } = await db.query(query.text);
+
+    for (let node of nodeIds) {
+      query.text =
+        "select t.id " +
+        "from uplink_messages t " +
+        "inner join ( " +
+        "   SELECT max(receive_time) AS last_date " +
+        "   FROM  uplink_messages " +
+        `   WHERE node_id = '${node.id}' ` +
+        `) tm ON t.node_id = '${node.id}' and t.receive_time = tm.last_date`;
+
+      const {
+        rows: [uplinkMessage],
+      } = await db.query(query.text);
+
+      if (uplinkMessage !== undefined) {
+        console.log(uplinkMessage);
+
+        if (Math.random() < 0.5) {
+          query.text = `UPDATE uplink_messages SET battery=95 where id = ${uplinkMessage.id}`;
+          await db.query(query.text);
+
+          query.text = `UPDATE nodes SET battery=95 where id = '${node.id}'`;
+          await db.query(query.text);
+        }
+      }
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
