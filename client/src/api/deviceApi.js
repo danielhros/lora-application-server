@@ -50,4 +50,8 @@ export default {
     devConsole.log("Sending request to set device message..");
     return appApi.post(`${DEVICE}/config`, payload);
   },
+  isHighConsumptionBattery(payload) {
+    devConsole.log("Sending request to get if battery consumption is high..");
+    return appApi.post(`${DEVICE}/isHighConsumptionBattery`, payload);
+  },
 };

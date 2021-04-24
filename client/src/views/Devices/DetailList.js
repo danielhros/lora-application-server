@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import Title from "../../components/Title";
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,12 +7,91 @@ import Divider from "@material-ui/core/Divider";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 import Tooltip from "@material-ui/core/Tooltip";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import Typography from "@material-ui/core/Typography";
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import moment from "moment";
 import Firmware from "../../components/Firmware";
+import deviceApi from "../../api/deviceApi";
+import devConsole from "../../devConsole";
 
-export const DetailList = ({ device, width }) => {
+const BatteryWithTooltip = ({ battery, highConsumption }) => {
+  const getColor = () => {
+    if (highConsumption) {
+      return "#EC5B56";
+    }
+
+    if (battery >= 75) {
+      return "#72C040";
+    }
+
+    if (battery >= 45) {
+      return "#EFAF41";
+    }
+
+    return "#EC5B56";
+  };
+
+  return (
+    <React.Fragment>
+      <Typography
+        variant="body2"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          color: getColor(),
+        }}
+      >
+        <nobr>{`${battery} %`}</nobr>
+
+        {highConsumption || battery < 45 ? (
+          <Tooltip
+            title={
+              highConsumption
+                ? "Emergency consumption is too high. Battery dropped for 2 and more % in one day."
+                : "Low Battery"
+            }
+            arrow
+          >
+            <ErrorOutlineIcon
+              style={{
+                marginLeft: 5,
+                height: 20,
+                color: getColor(),
+              }}
+            />
+          </Tooltip>
+        ) : null}
+      </Typography>
+    </React.Fragment>
+  );
+};
+
+export const DetailList = ({ device, width, refresh }) => {
   const classes = useStyles();
+  const [highConsumption, setHighConsumption] = React.useState(false);
+
+  const isHighConsumptionBattery = async () => {
+    try {
+      const res = await deviceApi.isHighConsumptionBattery({
+        deviceId: device.id,
+      });
+
+      setHighConsumption(res?.data?.highConsumption || false);
+    } catch (error) {
+      devConsole.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    isHighConsumptionBattery();
+  }, []);
+
+  React.useEffect(() => {
+    if (refresh) {
+      isHighConsumptionBattery();
+    }
+  }, [refresh]);
 
   return (
     <React.Fragment>
@@ -49,9 +129,14 @@ export const DetailList = ({ device, width }) => {
           <tr className={clsx(classes.tableRow)}>
             <td>battery</td>
             <td>
-              {device.hasOwnProperty("battery")
-                ? `${device.battery} %`
-                : "none"}
+              {device.hasOwnProperty("battery") ? (
+                <BatteryWithTooltip
+                  battery={device.battery}
+                  highConsumption={highConsumption}
+                />
+              ) : (
+                "none"
+              )}
             </td>
           </tr>
         </tbody>

@@ -169,6 +169,16 @@ const DownlinkMessagesModal = ({
                 </td>
               </tr>
               <tr className={localClasses.tableRow}>
+                <td>battery</td>
+                <td>
+                  {message.hasOwnProperty("battery") ? (
+                    <nobr>{message.battery} %</nobr>
+                  ) : (
+                    "none"
+                  )}
+                </td>
+              </tr>
+              <tr className={localClasses.tableRow}>
                 <td>coding_rate</td>
                 <td>{message?.coderate || "none"}</td>
               </tr>

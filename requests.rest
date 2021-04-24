@@ -379,10 +379,10 @@ Content-Type: application/json
 }
 
 ### Logout
-POST http://localhost:5000/api/device/latestBatteryLevels
+POST http://localhost:5000/api/device/isHighConsumptionBattery
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5MjY5MzQ4LCJleHAiOjE2MTkyNzQzNDh9.ddWM24CbhZCRw9xX-8sTIkkflrI9rAhlrwPOyc9nrfg
 Content-Type: application/json
 
 {
-    "deviceId": "08Tf"
+    "deviceId": "tztj"
 }

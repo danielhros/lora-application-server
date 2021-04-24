@@ -91,7 +91,7 @@ export const DevicesDetail = ({
 
         <Grid item xs={12} md={4}>
           <Paper className={classes.paper}>
-            <DetailList device={selected?.data} />
+            <DetailList device={selected?.data} refresh={refresh} />
           </Paper>
         </Grid>
 
