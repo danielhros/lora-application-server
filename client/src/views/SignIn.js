@@ -82,7 +82,7 @@ const SignIn = ({
     },
   });
 
-  const [rememberMe, setRememberMe] = React.useState(true);
+  // const [rememberMe, setRememberMe] = React.useState(true);
 
   React.useEffect(() => {
     resetSignIn();
@@ -158,12 +158,12 @@ const SignIn = ({
             }
           />
 
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
             checked={rememberMe}
             onChange={() => setRememberMe(!rememberMe)}
-          />
+          /> */}
           <div className={classes.wrapper}>
             <Button
               type="submit"
