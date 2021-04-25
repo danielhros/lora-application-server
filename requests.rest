@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
     "username": "admin",
-    "password": "VRjekeJeOnadatra125."
+    "password": "admin"
 }
 
 ### Get user
@@ -363,4 +363,35 @@ Content-Type: application/json
     "deviceId": "Dp1Q",
     "netData": {"sf":7,"power":6,"type":"NORMAL"},
     "newDeviceName": "newDeviceName"
+}
+
+### Get all messages chart info
+GET http://localhost:5000/api/chart/allMessages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5MTk1ODQwLCJleHAiOjE2MTkyMDA4NDB9.0ItrpFTtLkveamkJqm9UhObiObqwlKbnIavgxrnQx4M
+
+### Get ratio for specifig device
+POST http://localhost:5000/api/chart/deviceMessageRatio
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5MjA3Mjk1LCJleHAiOjE2MTkyMTIyOTV9.zLdt-zRzPuRZqnXnl3P66zlhUwvfs0JCOuLZ9SoMcNc
+Content-Type: application/json
+
+{
+    "deviceId": "d"
+}
+
+### Logout
+POST http://localhost:5000/api/device/isHighConsumptionBattery
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5MjY5MzQ4LCJleHAiOjE2MTkyNzQzNDh9.ddWM24CbhZCRw9xX-8sTIkkflrI9rAhlrwPOyc9nrfg
+Content-Type: application/json
+
+{
+    "deviceId": "tztj"
+}
+
+### Logout
+POST http://localhost:5000/api/chart/device
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5MzU5NDg1LCJleHAiOjE2MTk0NDU4ODV9.NbEmEm4qdvOpR3Hah76AV6Dd429HR6ZF0CIgMl6_ICs
+Content-Type: application/json
+
+{
+    "deviceId": "Nn71"
 }

@@ -159,12 +159,13 @@ const GatewaySettingsModal = ({
         setap: JSON.stringify(setap),
         gatewayId: gateway.id,
       });
+      setLoading(false);
       handleConfirmClose();
     } catch (error) {
       devConsole.log(error);
+      setLoading(false);
       handleClose();
     }
-    setLoading(false);
   };
 
   if (gateway === null) {

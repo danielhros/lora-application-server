@@ -21,6 +21,10 @@ import SentDownlinkMessages from "./SentDownlinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import GatewaySettingsModal from "./GatewaySettingsModal";
 import MyMap from "./MyMap";
+import gatewayApi from "../../api/gatewayApi";
+import devConsole from "../../devConsole";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from "@material-ui/core/styles";
 
 const GatewayDetail = ({
   refresh,
@@ -33,6 +37,11 @@ const GatewayDetail = ({
   handleConfirmClose,
 }) => {
   let { id } = useParams();
+
+  const downloadButton = React.useRef(null);
+  const [downloadLoading, setDownloadLoading] = React.useState(false);
+
+  const localClasses = useStyles();
 
   React.useEffect(() => {
     getGatewayDetail({ id });
@@ -54,6 +63,38 @@ const GatewayDetail = ({
   if (selected.data === null || selected.type !== "gateways") {
     return <Loading />;
   }
+
+  const download = async (event) => {
+    event.preventDefault();
+
+    let data;
+    try {
+      setDownloadLoading(true);
+      const res = await gatewayApi.downloadSetap({
+        gatewayId: selected.data.id,
+      });
+
+      data = res?.data[0]?.setap || undefined;
+    } catch (error) {
+      setDownloadLoading(false);
+      return devConsole.log("error");
+    }
+
+    if (data === undefined) {
+      setDownloadLoading(false);
+      return devConsole.log("error");
+    }
+
+    const output = JSON.stringify(data, null, 4);
+    const blob = new Blob([output]);
+    const fileDownloadUrl = URL.createObjectURL(blob);
+
+    setDownloadLoading(false);
+
+    downloadButton.current.href = fileDownloadUrl;
+    downloadButton.current.click();
+    URL.revokeObjectURL(fileDownloadUrl);
+  };
 
   return (
     <React.Fragment>
@@ -78,20 +119,41 @@ const GatewayDetail = ({
             <Grid item xs={12} md={12}>
               <Paper className={clsx(classes.paper)}>
                 <Title>Download configuration</Title>
-                <Button
-                  variant="contained"
-                  color="default"
-                  startIcon={<GetAppIcon />}
+
+                <a
+                  className="hidden"
+                  style={{ display: "none" }}
+                  download={`apConf-${selected.data.id}.json`}
+                  href={"/"}
+                  ref={downloadButton}
                 >
-                  Download
-                </Button>
+                  download it
+                </a>
+                <div className={localClasses.wrapper}>
+                  <Button
+                    variant="contained"
+                    style={{ width: "100%" }}
+                    color="default"
+                    startIcon={<GetAppIcon />}
+                    onClick={download}
+                    disabled={downloadLoading}
+                  >
+                    Download
+                  </Button>
+                  {downloadLoading && (
+                    <CircularProgress
+                      size={24}
+                      className={localClasses.buttonProgress}
+                    />
+                  )}
+                </div>
               </Paper>
             </Grid>
 
             <Grid item xs={12} md={12}>
               <Paper className={clsx(classes.paper)}>
                 <Title>Upload configuration</Title>
-                <Upload />
+                <Upload gatewayId={selected.data.id} refresh={refresh} />
               </Paper>
             </Grid>
 
@@ -141,6 +203,20 @@ const GatewayDetail = ({
     </React.Fragment>
   );
 };
+
+const useStyles = makeStyles((theme) => ({
+  buttonProgress: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -12,
+    marginLeft: -12,
+  },
+  wrapper: {
+    position: "relative",
+    width: "100%",
+  },
+}));
 
 const mapStateToProps = ({ result }) => ({
   selected: result.selected,

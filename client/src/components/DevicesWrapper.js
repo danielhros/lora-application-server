@@ -128,17 +128,16 @@ export const Devices = ({
             {e.hasOwnProperty("firmware") ? (
               <React.Fragment>
                 <Typography
-                  color={
-                    e.firmware.split(".")[0] > 1 ||
-                    (e.firmware.split(".")[0] >= 1 &&
-                      e.firmware.split(".")[1] >= 5)
-                      ? "inherit"
-                      : "error"
-                  }
                   variant="body2"
                   style={{
                     display: "flex",
                     alignItems: "center",
+                    color:
+                      e.firmware.split(".")[0] > 1 ||
+                      (e.firmware.split(".")[0] >= 1 &&
+                        e.firmware.split(".")[1] >= 5)
+                        ? "inherit"
+                        : "#EC5B56",
                   }}
                 >
                   <nobr>{`${e.firmware}`}</nobr>
@@ -151,8 +150,7 @@ export const Devices = ({
                       arrow
                     >
                       <ErrorOutlineIcon
-                        color="error"
-                        style={{ marginLeft: 5, height: 20 }}
+                        style={{ marginLeft: 5, height: 20, color: "#EC5B56" }}
                       />
                     </Tooltip>
                   )}

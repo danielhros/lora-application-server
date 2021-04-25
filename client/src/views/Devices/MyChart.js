@@ -1,46 +1,57 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import { connect } from "react-redux";
 import MyCharWrapper from "../../components/MyChartWrapper";
+import chartApi from "../../api/chartApi";
+import devConsole from "../../devConsole";
 
-const data = [
-  {
-    name: "10:00",
-    uplink: 40,
-    collisions: 5,
-    downlink: 24,
-  },
-  {
-    name: "11:00",
-    uplink: 30,
-    collisions: 3,
-    downlink: 13,
-  },
-  {
-    name: "12:00",
-    uplink: 58,
-    collisions: 8,
-    downlink: 20,
-  },
-  {
-    name: "13:00",
-    uplink: 39,
-    collisions: 15,
-    downlink: 2,
-  },
-  {
-    name: "14:00",
-    uplink: 48,
-    collisions: 10,
-    downlink: 15,
-  },
+const initialData = [
+  ...[1, 2, 3, 4, 5].map((_) => {
+    return {
+      name: "loading",
+      uplink: 0,
+      collisions: 0,
+      downlink: 0,
+    };
+  }),
 ];
 
-export const MyChart = (props) => {
-  return <MyCharWrapper {...props} data={data} withCollisions={true} />;
+const errorData = [
+  ...[1, 2, 3, 4, 5].map((_) => {
+    return {
+      name: "error",
+      uplink: 0,
+      collisions: 0,
+      downlink: 0,
+    };
+  }),
+];
+
+export const MyChart = ({ refresh, deviceId }) => {
+  const [data, setData] = React.useState(initialData);
+
+  const getMessages = async () => {
+    try {
+      const res = await chartApi.getDevice({
+        deviceId,
+      });
+      setData(res.data);
+    } catch (error) {
+      setData(errorData);
+      devConsole.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getMessages();
+  }, []);
+
+  React.useEffect(() => {
+    if (refresh) {
+      getMessages();
+    }
+  }, [refresh]);
+
+  return <MyCharWrapper data={data} withCollisions={true} />;
 };
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyChart);
+export default MyChart;

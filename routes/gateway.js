@@ -51,15 +51,17 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
-// SELECT * FROM aps
-// JOIN transmission_params ON aps.transmission_param_id = transmission_params.id
-// WHERE aps.dev_id = 20
+// SELECT aps.*, transmission_params.registration_freq, transmission_params.emergency_freq, transmission_params.standard_freq, transmission_params.coderate, transmission_params.bandwidth, aps_config.setap  FROM aps
+// LEFT JOIN transmission_params ON aps.transmission_param_id = transmission_params.id
+// LEFT JOIN aps_config ON aps.id = aps_config.gateway_id
+// WHERE aps.dev_id = 1
 router.post("/detail", auth, async (req, res) => {
   try {
     const query = {
       text:
-        "SELECT aps.*, transmission_params.registration_freq, transmission_params.emergency_freq, transmission_params.standard_freq, transmission_params.coderate, transmission_params.bandwidth  FROM aps " +
+        "SELECT aps.*, transmission_params.registration_freq, transmission_params.emergency_freq, transmission_params.standard_freq, transmission_params.coderate, transmission_params.bandwidth, aps_config.setap FROM aps " +
         "LEFT JOIN transmission_params ON aps.transmission_param_id = transmission_params.id " +
+        "LEFT JOIN aps_config ON aps.id = aps_config.gateway_id " +
         "WHERE aps.dev_id = $1",
       values: [req.body.devId],
     };
@@ -190,6 +192,25 @@ router.post("/setap", auth, async (req, res) => {
 
     await db.query(query.text);
     res.status(200).send("OK");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.post("/download", auth, async (req, res) => {
+  const { gatewayId } = req.body;
+
+  try {
+    const query = {
+      text:
+        `SELECT setap FROM aps_config ` +
+        `WHERE aps_config.gateway_id = '${gatewayId}' ` +
+        `ORDER BY aps_config.created DESC`,
+    };
+
+    let { rows } = await db.query(query.text);
+    res.json(rows);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server error");

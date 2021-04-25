@@ -17,6 +17,7 @@ import DeviceSettingsModal from "./DeviceSettingsModal";
 import MyMap from "./MyMap";
 import TopList from "./TopList";
 import DetailList from "./DetailList";
+import MyVerticalChart from "./MyVerticalChart";
 
 import PDRProgress from "./PDRProgress";
 import MyChart from "./MyChart";
@@ -68,7 +69,7 @@ export const DevicesDetail = ({
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Paper className={classes.paper} style={{ height: 340 }}>
-            <MyChart />
+            <MyChart refresh={refresh} deviceId={selected.data.id} />
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -78,18 +79,20 @@ export const DevicesDetail = ({
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={12}>
-              <Paper className={classes.paper}>
-                <TopList refresh={refresh} />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6} md={12}>
-              <Paper className={classes.paper}>
-                <DetailList device={selected?.data} />
-              </Paper>
-            </Grid>
-          </Grid>
+          <Paper className={classes.paper}>
+            <TopList refresh={refresh} />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <Paper className={classes.paper}>
+            <MyVerticalChart refresh={refresh} deviceId={selected.data.id} />
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Paper className={classes.paper}>
+            <DetailList device={selected?.data} refresh={refresh} />
+          </Paper>
         </Grid>
 
         <Grid item xs={12} md={8}>

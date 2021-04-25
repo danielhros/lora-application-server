@@ -7,16 +7,15 @@ const Firmware = ({ firmware = "" }) => {
   return (
     <React.Fragment>
       <Typography
-        color={
-          firmware?.split(".")[0] > 1 ||
-          (firmware?.split(".")[0] >= 1 && firmware.split(".")[1] >= 5)
-            ? "inherit"
-            : "error"
-        }
         variant="body2"
         style={{
           display: "flex",
           alignItems: "center",
+          color:
+            firmware?.split(".")[0] > 1 ||
+            (firmware?.split(".")[0] >= 1 && firmware.split(".")[1] >= 5)
+              ? "inherit"
+              : "#EC5B56",
         }}
       >
         <nobr>{`${firmware || "none"}`}</nobr>
@@ -29,8 +28,7 @@ const Firmware = ({ firmware = "" }) => {
             arrow
           >
             <ErrorOutlineIcon
-              color="error"
-              style={{ marginLeft: 5, height: 20 }}
+              style={{ marginLeft: 5, height: 20, color: "#EC5B56" }}
             />
           </Tooltip>
         )}

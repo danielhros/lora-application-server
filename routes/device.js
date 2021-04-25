@@ -248,4 +248,41 @@ router.post("/config", auth, async (req, res) => {
   }
 });
 
+router.post("/isHighConsumptionBattery", auth, async (req, res) => {
+  const { deviceId } = req.body;
+
+  try {
+    let query = {
+      text:
+        "SELECT t.battery " +
+        "FROM uplink_messages t " +
+        "INNER JOIN ( " +
+        "   SELECT max(receive_time) AS last_date " +
+        "   FROM  uplink_messages " +
+        `   WHERE node_id = '${deviceId}' ` +
+        `) tm ON t.node_id = '${deviceId}' AND t.receive_time >= tm.last_date::timestamp - INTERVAL '1 day' ` +
+        "ORDER BY t.receive_time DESC ",
+    };
+    let { rows } = await db.query(query.text);
+
+    if (rows.length >= 2) {
+      const younger = rows[0].battery;
+      const older = rows[rows.length - 1].battery;
+
+      if (Math.abs(older - younger) >= 2) {
+        return res.json({
+          highConsumption: true,
+        });
+      }
+    }
+
+    res.json({
+      highConsumption: false,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;

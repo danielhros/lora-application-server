@@ -12,3 +12,4 @@ export const APPLICATION = `${API}/application`;
 export const DEVICE = `${API}/device`;
 export const MESSAGES = `${API}/messages`;
 export const DASHBOARD = `${API}/dashboard`;
+export const CHART = `${API}/chart`;
