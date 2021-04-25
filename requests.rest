@@ -386,3 +386,12 @@ Content-Type: application/json
 {
     "deviceId": "tztj"
 }
+
+### Logout
+POST http://localhost:5000/api/chart/device
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5MzU5NDg1LCJleHAiOjE2MTk0NDU4ODV9.NbEmEm4qdvOpR3Hah76AV6Dd429HR6ZF0CIgMl6_ICs
+Content-Type: application/json
+
+{
+    "deviceId": "Nn71"
+}
