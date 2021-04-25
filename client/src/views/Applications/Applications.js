@@ -13,15 +13,16 @@ import {
   setRowsPerPage,
   cleanResults as cleanApplications,
 } from "../../actions/shared";
-import Tooltip from "@material-ui/core/Tooltip";
-import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
-import applicationApi from "../../api/applicationApi";
+// import Tooltip from "@material-ui/core/Tooltip";
+// import Button from "@material-ui/core/Button";
+// import AddIcon from "@material-ui/icons/Add";
+// import applicationApi from "../../api/applicationApi";
+// import devConsole from "../../devConsole";
+
 import { truncate } from "../../utils/utils";
 import moment from "moment";
 
 import { withRouter } from "react-router-dom";
-import devConsole from "../../devConsole";
 
 const getColumnName = (column) => {
   switch (column) {
@@ -100,14 +101,14 @@ export const Applications = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cleanApplications, getApplications, getCountOfApplications]);
 
-  const handleAddApplication = async () => {
-    try {
-      await applicationApi.addApplication();
-      callRefresh();
-    } catch (error) {
-      devConsole.log(error);
-    }
-  };
+  // const handleAddApplication = async () => {
+  //   try {
+  //     await applicationApi.addApplication();
+  //     callRefresh();
+  //   } catch (error) {
+  //     devConsole.log(error);
+  //   }
+  // };
 
   const handleOnRowClick = (index) => {
     history.push(`/applications/${applications[index].id}`);
@@ -180,18 +181,18 @@ export const Applications = ({
                 column: getColumnName(column),
               });
             }}
-            rightNode={
-              <Tooltip title="Add application">
-                <Button
-                  variant="outlined"
-                  className={classes.tableButton}
-                  startIcon={<AddIcon />}
-                  onClick={handleAddApplication}
-                >
-                  add
-                </Button>
-              </Tooltip>
-            }
+            // rightNode={
+            //   <Tooltip title="Add application">
+            //     <Button
+            //       variant="outlined"
+            //       className={classes.tableButton}
+            //       startIcon={<AddIcon />}
+            //       onClick={handleAddApplication}
+            //     >
+            //       add
+            //     </Button>
+            //   </Tooltip>
+            // }
           />
         </Paper>
       </Grid>
