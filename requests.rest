@@ -378,7 +378,7 @@ Content-Type: application/json
     "deviceId": "d"
 }
 
-### Logout
+### Ger info if the energy consuption of device is high
 POST http://localhost:5000/api/device/isHighConsumptionBattery
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5MjY5MzQ4LCJleHAiOjE2MTkyNzQzNDh9.ddWM24CbhZCRw9xX-8sTIkkflrI9rAhlrwPOyc9nrfg
 Content-Type: application/json
@@ -387,7 +387,7 @@ Content-Type: application/json
     "deviceId": "tztj"
 }
 
-### Logout
+### Get chart of concrete device
 POST http://localhost:5000/api/chart/device
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5MzU5NDg1LCJleHAiOjE2MTk0NDU4ODV9.NbEmEm4qdvOpR3Hah76AV6Dd429HR6ZF0CIgMl6_ICs
 Content-Type: application/json
@@ -395,3 +395,7 @@ Content-Type: application/json
 {
     "deviceId": "Nn71"
 }
+
+### Get pdr of all messages
+GET http://localhost:5000/api/pdr/allMessages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5NDQ5NzU0LCJleHAiOjE2MTk1MzYxNTR9.qsPBY7AkSA8qZPLls4N9_N3THSU1NnFzXyXiEUns60s
