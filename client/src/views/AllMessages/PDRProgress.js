@@ -1,6 +1,6 @@
 import React from "react";
 import PDRProgressWrapper from "../../components/PDRProgressWrapper";
-import pdrApi from "../../api/pdr";
+import pdrApi from "../../api/pdrApi";
 
 export const PDRProgress = ({ refresh }) => {
   const [pdr, setPdr] = React.useState(0);

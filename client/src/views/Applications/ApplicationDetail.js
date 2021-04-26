@@ -71,7 +71,7 @@ export const ApplicationDetail = ({
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper className={classes.paper}>
-            <PDRProgress />
+            <PDRProgress refresh={refresh} applicationId={selected.data.id} />
           </Paper>
         </Grid>
         <Grid item xs={12}>
