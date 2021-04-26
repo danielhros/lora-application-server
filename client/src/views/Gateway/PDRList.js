@@ -47,7 +47,7 @@ export const PDRList = ({ classes, refresh, gatewayId }) => {
           <td>7</td>
           <td>
             {loading ? (
-              "loading"
+              "loading.."
             ) : error ? (
               "error"
             ) : (
@@ -59,7 +59,7 @@ export const PDRList = ({ classes, refresh, gatewayId }) => {
           <td>8</td>
           <td>
             {loading ? (
-              "loading"
+              "loading.."
             ) : error ? (
               "error"
             ) : (
@@ -71,7 +71,7 @@ export const PDRList = ({ classes, refresh, gatewayId }) => {
           <td>9</td>
           <td>
             {loading ? (
-              "loading"
+              "loading.."
             ) : error ? (
               "error"
             ) : (
@@ -83,7 +83,7 @@ export const PDRList = ({ classes, refresh, gatewayId }) => {
           <td>10</td>
           <td>
             {loading ? (
-              "loading"
+              "loading.."
             ) : error ? (
               "error"
             ) : (
@@ -95,7 +95,7 @@ export const PDRList = ({ classes, refresh, gatewayId }) => {
           <td>11</td>
           <td>
             {loading ? (
-              "loading"
+              "loading.."
             ) : error ? (
               "error"
             ) : (
@@ -104,10 +104,10 @@ export const PDRList = ({ classes, refresh, gatewayId }) => {
           </td>
         </tr>
         <tr className={classes.tableRow}>
-          <td>13</td>
+          <td>12</td>
           <td>
             {loading ? (
-              "loading"
+              "loading.."
             ) : error ? (
               "error"
             ) : (
