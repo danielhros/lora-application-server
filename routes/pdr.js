@@ -47,18 +47,32 @@ const calculatePdr = (seqs) => {
 router.get("/allMessages", auth, async (req, res) => {
   try {
     const query = {
-      text:
-        "SELECT t.seq FROM " +
-        "(SELECT * FROM uplink_messages " +
-        "ORDER BY receive_time DESC " +
-        "LIMIT 100 offset 0) t " +
-        "ORDER BY t.receive_time ASC ",
+      text: "SELECT id FROM applications ORDER BY id",
     };
 
-    let { rows: seqs } = await db.query(query.text);
+    let { rows: ids } = await db.query(query.text);
+
+    const applicationsPdrs = [];
+
+    for (id of ids) {
+      query.text =
+        "SELECT t.seq FROM " +
+        "(SELECT * FROM uplink_messages " +
+        `WHERE application_id = ${id.id} ` +
+        "ORDER BY receive_time DESC " +
+        "LIMIT 100 offset 0) t " +
+        "ORDER BY t.receive_time ASC ";
+
+      let { rows: seqs } = await db.query(query.text);
+
+      applicationsPdrs.push(calculatePdr(seqs));
+    }
+
+    const sum = applicationsPdrs.reduce((a, b) => a + b, 0);
+    const finalPdr = sum / applicationsPdrs.length || 0;
 
     res.json({
-      pdr: calculatePdr(seqs),
+      pdr: finalPdr,
     });
   } catch (err) {
     res.status(500).send("Server error");
