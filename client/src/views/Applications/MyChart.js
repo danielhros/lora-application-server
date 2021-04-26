@@ -27,6 +27,7 @@ export const MyChart = ({ refresh, applicationId }) => {
   const [data, setData] = React.useState(initialData);
 
   const getMessages = async () => {
+    setData(initialData);
     try {
       const res = await chartApi.getApplication({
         applicationId,
