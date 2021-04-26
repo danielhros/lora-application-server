@@ -103,4 +103,35 @@ router.post("/application", auth, async (req, res) => {
   }
 });
 
+router.post("/gateway", auth, async (req, res) => {
+  const { gatewayId } = req.body;
+
+  let responseData = [];
+
+  try {
+    for (let i = 7; i < 13; i++) {
+      const query = {
+        text:
+          "SELECT * FROM " +
+          "(SELECT * FROM uplink_messages " +
+          `WHERE ap_id = '${gatewayId}' AND spf = ${i} ` +
+          "ORDER BY receive_time DESC " +
+          "LIMIT 100 offset 0) t " +
+          "ORDER BY t.receive_time ASC ",
+      };
+
+      let { rows: seqs } = await db.query(query.text);
+
+      responseData.push({
+        pdr: calculatePdr(seqs),
+        spf: i,
+      });
+    }
+
+    res.json(responseData);
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;

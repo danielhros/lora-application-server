@@ -399,3 +399,13 @@ Content-Type: application/json
 ### Get pdr of all messages
 GET http://localhost:5000/api/pdr/allMessages
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5NDQ5NzU0LCJleHAiOjE2MTk1MzYxNTR9.qsPBY7AkSA8qZPLls4N9_N3THSU1NnFzXyXiEUns60s
+
+
+### Get chart of concrete device
+POST http://localhost:5000/api/pdr/gateway
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5NDY1MTU2LCJleHAiOjE2MTk1NTE1NTZ9.oUVk3ByJlnm4lRSUfc0_hBWG2S1rvWCVGfBKEyop9p0
+Content-Type: application/json
+
+{
+    "gatewayId": "333333"
+}
