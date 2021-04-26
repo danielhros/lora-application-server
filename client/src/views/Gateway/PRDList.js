@@ -3,6 +3,11 @@ import React from "react";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
 import pdrApi from "../../api/pdrApi";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import Tooltip from "@material-ui/core/Tooltip";
+import { getPDRColor } from "../../utils/utils";
+import Typography from "@material-ui/core/Typography";
+import PDRText from "../../components/PDRText";
 
 export const PRDList = ({ classes, refresh, gatewayId }) => {
   const [pdr, setPdr] = React.useState(0);
@@ -44,27 +49,75 @@ export const PRDList = ({ classes, refresh, gatewayId }) => {
       <tbody>
         <tr className={classes.tableRow}>
           <td>7</td>
-          <td>{loading ? "loading" : error ? "error" : `${pdr[0].pdr} %`}</td>
+          <td>
+            {loading ? (
+              "loading"
+            ) : error ? (
+              "error"
+            ) : (
+              <PDRText value={pdr[0].pdr} />
+            )}
+          </td>
         </tr>
         <tr className={classes.tableRow}>
           <td>8</td>
-          <td>{loading ? "loading" : error ? "error" : `${pdr[1].pdr} %`}</td>
+          <td>
+            {loading ? (
+              "loading"
+            ) : error ? (
+              "error"
+            ) : (
+              <PDRText value={pdr[1].pdr} />
+            )}
+          </td>
         </tr>
         <tr className={classes.tableRow}>
           <td>9</td>
-          <td>{loading ? "loading" : error ? "error" : `${pdr[2].pdr} %`}</td>
+          <td>
+            {loading ? (
+              "loading"
+            ) : error ? (
+              "error"
+            ) : (
+              <PDRText value={pdr[2].pdr} />
+            )}
+          </td>
         </tr>
         <tr className={classes.tableRow}>
           <td>10</td>
-          <td>{loading ? "loading" : error ? "error" : `${pdr[3].pdr} %`}</td>
+          <td>
+            {loading ? (
+              "loading"
+            ) : error ? (
+              "error"
+            ) : (
+              <PDRText value={pdr[3].pdr} />
+            )}
+          </td>
         </tr>
         <tr className={classes.tableRow}>
           <td>11</td>
-          <td>{loading ? "loading" : error ? "error" : `${pdr[4].pdr} %`}</td>
+          <td>
+            {loading ? (
+              "loading"
+            ) : error ? (
+              "error"
+            ) : (
+              <PDRText value={pdr[3].pdr} />
+            )}
+          </td>
         </tr>
         <tr className={classes.tableRow}>
           <td>13</td>
-          <td>{loading ? "loading" : error ? "error" : `${pdr[5].pdr} %`}</td>
+          <td>
+            {loading ? (
+              "loading"
+            ) : error ? (
+              "error"
+            ) : (
+              <PDRText value={pdr[4].pdr} />
+            )}
+          </td>
         </tr>
       </tbody>
     </table>

@@ -12,7 +12,8 @@ import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import moment from "moment";
 import Typography from "@material-ui/core/Typography";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
-import { truncate, getPDRColor } from "../utils/utils";
+import { truncate } from "../utils/utils";
+import PDRText from "./PDRText";
 
 const getColumnName = (column) => {
   switch (column) {
@@ -190,35 +191,7 @@ export const Devices = ({
           : "none",
         content: (
           <React.Fragment>
-            {e.hasOwnProperty("pdr") ? (
-              <React.Fragment>
-                <Typography
-                  variant="body2"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    color: getPDRColor(e.pdr),
-                  }}
-                >
-                  <nobr>{`${e.pdr} %`}</nobr>
-
-                  {e.pdr < 75 ? (
-                    <Tooltip title="Low PDR" arrow>
-                      <ErrorOutlineIcon
-                        color="error"
-                        style={{
-                          marginLeft: 5,
-                          height: 20,
-                          color: getPDRColor(e.pdr),
-                        }}
-                      />
-                    </Tooltip>
-                  ) : null}
-                </Typography>
-              </React.Fragment>
-            ) : (
-              "none"
-            )}
+            {e.hasOwnProperty("pdr") ? <PDRText value={e.pdr} /> : "none"}
           </React.Fragment>
         ),
       },
