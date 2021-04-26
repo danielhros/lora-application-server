@@ -6,7 +6,12 @@ import Box from "@material-ui/core/Box";
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 import { getPDRColor } from "../utils/utils";
 
-export const PDRProgress = ({ value = 0, width }) => {
+export const PDRProgress = ({
+  value = 0,
+  width,
+  loading = false,
+  error = false,
+}) => {
   return (
     <React.Fragment>
       <Title subtitle={"median of all messages"}>PDR</Title>
@@ -23,9 +28,11 @@ export const PDRProgress = ({ value = 0, width }) => {
         justifyContent="center"
       >
         <CircularProgress
-          variant="determinate"
-          value={value === 0 ? value + 1 : value}
-          style={{ color: getPDRColor(value) }}
+          variant={"determinate"}
+          value={loading ? 0 : error ? 100 : value === 0 ? value + 1 : value}
+          style={{
+            color: error ? "#EC5B56" : getPDRColor(value),
+          }}
           size={isWidthDown("xs", width) ? 130 : 170}
         />
         <Box
@@ -39,10 +46,14 @@ export const PDRProgress = ({ value = 0, width }) => {
           justifyContent="center"
         >
           <Typography
-            variant={isWidthDown("xs", width) ? "h6" : "h4"}
+            variant={
+              loading || error ? "h6" : isWidthDown("xs", width) ? "h6" : "h4"
+            }
             component="div"
             color="textSecondary"
-          >{`${Math.round(value)}%`}</Typography>
+          >
+            {loading ? "loading" : error ? "error" : `${Math.round(value)}%`}
+          </Typography>
         </Box>
       </Box>
     </React.Fragment>

@@ -30,6 +30,8 @@ export const MyChart = ({ refresh, deviceId }) => {
   const [data, setData] = React.useState(initialData);
 
   const getMessages = async () => {
+    setData(initialData);
+
     try {
       const res = await chartApi.getDevice({
         deviceId,

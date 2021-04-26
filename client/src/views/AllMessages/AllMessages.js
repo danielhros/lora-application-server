@@ -20,7 +20,7 @@ export const AllMessages = ({ refresh, classes }) => {
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper className={classes.paper}>
-            <PDRProgress />
+            <PDRProgress refresh={refresh} />
           </Paper>
         </Grid>
         <Grid item xs={12}>
