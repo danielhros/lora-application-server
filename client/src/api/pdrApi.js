@@ -14,4 +14,10 @@ export default {
     );
     return appApi.post(`${PDR}/application`, payload);
   },
+  getPDRGateway(payload) {
+    devConsole.log(
+      "Sending request to get pdr of concrete gateway from server.."
+    );
+    return appApi.post(`${PDR}/gateway`, payload);
+  },
 };
