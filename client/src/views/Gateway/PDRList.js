@@ -3,13 +3,9 @@ import React from "react";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
 import pdrApi from "../../api/pdrApi";
-import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
-import Tooltip from "@material-ui/core/Tooltip";
-import { getPDRColor } from "../../utils/utils";
-import Typography from "@material-ui/core/Typography";
 import PDRText from "../../components/PDRText";
 
-export const PRDList = ({ classes, refresh, gatewayId }) => {
+export const PDRList = ({ classes, refresh, gatewayId }) => {
   const [pdr, setPdr] = React.useState(0);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -124,4 +120,4 @@ export const PRDList = ({ classes, refresh, gatewayId }) => {
   );
 };
 
-export default withStyles(globalStyles)(PRDList);
+export default withStyles(globalStyles)(PDRList);

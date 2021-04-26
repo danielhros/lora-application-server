@@ -14,7 +14,7 @@ import clsx from "clsx";
 import DetailList from "./DetailList";
 import Title from "../../components/Title";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import PRDList from "./PRDList";
+import PRDList from "./PDRList";
 import Upload from "./Upload";
 import UplinkMessages from "./UplinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
