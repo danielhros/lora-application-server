@@ -45,7 +45,11 @@ export default {
     return appApi.post(`${GATEWAY}/setap`, payload);
   },
   downloadSetap(payload) {
-    devConsole.log("Downloading SETAP message to server..");
+    devConsole.log("Downloading SETAP message from server..");
     return appApi.post(`${GATEWAY}/download`, payload);
+  },
+  getCircles(payload) {
+    devConsole.log("Get circles for gateways from server..");
+    return appApi.post(`${GATEWAY}/getRadius`, payload);
   },
 };
