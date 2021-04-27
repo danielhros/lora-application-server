@@ -145,7 +145,7 @@ const GatewaySettingsModal = ({
           return {
             type,
             cr: codingRate[type],
-            freqs: selectedFrequencies[type],
+            freqs: selectedFrequencies[type].filter((freq) => freq !== "none"),
             band: bandwidth[type],
             power: transmissionPower[type],
             sf: spreadingFactor[type],
