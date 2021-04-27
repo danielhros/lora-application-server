@@ -25,6 +25,8 @@ import gatewayApi from "../../api/gatewayApi";
 import devConsole from "../../devConsole";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
+import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const GatewayDetail = ({
   refresh,
@@ -159,7 +161,17 @@ const GatewayDetail = ({
 
             <Grid item xs={12} md={12}>
               <Paper className={clsx(classes.paper)}>
-                <Title>Channels PDR</Title>
+                <Title
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  Channels PDR
+                  <Tooltip title="Median of last 100 messages" arrow>
+                    <HelpOutlineOutlinedIcon style={{ marginLeft: 5 }} />
+                  </Tooltip>
+                </Title>
                 <PRDList refresh={refresh} gatewayId={selected.data.id} />
               </Paper>
             </Grid>

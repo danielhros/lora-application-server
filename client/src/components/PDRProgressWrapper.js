@@ -11,10 +11,11 @@ export const PDRProgress = ({
   width,
   loading = false,
   error = false,
+  subtitle = "median of last 100 messages",
 }) => {
   return (
     <React.Fragment>
-      <Title subtitle={"median of all messages"}>PDR</Title>
+      <Title subtitle={subtitle}>PDR</Title>
 
       <Box
         position="relative"

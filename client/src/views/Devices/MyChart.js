@@ -53,7 +53,13 @@ export const MyChart = ({ refresh, deviceId }) => {
     }
   }, [refresh]);
 
-  return <MyCharWrapper data={data} withCollisions={true} />;
+  return (
+    <MyCharWrapper
+      data={data}
+      withCollisions={true}
+      subtitle={"uplink & downlink & collisions"}
+    />
+  );
 };
 
 export default MyChart;

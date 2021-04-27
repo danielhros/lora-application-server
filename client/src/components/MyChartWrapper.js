@@ -11,7 +11,12 @@ import {
   Legend,
 } from "recharts";
 
-export const MyChartWrapper = ({ width, data = [], withCollisions }) => {
+export const MyChartWrapper = ({
+  width,
+  data = [],
+  withCollisions,
+  subtitle = "uplink & downlink",
+}) => {
   const theme = useTheme();
   let graphData = data;
 
@@ -24,9 +29,7 @@ export const MyChartWrapper = ({ width, data = [], withCollisions }) => {
   return (
     <React.Fragment>
       <div style={{ height: 250, minWidth: 400 }}>
-        <Title subtitle={"uplink & downlink"}>
-          All messages count per hour
-        </Title>
+        <Title subtitle={subtitle}>Latest messages count per hour</Title>
         <ResponsiveContainer>
           <BarChart
             data={graphData}

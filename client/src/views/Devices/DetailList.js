@@ -48,7 +48,7 @@ const BatteryWithTooltip = ({ battery, highConsumption }) => {
           <Tooltip
             title={
               highConsumption
-                ? "Emergency consumption is too high. Battery dropped for 2 and more % in one day."
+                ? "Power consumption is too high. There has been detection of battery drop of 2 or more % in one day, based on uplink messages."
                 : "Low Battery"
             }
             arrow

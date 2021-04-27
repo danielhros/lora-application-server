@@ -3,6 +3,8 @@ import React from "react";
 import Title from "../../components/Title";
 import chartApi from "../../api/chartApi";
 import devConsole from "../../devConsole";
+import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import {
   BarChart,
@@ -86,7 +88,20 @@ export const MyVerticalChart = ({ deviceId, refresh }) => {
 
   return (
     <React.Fragment>
-      <Title>Message type ratio</Title>
+      <Title
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        Message type ratio
+        <Tooltip
+          title="Ratio of message types of all messages for specific device. Message types with 0% are omitted from graph. Types can be: NORMAL, EMER and REG."
+          arrow
+        >
+          <HelpOutlineOutlinedIcon style={{ marginLeft: 5 }} />
+        </Tooltip>
+      </Title>
 
       {tooFewData ? (
         <div style={{ minHeight: 100 }}>Too few data</div>

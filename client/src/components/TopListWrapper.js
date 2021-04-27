@@ -16,7 +16,10 @@ export const TopListWrapper = ({ classes, top }) => {
         }}
       >
         Top{" "}
-        <Tooltip title="Most used values" arrow>
+        <Tooltip
+          title="Most used values calculated from all uplink messages."
+          arrow
+        >
           <HelpOutlineOutlinedIcon style={{ marginLeft: 5 }} />
         </Tooltip>
       </Title>
