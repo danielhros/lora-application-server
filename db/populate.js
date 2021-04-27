@@ -165,6 +165,8 @@ const addGeoToNodes = async () => {
 const addApsConfig = async () => {
   let i = 0;
 
+  await db.query("DELETE FROM aps_config WHERE 1 = 1");
+
   while (true) {
     let query = {
       text: `select id from aps order by id limit 1 offset ${i} `,
@@ -181,7 +183,7 @@ const addApsConfig = async () => {
 
     query.text =
       `insert into aps_config (setap, gateway_id) ` +
-      `VALUES ('{"message_name":"SETAP","ap_id":"${apId}","message_body":[{"type":"NORMAL","cr":"4/5","freqs":[867.1,"none","none","none","none","none","none","none","none"],"band":125,"power":5,"sf":7},{"type":"EMER","cr":"4/5","freqs":["none","none","none","none","none",868.3,"none","none","none"],"band":125,"power":5,"sf":7},{"type":"REG","cr":"4/5","freqs":[867.3,"none",867.5,"none","none","none","none","none","none"],"band":125,"power":5,"sf":7}]}'::json, '${apId}')`;
+      `VALUES ('{"message_name":"SETAP","ap_id":"${apId}","message_body":[{"type":"NORMAL","cr":"4/5","freqs":[],"band":125,"power":5,"sf":7},{"type":"EMER","cr":"4/5","freqs":[],"band":125,"power":5,"sf":7},{"type":"REG","cr":"4/5","freqs":[],"band":125,"power":5,"sf":7}]}'::json, '${apId}')`;
 
     await db.query(query.text);
 
