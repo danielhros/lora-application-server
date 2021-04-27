@@ -4,7 +4,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { getPDRColor } from "../utils/utils";
 import Typography from "@material-ui/core/Typography";
 
-const PDRText = ({ value }) => {
+const PDRText = ({ value = 0 }) => {
   return (
     <React.Fragment>
       <Typography
@@ -15,9 +15,9 @@ const PDRText = ({ value }) => {
           color: getPDRColor(value),
         }}
       >
-        <nobr>{`${value} %`}</nobr>
+        {value === 0 ? "none" : <nobr>{`${value} %`}</nobr>}
 
-        {value < 75 ? (
+        {value < 75 && value !== 0 ? (
           <Tooltip title="Low PDR" arrow>
             <ErrorOutlineIcon
               color="error"

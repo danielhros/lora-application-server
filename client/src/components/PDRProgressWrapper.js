@@ -29,9 +29,9 @@ export const PDRProgress = ({
       >
         <CircularProgress
           variant={"determinate"}
-          value={loading ? 0 : error ? 100 : value === 0 ? value + 1 : value}
+          value={loading ? 0 : error ? 100 : value === 0 ? 100 : value}
           style={{
-            color: error ? "#EC5B56" : getPDRColor(value),
+            color: error || value === 0 ? "#EC5B56" : getPDRColor(value),
           }}
           size={isWidthDown("xs", width) ? 130 : 170}
         />
@@ -47,12 +47,22 @@ export const PDRProgress = ({
         >
           <Typography
             variant={
-              loading || error ? "h6" : isWidthDown("xs", width) ? "h6" : "h4"
+              loading || error || value === 0
+                ? "h6"
+                : isWidthDown("xs", width)
+                ? "h6"
+                : "h4"
             }
             component="div"
             color="textSecondary"
           >
-            {loading ? "loading" : error ? "error" : `${Math.round(value)}%`}
+            {loading
+              ? "loading"
+              : error
+              ? "error"
+              : value === 0
+              ? "none"
+              : `${Math.round(value)}%`}
           </Typography>
         </Box>
       </Box>

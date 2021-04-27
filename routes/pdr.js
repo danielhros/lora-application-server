@@ -41,7 +41,7 @@ const calculatePdr = (seqs) => {
       ? Math.floor((dataSort[mid] + dataSort[mid - 1]) / 2)
       : dataSort[mid - 1];
 
-  return median === 0 || median ? median : 100;
+  return median ? median : 0;
 };
 
 router.get("/allMessages", auth, async (req, res) => {
@@ -52,7 +52,7 @@ router.get("/allMessages", auth, async (req, res) => {
 
     let { rows: ids } = await db.query(query.text);
 
-    const applicationsPdrs = [];
+    let applicationsPdrs = [];
 
     for (id of ids) {
       query.text =
@@ -68,11 +68,13 @@ router.get("/allMessages", auth, async (req, res) => {
       applicationsPdrs.push(calculatePdr(seqs));
     }
 
+    applicationsPdrs = applicationsPdrs.filter((appPdr) => appPdr != 0);
+
     const sum = applicationsPdrs.reduce((a, b) => a + b, 0);
     const finalPdr = sum / applicationsPdrs.length || 0;
 
     res.json({
-      pdr: finalPdr,
+      pdr: finalPdr || 0,
     });
   } catch (err) {
     res.status(500).send("Server error");

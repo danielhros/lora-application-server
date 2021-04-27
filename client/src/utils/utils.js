@@ -11,5 +11,9 @@ export const getPDRColor = (value) => {
     return "#EFAF41";
   }
 
+  if (value === 0) {
+    return "#ffff";
+  }
+
   return "#EC5B56";
 };
