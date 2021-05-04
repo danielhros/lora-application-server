@@ -409,3 +409,12 @@ Content-Type: application/json
 {
     "gatewayId": "333333"
 }
+
+### Get chart of concrete device
+POST http://localhost:5000/api/gateway/getRadius
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjE5NDY1MTU2LCJleHAiOjE2MTk1NTE1NTZ9.oUVk3ByJlnm4lRSUfc0_hBWG2S1rvWCVGfBKEyop9p0
+Content-Type: application/json
+
+{
+    "gatewayId": "333333"
+}

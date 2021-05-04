@@ -6,10 +6,11 @@ import {
   withGoogleMap,
   Marker,
   InfoWindow,
+  Circle,
 } from "react-google-maps";
 import mapStyles from "../shared/mapStyles";
 
-function Map({ markers = [], defaultZoom = 15 }) {
+function Map({ markers = [], defaultZoom = 15, circles = [] }) {
   const [selected, setSelected] = React.useState(null);
 
   return (
@@ -36,6 +37,25 @@ function Map({ markers = [], defaultZoom = 15 }) {
           />
         );
       })}
+
+      {circles && circles.length > 0
+        ? circles.map((circle) => (
+            <Circle
+              key={`${circle.distance}-${circle.fill} `}
+              defaultCenter={{
+                lat: markers[0]?.lat || 49.42172,
+                lng: markers[0]?.lng || 49.42172,
+              }}
+              radius={circle.distance}
+              options={{
+                strokeColor: circle.stroke,
+                fillColor: circle.fill,
+                fillOpacity: 0.0,
+              }}
+            />
+          ))
+        : null}
+
       {selected && (
         <InfoWindow
           position={{ lat: selected.lat, lng: selected.lng }}
@@ -57,6 +77,7 @@ const MyMapWrapper = ({
   wrapperStyle,
   defaultZoom,
   title = "Signal radius",
+  circles = [],
 }) => {
   return (
     <div
@@ -75,6 +96,7 @@ const MyMapWrapper = ({
         mapElement={<div style={{ height: "100%" }} />}
         markers={markers}
         defaultZoom={defaultZoom}
+        circles={circles}
       />
     </div>
   );

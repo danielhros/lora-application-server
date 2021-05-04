@@ -217,4 +217,74 @@ router.post("/download", auth, async (req, res) => {
   }
 });
 
+router.post("/getRadius", auth, async (req, res) => {
+  const { gatewayId } = req.body;
+
+  try {
+    const query = {
+      text:
+        "SELECT uplink_messages.rssi, uplink_messages.frequency, uplink_messages.power, nodes.antena_gain AS ag_node, aps.antena_gain AS ag_ap FROM uplink_messages " +
+        "INNER JOIN aps ON aps.id = uplink_messages.ap_id " +
+        "INNER JOIN nodes ON nodes.id = uplink_messages.node_id " +
+        `WHERE ap_id = '${gatewayId}' ` +
+        "LIMIT 100",
+    };
+
+    let { rows } = await db.query(query.text);
+
+    let data = rows.map((row) => {
+      const power = row.power;
+      const agNode = row.ag_node;
+      const agAp = row.ag_ap;
+      const rssi = parseInt(row.rssi);
+      const frequency = parseInt(row.frequency) / (1.0 * 1000000);
+
+      const distance = Math.pow(
+        10,
+        (power + agNode - 32.5 - 20 * Math.log10(frequency) + agAp - rssi) / 20
+      );
+
+      return {
+        rssi,
+        distance,
+      };
+    });
+
+    data = data.sort((a, b) => b.rssi - a.rssi);
+
+    if (data.length == 0) {
+      return res.json([]);
+    }
+
+    const first = 0;
+    const second = Math.floor(data.length * (1.5 / 4));
+    const third = Math.floor(data.length * (2.5 / 4));
+    const last = data.length - 1;
+
+    const circles = [
+      {
+        distance: Math.floor(data[first].distance * 1000),
+        rssi: data[first].rssi,
+      },
+      {
+        distance: Math.floor(data[second].distance * 1000),
+        rssi: data[second].rssi,
+      },
+      {
+        distance: Math.floor(data[third].distance * 1000),
+        rssi: data[third].rssi,
+      },
+      {
+        distance: Math.floor(data[last].distance * 1000),
+        rssi: data[last].rssi,
+      },
+    ];
+
+    res.json(circles);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
