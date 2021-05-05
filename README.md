@@ -25,7 +25,7 @@
 
     This will run db, pgadmin, server and build react with disabled redux devtools
 
-1. Change value of DB_HOST from `.env` to: `postgres`
+1. Change value of `${DB_HOST}` from `.env` to: `postgres`
 2. Run db & pgadmin & server containers in console: `docker-compose up`
 3. App is available at: `localhost:${SERVER_PORT}`
 
