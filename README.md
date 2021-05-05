@@ -132,7 +132,7 @@ volumes:
   pgadmin:
 ```
 
-This compose configuration creates 3 containers, 1 network and 1 volume for storing persistent data. Every container is using the same network for communication with other containers. Each container, after failure, automatically restarts. Container `postgres_container` creates postgresql server where the persistent data is stored using volume. There is also container `pgadmin_container`, which is sql client. Last container, named `server_container`, is where our main app is running. Instead of image it is using build defined in Docker file discussed in previous section.
+This compose configuration creates 3 containers, 1 network and 1 volume for storing persistent data. Every container is using the same network for communication with other containers. Each container, after failure, automatically restarts. Container `postgres_container` creates postgresql server, where the persistent data is stored in volume. There is also container `pgadmin_container`, which is sql client. Last container, named `server_container`, is where our main app is running. Instead of image it is using build defined in Dockerfile discussed in previous section.
 
 ### docker-compose.dev.yml explained
 
