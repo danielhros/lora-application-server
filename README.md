@@ -50,7 +50,7 @@
 
 ## Docker file explained
 
-Docker file is located at root level of project and it is used only for build and deploy mode.
+Docker file is located at root level of project and it is used only for deploy mode.
 
 ```dockerfile
 #Dockerfile
