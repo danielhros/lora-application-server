@@ -70,7 +70,7 @@ At first, latest node is downloaded and `/server` working directory is created i
 
 ## Docker-compose explained
 
-We are using two docker-compose files. The `docker-compose.dev.yml` for develop mode and `docker-compose.yml` for production mode, both located in root directory. Both files are using environment variables specified in `.env` file.
+We are using two docker-compose files. The `docker-compose.dev.yml` for develop mode and `docker-compose.yml` for production mode, both located in root directory and are using environment variables specified in `.env` file.
 
 ### docker-compose.yml explained
 
