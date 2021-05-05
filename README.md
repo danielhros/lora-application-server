@@ -12,7 +12,7 @@
 
 ### Run app in develop mode:
 
-    This will just run db and pgadmin container, React and Server are running separately on local machine
+    This will just run db and pgadmin containers. React and Server instances are running separately on local machine
 
 1. Change value of `${DB_HOST}` from `.env` to: `localhost`
 2. Run db and pgadmin containers in console: `docker-compose -f docker-compose.dev.yml up`
