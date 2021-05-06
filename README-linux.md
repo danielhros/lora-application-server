@@ -294,4 +294,4 @@ Then, the Jenkins, with new home directory, should be still available at `lora.f
     ```
 
 14. Save changes and run your first pipeline
-15. Congratulations!, after the pipeline successfully build and deploy the application, you are ready to go.
+15. Congratulations! After the pipeline successfully build and deploy the application, you are ready to go.
