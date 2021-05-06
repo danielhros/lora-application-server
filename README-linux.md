@@ -13,7 +13,7 @@
 1. Copy and rename `.env.example` file to `.env` and set value of `${DB_HOST}` to `localhost`
 2. Copy and rename `client/.env.production.example` to `client/.env.production`
 3. Fulfill missing values in those two files.
-4. To get value for `${REACT_APP_GOOGLE_API}` in `client/.env.production` follow [these](https://developers.google.com/maps/premium/apikey/maps-javascript-apikey#creating-api-keys) steps
+4. To get value for `${REACT_APP_GOOGLE_API}` in `client/.env.production`, follow [these](https://developers.google.com/maps/premium/apikey/maps-javascript-apikey#creating-api-keys) steps
 
 ## Setup reverse proxy
 
