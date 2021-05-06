@@ -5,8 +5,8 @@
 ### General
 
 1. Copy and rename `.env.example` file to `.env`
-2. Copy and rename `client/.env.development.example` to `.env.development` if you want to **run app in develop mode**
-3. Copy and rename `client/.env.production.example` to `.env.production` if you want to **run app in production mode**
+2. Copy and rename `client/.env.development.example` to `client/.env.development` if you want to **run app in develop mode**
+3. Copy and rename `client/.env.production.example` to `client/.env.production` if you want to **run app in production mode**
 4. Fulfill missing values in those files.
 5. To get value for `${REACT_APP_GOOGLE_API}` follow [these](https://developers.google.com/maps/premium/apikey/maps-javascript-apikey#creating-api-keys) steps
 
