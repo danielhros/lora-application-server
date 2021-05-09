@@ -146,7 +146,7 @@ The compose configuration for develop mode is very similar to one for deploy mod
 
 # How to populate database
 
-For correct application server functioning, database has to be populated. We will be using command line to accomplish it.
+For correct application server functioning, database has to be populated. We will be using command line to accomplish that.
 
 ### Pre requirements
 
