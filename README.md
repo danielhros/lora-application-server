@@ -1,18 +1,24 @@
-# How to run locally:
+# Run app locally
 
-    There are two options how to run application. Develop and deploy mode. Both modes are using same docker volume (same database is loaded).
+    There are two options how to run application. Develop and deploy mode.
+    Both modes are using same docker volume (same database is loaded).
+
+### Pre requirements
+
+- Docker installed on your local machine. Tutorial, how to install Docker, can be found [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04).
+- Npm installed on your local machine. Tutorial, how to install Npm, can be found [here](https://www.npmjs.com/get-npm).
 
 ### General
 
-1. Copy and rename `.env.example` file to `.env`
-2. Copy and rename `client/.env.development.example` to `client/.env.development` if you want to **run app in develop mode**
-3. Copy and rename `client/.env.production.example` to `client/.env.production` if you want to **run app in production mode**
+1. Copy and rename `.env.example` to `.env`
+2. Copy and rename `client/.env.development.example` to `client/.env.development` if you want to run app **in develop mode**
+3. Copy and rename `client/.env.production.example` to `client/.env.production` if you want to run app in **production mode**
 4. Fulfill missing values in those files.
 5. To get value for `${REACT_APP_GOOGLE_API}` follow [these](https://developers.google.com/maps/premium/apikey/maps-javascript-apikey#creating-api-keys) steps
 
 ### Run app in develop mode:
 
-    This will just run db and pgadmin containers. React and server instances are running separately on local machine
+    This will just run db and pgadmin containers. React and server instances are running separately, outside of containers.
 
 1. Change value of `${DB_HOST}` from `.env` to: `localhost`
 2. Run db and pgadmin containers in console: `docker-compose -f docker-compose.dev.yml up`
@@ -23,11 +29,11 @@
 
 ### Run app in production mode:
 
-    This will run db, pgadmin, server and build react with disabled redux devtools
+    This will run db, pgadmin, server and build react with disabled redux devtools.
 
-1. Change value of `${DB_HOST}` from `.env` to: `postgres`
-2. Run db & pgadmin & server containers in console: `docker-compose up`
-3. App is available at: `localhost:${SERVER_PORT}`
+1. Change value of `${DB_HOST}` from `.env` to `postgres`.
+2. Run db & pgadmin & server containers in console: `docker-compose up`.
+3. App is available at: `localhost:${SERVER_PORT}`.
 
 ### Access to postgres:
 
@@ -66,13 +72,13 @@ RUN npm install --prefix client
 CMD npm run build
 ```
 
-At first, latest node is downloaded and `/server` working directory is created in newly created container. Into this working directory, whole source code is copied, expect for files specified in `client/.dockerignore`. These files are omitted. Then, node dependencies are installed into working directory for both, server and client instancies. Lastly, the `npm run build` command is called which is located in `package.json`. This command firstly build React application and then trigger server. When the server is started this way, the environment variable `NODE_ENV` is set to `production` and built version of React application is served.
+At first, latest node is downloaded and `/server` working directory is created in newly created container. Into this working directory, whole source code is copied, expect for files specified in `client/.dockerignore`. These files are omitted. Then, node dependencies are installed into working directory for both, server and client instancies. Lastly, the `npm run build` command is called which is located in `package.json`. This command firstly build react application and then trigger server. When the server is started this way, the environment variable `NODE_ENV` is set to `production` and built version of react application is used.
 
 ## Docker-compose explained
 
 We are using two docker-compose files. The `docker-compose.dev.yml` for develop mode and `docker-compose.yml` for production mode, both located in root directory. Each compose files loads environment variables specified in `.env` file.
 
-### docker-compose.yml explained
+### docker-compose config file explained
 
 ```yml
 # docker-compose.dev.yml
@@ -137,6 +143,70 @@ This compose configuration creates 3 containers, 1 network and 1 volume for stor
 ### docker-compose.dev.yml explained
 
 The compose configuration for develop mode is very similar to one for deploy mode. Only difference is that, there is no `server_container`, because server and client are separate instances running out of docker.
+
+# How to populate database
+
+For correct application server functioning, database has to be populated. We will be using command line to accomplish it.
+
+### Pre requirements
+
+- application server is running in containers.
+
+From root directory, navigate to directory where exported data are located.
+
+```shell
+cd dummy
+```
+
+Then, copy data into running postgres container (for development mode use `dev_postgres_container`).
+
+```
+docker cp dbexport.sql postgres_container:/
+```
+
+Then, enter container (for development mode use `dev_postgres_container`).
+
+```
+docker exec -it postgres_container /bin/sh
+```
+
+Lastly, import data into database:
+
+```
+psql -d ${DB_NAME} -U ${DB_USER} -f dbexport.sql
+```
+
+Default `name` and `password` is: `admin`
+
+If you would like to import data into already populated database, you have to first remove the existing table and then create new one. In container console drop existing database.
+
+```shell
+dropdb -U ${DB_USER} ${DB_NAME}
+```
+
+Log into postgres server as user.
+
+```shell
+su - postgres
+```
+
+Then create new database.
+
+```shell
+createdb ${DB_NAME}
+```
+
+Exit postgres server console.
+
+```shell
+exit
+```
+
+Populate database with new data like previously.
+
+```shell
+psql -d ${DB_NAME} -U ${DB_USER} -f dbexport.sql
+```
 
 # How to build and deploy app on remote server using Jenkins pipeline
 
