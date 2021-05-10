@@ -15,7 +15,7 @@ services:
       - "${DB_PORT}:5432"
     networks:
       - postgres
-    restart: unless-stopped
+    restart: always
 
   pgadmin:
     container_name: dev_pgadmin_container
@@ -30,7 +30,7 @@ services:
       - "${PGADMIN_PORT}:80"
     networks:
       - postgres
-    restart: unless-stopped
+    restart: always
 
 networks:
   postgres:
