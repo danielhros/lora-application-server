@@ -39,7 +39,7 @@
 
 - `localhost:${DB_PORT}`
 - **Username:** `${DB_USER}`
-- **Password:** `${DP_PASSWORD}`
+- **Password:** `${DB_PASSWORD}`
 
 ### Access to PgAdmin:
 
@@ -52,7 +52,7 @@
 - **Host name/address:** `postgres`
 - **Port:** `${DB_PORT}`
 - **Username:** `${DB_NAME}`
-- **Password:** `${DP_PASSWORD}`
+- **Password:** `${DB_PASSWORD}`
 
 ## Docker file explained
 
@@ -91,7 +91,7 @@ services:
     image: postgres:11
     environment:
       POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DP_PASSWORD}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
@@ -150,7 +150,7 @@ For correct application server functioning, database has to be populated. We wil
 
 ### Pre requirements
 
-- application server is running in containers.
+- application server is running in containers
 
 From root directory, navigate to directory where exported data are located.
 
@@ -187,7 +187,7 @@ dropdb -U ${DB_USER} ${DB_NAME}
 Log into postgres server as user.
 
 ```shell
-su - postgres
+su - ${DB_USER}
 ```
 
 Then create new database.
@@ -214,7 +214,7 @@ psql -d ${DB_NAME} -U ${DB_USER} -f dbexport.sql
 
 - You should have access to server with linux OS software installed on it. For example [DigitalOcean](https://www.digitalocean.com/pricing?utm_campaign=emea_brand_kw_en_cpc&utm_adgroup=digitalocean_pricing_bmm&_keyword=%2Bdigitalocean%20%2Bpricing&_device=c&_adposition=&utm_content=conversion&utm_medium=cpc&utm_source=google&gclid=Cj0KCQjwp86EBhD7ARIsAFkgakiyGFR3oRT68R7CEWseAIPhseFJ2qsSPPO3xeP2veyrvATkd4ygDVgaAjDDEALw_wcB) cloud provider.
 - Nginx installed. Tutorial, how to install nginx on Ubuntu, can be found [here](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04).
-- Install SSL certificate and register DNS. Tutorial can be found [here](https://docs.digitalocean.com/products/networking/dns/).
+- Installed SSL certificate along with registered DNS. Tutorial can be found [here](https://docs.digitalocean.com/products/networking/dns/).
 - Jenkins installed. Tutorial, how to install Jenkins on Ubuntu, can be found [here](https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-20-04).
 - Docker installed. Tutorial, how to install Docker on Ubuntu, can be found [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04).
 
@@ -235,7 +235,7 @@ First, navigate to available sites config directory.
 cd /etc/nginx/sites-available/
 ```
 
-Create config file. You can name it as you whish. Good practice is to name it int the same way as your DNS address is. In our case, it is `lora.fiit.stuba.sk`.
+Create config file. You can name it as you whish. Good practice is to name it the same way as your DNS address is. In our case, it is `lora.fiit.stuba.sk`.
 
 ```shell
 touch lora.fiit.stuba.sk
@@ -454,7 +454,7 @@ sudo service jenkins start
 6. Click on the `addCredentials` button on the left side of the screen.
 7. Choose `Secret file` option from `Kind` dropdown menu.
 8. Upload fulfilled `.env` file and set ID field to `env`.
-9. Repeat step 6 and then upload fulfilled `client/.env.development` file and set ID field to `envClient`.
+9. Repeat step 6 and then upload fulfilled `client/.env.production` file and set ID field to `envClient`.
 10. Create another credentials but this time choose `SSH Username with private key` option from dropdown menu. Set ID field to `lora-application-server-ssh`. To get SSH keys for your repository (where the source code of application server is) follow [this instructions](https://docs.github.com/en/developers/overview/managing-deploy-keys).
 11. From dashboard click on `New Item` button, located in left side of the screen.
 12. Enter desired name, click on `Pipeline` button and confirm it clicking on OK button
