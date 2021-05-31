@@ -21,21 +21,81 @@
     This will just run db and pgadmin containers. React and server instances are running separately, outside of containers.
 
 1. Change value of `${DB_HOST}` from `.env` to: `localhost`
-2. Run db and pgadmin containers in console: `docker-compose -f docker-compose.dev.yml up`
-3. Run server in console: `npm run server`
+2. Run db and pgadmin containers in console: `docker-compose -f docker-compose.dev.yml up -d`
+3. Run server in console: `npm i && npm run server`
 4. Do not forget to adjust port of `${REACT_APP_BASE_URL}` variable in `client/.env.development` file accordingly to `${SERVER_PORT}` specified in `.env` file
-5. Run client in console: `npm run client`
+5. Run client in console: `cd client && npm i && cd .. && npm run client`
 6. App is available at: `localhost:3000`
+7. Populate database. Tutorial is down bellow in section **How to populate database**
 
 ### Run app in production mode:
 
     This will run db, pgadmin, server and build react with disabled redux devtools.
 
 1. Change value of `${DB_HOST}` from `.env` to `postgres`.
-2. Run db & pgadmin & server containers in console: `docker-compose up`.
+2. Run db & pgadmin & server containers in console: `docker-compose up -d`.
 3. App is available at: `localhost:${SERVER_PORT}`.
+4. Populate database. Tutorial is down bellow in section **How to populate database**.
 
-### Access to postgres:
+## How to populate database
+
+For correct application functioning, database has to be populated first. We will be using command line to accomplish that.
+
+### Pre requirements
+
+- application server is running in containers
+
+From root directory, navigate to directory where exported data are located.
+
+```shell
+cd dummy
+```
+
+Then, copy data into running postgres container (for development mode use `dev_postgres_container`).
+
+```
+docker cp dbexport.sql postgres_container:/
+```
+
+Then, enter container (for development mode use `dev_postgres_container`).
+
+```
+docker exec -it postgres_container /bin/bash
+```
+
+If you would like to import data into already populated database, you have to first remove the existing table and then create new one. In container console drop existing database. (skip this step if you don't have created database yet)
+
+```shell
+dropdb -U ${DB_USER} ${DB_NAME}
+```
+
+Log into postgres server as user.
+
+```shell
+su - ${DB_USER}
+```
+
+Then create new database.
+
+```shell
+createdb ${DB_NAME}
+```
+
+Exit postgres server console.
+
+```shell
+exit
+```
+
+Populate database with new data.
+
+```shell
+psql -d ${DB_NAME} -U ${DB_USER} -f dbexport.sql
+```
+
+Now you can log into the application. Both, default `name` and `password` is: `admin`.
+
+## Access to postgres:
 
 - `localhost:${DB_PORT}`
 - **Username:** `${DB_USER}`
@@ -143,70 +203,6 @@ This compose configuration creates 3 containers, 1 network and 1 volume for stor
 ### docker-compose.dev.yml explained
 
 The compose configuration for develop mode is very similar to one for deploy mode. Only difference is that, there is no `server_container`, because server and client are separate instances running out of docker.
-
-# How to populate database
-
-For correct application server functioning, database has to be populated. We will be using command line to accomplish that.
-
-### Pre requirements
-
-- application server is running in containers
-
-From root directory, navigate to directory where exported data are located.
-
-```shell
-cd dummy
-```
-
-Then, copy data into running postgres container (for development mode use `dev_postgres_container`).
-
-```
-docker cp dbexport.sql postgres_container:/
-```
-
-Then, enter container (for development mode use `dev_postgres_container`).
-
-```
-docker exec -it postgres_container /bin/sh
-```
-
-Lastly, import data into database:
-
-```
-psql -d ${DB_NAME} -U ${DB_USER} -f dbexport.sql
-```
-
-Default `name` and `password` is: `admin`
-
-If you would like to import data into already populated database, you have to first remove the existing table and then create new one. In container console drop existing database.
-
-```shell
-dropdb -U ${DB_USER} ${DB_NAME}
-```
-
-Log into postgres server as user.
-
-```shell
-su - ${DB_USER}
-```
-
-Then create new database.
-
-```shell
-createdb ${DB_NAME}
-```
-
-Exit postgres server console.
-
-```shell
-exit
-```
-
-Populate database with new data like previously.
-
-```shell
-psql -d ${DB_NAME} -U ${DB_USER} -f dbexport.sql
-```
 
 # How to build and deploy app on remote server using Jenkins pipeline
 
