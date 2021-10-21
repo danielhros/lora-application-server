@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../db");
 const auth = require("../middleware/auth");
 var faker = require("faker");
+const config = require("../config");
 
 router.post("/", auth, async (req, res) => {
   try {
@@ -205,6 +206,10 @@ router.post("/devicesCount", auth, async (req, res) => {
 });
 
 router.post("/rename", auth, async (req, res) => {
+  if (config.isDemo) {
+    return res.status(200).json({ status: "OK" });
+  }
+
   try {
     const query = {
       text:

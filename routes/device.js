@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../db");
 const auth = require("../middleware/auth");
 const moment = require("moment");
+const config = require("../config");
 
 // SELECT nodes.*, applications.name as application_name FROM nodes
 // INNER JOIN applications ON applications.id = nodes.application_id
@@ -203,6 +204,10 @@ router.post("/top", auth, async (req, res) => {
 });
 
 router.post("/config", auth, async (req, res) => {
+  if (config.isDemo) {
+    return res.status(200).json({ status: "OK" });
+  }
+
   const { deviceId, netData, newDeviceName } = req.body;
 
   try {

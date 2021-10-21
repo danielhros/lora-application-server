@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const auth = require("../middleware/auth");
+const config = require("../config");
 
 router.post("/", auth, async (req, res) => {
   try {
@@ -181,6 +182,10 @@ router.post("/downlinkMessages", auth, async (req, res) => {
 });
 
 router.post("/setap", auth, async (req, res) => {
+  if (config.isDemo) {
+    return res.status(200).json({ status: "OK" });
+  }
+
   const { setap, gatewayId } = req.body;
 
   try {

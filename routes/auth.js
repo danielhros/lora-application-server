@@ -5,6 +5,7 @@ const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const db = require("../db");
 const auth = require("../middleware/auth");
+const config = require("../config");
 
 // @route   GET api/auth
 // @desc    Get user object
@@ -123,11 +124,10 @@ router.post("/token", async (req, res) => {
 
 router.post("/logout", async (req, res) => {
   try {
-    const {
-      rowCount,
-    } = await db.query("DELETE FROM tokens WHERE refresh_token = $1", [
-      req.body.refreshToken,
-    ]);
+    const { rowCount } = await db.query(
+      "DELETE FROM tokens WHERE refresh_token = $1",
+      [req.body.refreshToken]
+    );
 
     if (rowCount === 0) {
       return res.sendStatus(401);
@@ -148,6 +148,10 @@ router.post(
     check("newPassword", "New password is required").not().isEmpty().exists(),
   ],
   async (req, res) => {
+    if (config.isDemo) {
+      return res.status(200).json({ status: "OK" });
+    }
+
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -181,9 +185,7 @@ router.post(
       const salt = await bcrypt.genSalt(10);
       const _newPassword = await bcrypt.hash(newPassword, salt);
 
-      const {
-        rowCount,
-      } = await db.query(
+      const { rowCount } = await db.query(
         "UPDATE users SET user_name = $1, password= $2 WHERE id = $3",
         [newUsername, _newPassword, req.user.id]
       );
