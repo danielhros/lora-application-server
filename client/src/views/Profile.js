@@ -11,6 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import { changeCredentials, resetUpdateCredentials } from "../actions/auth";
 import { connect } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import {isDemo} from "../config";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -55,6 +56,8 @@ export const Profile = ({
   resetUpdateCredentials,
   user_name,
 }) => {
+
+
   const classes = useStyles();
 
   const validationSchema = yup.object({
@@ -136,7 +139,7 @@ export const Profile = ({
               value={formik.values.userName}
               autoFocus
               onChange={formik.handleChange}
-              disabled={updateCredentialsLoading}
+              disabled={isDemo || updateCredentialsLoading}
               error={
                 (formik.touched.userName && Boolean(formik.errors.userName)) ||
                 !!userNameError
@@ -157,7 +160,7 @@ export const Profile = ({
               id="currentPassword"
               value={formik.values.currentPassword}
               onChange={formik.handleChange}
-              disabled={updateCredentialsLoading}
+              disabled={isDemo || updateCredentialsLoading}
               error={
                 (formik.touched.currentPassword &&
                   Boolean(formik.errors.currentPassword)) ||
@@ -180,7 +183,7 @@ export const Profile = ({
               id="newPassword"
               value={formik.values.newPassword}
               onChange={formik.handleChange}
-              disabled={updateCredentialsLoading}
+              disabled={isDemo || updateCredentialsLoading}
               error={
                 (formik.touched.newPassword &&
                   Boolean(formik.errors.newPassword)) ||
@@ -202,7 +205,7 @@ export const Profile = ({
               id="confirmNewPassword"
               value={formik.values.confirmNewPassword}
               onChange={formik.handleChange}
-              disabled={updateCredentialsLoading}
+              disabled={isDemo || updateCredentialsLoading}
               error={
                 formik.touched.confirmNewPassword &&
                 Boolean(formik.errors.confirmNewPassword)
@@ -216,7 +219,7 @@ export const Profile = ({
               <Button
                 type="submit"
                 fullWidth
-                disabled={updateCredentialsLoading}
+                disabled={isDemo || updateCredentialsLoading}
                 variant="contained"
                 color="primary"
                 className={classes.submit}

@@ -8,6 +8,7 @@ import gatewayApi from "../../api/gatewayApi";
 import devConsole from "../../devConsole";
 import { useDebounce } from "use-debounce";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { isDemo } from "../../config";
 
 const theme = createMuiTheme({
   overrides: {
@@ -92,6 +93,7 @@ export const Upload = ({ gatewayId, refresh }) => {
           filesLimit={1}
           onChange={handleAddFiles}
           acceptedFiles={["application/JSON"]}
+          disabled={isDemo}
         />
       </MuiThemeProvider>
 
@@ -113,7 +115,7 @@ export const Upload = ({ gatewayId, refresh }) => {
             variant="contained"
             onClick={() => handleSubmit()}
             color="primary"
-            disabled={files.length === 0 || loading}
+            disabled={isDemo || files.length === 0 || loading}
           >
             submit
           </Button>

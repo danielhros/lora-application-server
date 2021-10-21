@@ -14,6 +14,7 @@ import MessageForm from "./MessageForm";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import gatewayApi from "../../api/gatewayApi";
 import devConsole from "../../devConsole";
+import { isDemo } from "../../config";
 
 const DialogContent = withStyles((theme) => ({
   root: {
@@ -284,12 +285,12 @@ const GatewaySettingsModal = ({
             </Grid>
           </DialogContent>
           <DialogActions className={localClasses.root}>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose} color="primary" disabled={isDemo}>
               CANCEL
             </Button>
             <div className={localClasses.wrapper}>
               <Button
-                disabled={loading}
+                disabled={isDemo || loading}
                 variant="contained"
                 type="submit"
                 color="primary"

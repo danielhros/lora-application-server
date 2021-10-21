@@ -18,6 +18,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import deviceApi from "../../api/deviceApi";
+import { isDemo } from "../../config";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -133,7 +134,7 @@ const DownlinkMessagesModal = ({
                 value={formik.values.newDeviceName}
                 autoFocus
                 onChange={formik.handleChange}
-                disabled={loading}
+                disabled={isDemo || loading}
                 // disabled={updateCredentialsLoading}
                 error={
                   formik.touched.newDeviceName &&
@@ -181,6 +182,7 @@ const DownlinkMessagesModal = ({
                   labelId="spreading-factor-select"
                   id="spreading-factor-select"
                   value={spreadingFactor}
+                  disabled={isDemo}
                   onChange={(event) => setSpreadingFactor(event.target.value)}
                   label="Spreading Factor"
                 >
@@ -209,24 +211,10 @@ const DownlinkMessagesModal = ({
                   value={transmissionPower}
                   onChange={(event) => setTransmissionPower(event.target.value)}
                   label="Transmission Power"
+                  disabled={isDemo}
                 >
                   {[
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    14,
-                    15,
-                    16,
-                    17,
-                    18,
-                    19,
-                    20,
+                    5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
                   ].map((tp) => {
                     return (
                       <MenuItem key={tp} value={tp}>
@@ -239,12 +227,12 @@ const DownlinkMessagesModal = ({
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose} color="primary" disabled={isDemo}>
               CANCEL
             </Button>
             <div className={localClasses.wrapper}>
               <Button
-                disabled={loading}
+                disabled={isDemo || loading}
                 variant="contained"
                 type="submit"
                 color="primary"

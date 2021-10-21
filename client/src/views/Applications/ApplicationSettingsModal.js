@@ -14,6 +14,7 @@ import TextField from "@material-ui/core/TextField";
 import applicationApi from "../../api/applicationApi";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import {isDemo} from "../../config";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -123,7 +124,7 @@ const ApplicationSettingsModal = ({
                 value={formik.values.newApplicationName}
                 autoFocus
                 onChange={formik.handleChange}
-                disabled={loading}
+                disabled={isDemo || loading}
                 // disabled={updateCredentialsLoading}
                 error={
                   formik.touched.newApplicationName &&
@@ -144,7 +145,7 @@ const ApplicationSettingsModal = ({
                 name="newApplicationDescription"
                 value={formik.values.newApplicationDescription}
                 onChange={formik.handleChange}
-                disabled={loading}
+                disabled={isDemo || loading}
                 // disabled={updateCredentialsLoading}
                 error={
                   formik.touched.newApplicationDescription &&
@@ -158,16 +159,17 @@ const ApplicationSettingsModal = ({
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose} color="primary" disabled={isDemo}>
               CANCEL
             </Button>
 
             <div className={localClasses.wrapper}>
               <Button
-                disabled={loading}
+                disabled={isDemo || loading}
                 variant="contained"
                 type="submit"
                 color="primary"
+
               >
                 SAVE
               </Button>
