@@ -8,6 +8,7 @@ import MyChart from "./MyChart";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import UplinkMessages from "./UplinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
+import MessagesTable from "./MessagesTable";
 
 export const AllMessages = ({ refresh, classes }) => {
   return (
@@ -25,17 +26,13 @@ export const AllMessages = ({ refresh, classes }) => {
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
+            <MessagesTable />
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
             <UplinkMessages refresh={refresh} />
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <ScheduledDownlinkMessages refresh={refresh} />
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <SentDownlinkMessages refresh={refresh} />
           </Paper>
         </Grid>
       </Grid>

@@ -14,3 +14,5 @@ export const MESSAGES = `${API}/messages`;
 export const DASHBOARD = `${API}/dashboard`;
 export const CHART = `${API}/chart`;
 export const PDR = `${API}/pdr`;
+
+export const ALL_MESSAGES = `${API}/messages/all-messages`;
