@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Pagination from '@material-ui/lab/Pagination';
 import queryString from 'query-string';
 import { BASE_URL, ALL_MESSAGES } from "../../services/URLs";
 import Loading from "../Loading";
@@ -19,10 +20,12 @@ const MessagesTable = () => {
         dateTo: '',
         text: '',
         orderBy: null,
+        page: 1,
     });
 
     function filterData() {
         setData(null);
+        setQuery({...query, page: 1});
         const URL = BASE_URL + ALL_MESSAGES + '?' + queryString.stringify(query);
         getData(URL);
     }
@@ -44,6 +47,13 @@ const MessagesTable = () => {
         }).then(result => {
             setData(result);
         });
+    }
+
+    const handlePageClick = (e, value) => {
+        const _query = {...query, page: value};
+        const URL = BASE_URL + ALL_MESSAGES + '?' + queryString.stringify(_query);
+        getData(URL);
+        setQuery(_query);
     }
 
     useEffect(() => {
@@ -137,6 +147,7 @@ const MessagesTable = () => {
                     {result}
                 </tbody>
             </table>
+            <Pagination count={data.pagination.pages} page={query.page} onChange={handlePageClick} />
         </>
     )
 }

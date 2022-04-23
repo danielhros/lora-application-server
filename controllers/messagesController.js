@@ -1,8 +1,11 @@
 const { Op } = require("sequelize");
 const MessagesView = require("../models/MessagesView");
 
+const PER_PAGE = 10;
+
 const allMessages = async (req, res) => {
     const {query} = req;
+    const page = query.page ?? 1;
     let whereQuery = {};
     // datetime query
     if(query.dateFrom && query.dateTo) {
@@ -69,10 +72,18 @@ const allMessages = async (req, res) => {
 
     const messageView = await MessagesView.findAndCountAll({
         where: whereQuery,
-        limit: 5, offset: 0,
+        limit: PER_PAGE, offset: (page - 1) * PER_PAGE,
     });
 
-    res.json(messageView);
+    const {count} = messageView;
+
+    res.json({
+        ...messageView,
+        pagination: {
+            current: page,
+            pages: Math.ceil(count / PER_PAGE),
+        },
+    });
 }
 
 module.exports = {
