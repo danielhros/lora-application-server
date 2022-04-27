@@ -3,12 +3,14 @@ import Pagination from '@material-ui/lab/Pagination';
 import queryString from 'query-string';
 import { BASE_URL, ALL_MESSAGES } from "../../services/URLs";
 import Loading from "../Loading";
+import newStyles from "../../shared/newStyles";
 
 const MESSAGE_TYPES = [
     {id: 'uplink', value: 'Uplink messages'}, 
     {id: 'scheduled', value: 'Scheduled downlink messages'},
     {id: 'downlink', value: 'Sent downlink messages'},
 ];
+
 
 const MessagesTable = () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -67,15 +69,16 @@ const MessagesTable = () => {
     for(let i = 0; i < messages.length; i++) {
         result.push(
             <tr key={'messages-tbody-key-'+i}>
-                <td>{messages[i].datetime}</td>
-                <td>{messages[i].device_id}</td>
-                <td>{messages[i].snr ?? '-'}</td>
-                <td>{messages[i].rssi ?? '-'}</td>
-                <td>{messages[i].spf}</td>
-                <td>{messages[i].power}</td>
-                <td>{messages[i].gateway}</td>
-                <td>{messages[i].dc_remaining}</td>
-                <td>{messages[i].type === 0 ? 'uplink' : 'downlink'}</td>
+                <td style={newStyles.tableCell}>{new Date(messages[i].datetime).toLocaleString('sk-SK', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit',
+                    minute: '2-digit'})}</td>
+                <td style={newStyles.tableCell}>{messages[i].device_id}</td>
+                <td style={newStyles.tableCell}>{messages[i].snr ?? '-'}</td>
+                <td style={newStyles.tableCell}>{messages[i].rssi ?? '-'}</td>
+                <td style={newStyles.tableCell}>{messages[i].spf}</td>
+                <td style={newStyles.tableCell}>{messages[i].power}</td>
+                <td style={newStyles.tableCell}>{messages[i].gateway}</td>
+                <td style={newStyles.tableCell}>{messages[i].dc_remaining}</td>
+                <td style={newStyles.tableCell}>{messages[i].type === 0 ? 'uplink' : 'downlink'}</td>
             </tr>
         )
     }
@@ -107,47 +110,48 @@ const MessagesTable = () => {
 
     return (
         <>
-            <div>
+            <div style={{display: 'flex'}}>
                 <div>
                     {TYPE_CHECKBOXES}
                 </div>
-                <div>
+                <div style={newStyles.dateInput}>
                     <label htmlFor={"date-from"}>Date from</label>
-                    <input type="date" name="date-from" value={query.dateFrom} id="date-from" 
+                    <input type="date" name="date-from" style={newStyles.textInput} value={query.dateFrom} id="date-from" 
                         onChange={(e)=>setQuery({...query, dateFrom: e.target.value})}  />
                 </div>
-                <div>
+                <div style={newStyles.dateInput}>
                     <label htmlFor={"date-to"}>Date to</label>
-                    <input type="date" name="date-to" value={query.dateTo} id="date-to" 
+                    <input type="date" name="date-to" style={newStyles.textInput} value={query.dateTo} id="date-to" 
                         onChange={(e)=>setQuery({...query, dateTo: e.target.value})}  />
                 </div>
-                <div>
+                <div style={newStyles.dateInput}>
                     <label htmlFor={"text"}>Device ID</label>
-                    <input type="text" name="text" value={query.text} id="text" 
+                    <input type="text" name="text" style={newStyles.textInput} value={query.text} id="text" 
                         onChange={(e)=>setQuery({...query, text: e.target.value})}  />
                 </div>
-                <div>
-                    <button role="button" onClick={filterData}>FILTER DATA</button>
+                <div style={newStyles.dateInput}>
+                    <button role="button" onClick={filterData} style={newStyles.filterButton}>FILTER DATA</button>
                 </div>
             </div>
-            <table>
+            <table style={newStyles.tableStyle}>
                 <thead>
                     <tr>
-                        <td>Datetime</td>
-                        <td>Device ID</td>
-                        <td>SNR</td>
-                        <td>RSSI</td>
-                        <td>SPF</td>
-                        <td>Power</td>
-                        <td>Gateway</td>
-                        <td>DC remaining</td>
+                        <td style={newStyles.tableCell}>Datetime</td>
+                        <td style={newStyles.tableCell}>Device ID</td>
+                        <td style={newStyles.tableCell}>SNR</td>
+                        <td style={newStyles.tableCell}>RSSI</td>
+                        <td style={newStyles.tableCell}>SPF</td>
+                        <td style={newStyles.tableCell}>Power</td>
+                        <td style={newStyles.tableCell}>Gateway</td>
+                        <td style={newStyles.tableCell}>DC remaining</td>
+                        <td style={newStyles.tableCell}>Type</td>
                     </tr>
                 </thead>
                 <tbody>
                     {result}
                 </tbody>
             </table>
-            <Pagination count={data.pagination.pages} page={query.page} onChange={handlePageClick} />
+            <Pagination count={data.pagination.pages} page={query.page} onChange={handlePageClick} style={{marginTop: 10}}/>
         </>
     )
 }
