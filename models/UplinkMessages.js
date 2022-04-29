@@ -42,7 +42,51 @@ const UplinkMessages = sequelize.define('uplink_messages', {
     duty_cycle_remaining: {
         type: DataTypes.INTEGER,
         allowNull: false,        
-    }
+    },
+    app_data: {
+        type: DataTypes.STRING,
+        allowNull: false,    
+    },
+    seq: {
+        type: DataTypes.INTEGER,
+        allowNull: false,        
+    },
+    frequency: {
+        type: DataTypes.INTEGER,
+        allowNull: false,        
+    },
+    airtime: {
+        type: DataTypes.INTEGER,
+        allowNull: false,        
+    },
+    coderate: {
+        type: DataTypes.STRING,
+        allowNull: false,        
+    },
+    bandwidth: {
+        type: DataTypes.INTEGER,
+        allowNull: false,        
+    },
+    msg_group_number: {
+        type: DataTypes.INTEGER,
+        allowNull: false,        
+    },
+    message_type_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,        
+    },
+    dev_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,        
+    },
+    application_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,        
+    },
+    battery: {
+        type: DataTypes.INTEGER,
+        allowNull: false,        
+    },
    
 }, { timestamps: false });
 

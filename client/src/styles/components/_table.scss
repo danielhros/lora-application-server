@@ -1,0 +1,22 @@
+.table {
+    .orderable-td {
+
+        font-weight: 700;
+        font-size: '14px';
+        margin-top: 50;
+        border-top: 2px solid rgba(255, 255, 255, 0.1);
+        padding-top: 5;
+        padding-bottom: 5;
+
+        svg {
+            width: .7em;
+            height: .7em;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

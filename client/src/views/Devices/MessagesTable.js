@@ -24,7 +24,7 @@ const TABLE_HEAD = [
 ];
 
 
-const MessagesTable = () => {
+const MessagesTable = ({id}) => {
     const accessToken = localStorage.getItem("accessToken");
 
     const [data, setData] = useState(null);
@@ -35,6 +35,7 @@ const MessagesTable = () => {
         text: '',
         orderBy: ["datetime","desc"],
         page: 1,
+        device_id: id ?? null,
     });
 
     function filterData() {

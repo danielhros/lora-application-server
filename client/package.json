@@ -23,6 +23,9 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "recharts": "^2.0.9",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.51.0",
+    "sass-loader": "^12.6.0",
     "use-debounce": "^6.0.1",
     "web-vitals": "^1.1.1",
     "yup": "^0.32.9"

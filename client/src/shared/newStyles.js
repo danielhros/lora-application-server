@@ -2,10 +2,17 @@ export default{
     tableCell: {
         fontFamily: 'Roboto',
         fontSize: '14px',
+        fontWeight: 300,
         marginTop: 50,
         borderTop: "2px solid rgba(255, 255, 255, 0.1)",
         paddingTop: 5,
         paddingBottom: 5
+      },
+
+      title: {
+        fontFamily: 'Roboto',
+        fontSize: '24px',
+        color: '#FF9800'
       },
 
     dateInput: {
@@ -24,16 +31,6 @@ export default{
       color: "rgba(255, 255, 255, 0.7)"
     },
 
-    filterButton: {
-      fontFamily: 'Roboto',
-      border: "2px solid #303030",
-      borderRadius: "4px",
-      backgroundColor: "#606060",
-      height: 30,
-      width: 100,
-      color: "rgba(255, 255, 255, 0.7)",
-      marginLeft: 85
-    },
 
     tableStyle: {
       borderCollapse:"collapse",

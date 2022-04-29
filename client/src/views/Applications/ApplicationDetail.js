@@ -18,6 +18,7 @@ import { withStyles } from "@material-ui/core/styles";
 import UplinkMessages from "./UplinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
+import MessagesTable from "../Devices/MessagesTable";
 
 export const ApplicationDetail = ({
   refresh,
@@ -81,17 +82,7 @@ export const ApplicationDetail = ({
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <UplinkMessages refresh={refresh} />
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <ScheduledDownlinkMessages refresh={refresh} />
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <SentDownlinkMessages refresh={refresh} />
+            <MessagesTable />
           </Paper>
         </Grid>
       </Grid>
