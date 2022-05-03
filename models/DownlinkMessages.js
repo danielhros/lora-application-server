@@ -11,10 +11,6 @@ const DownlinkMessages = sequelize.define('downlink_messages', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    net_data: {
-        type: DataTypes.JSON,
-        allowNull: true,
-    },
     sent: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

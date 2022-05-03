@@ -4,10 +4,6 @@ import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import PDRProgress from "./PDRProgress";
-import MyChart from "./MyChart";
-import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
-import UplinkMessages from "./UplinkMessages";
-import SentDownlinkMessages from "./SentDownlinkMessages";
 import MessagesTable from "./MessagesTable";
 import MessagesChart from "../../components/MessagesChart";
 

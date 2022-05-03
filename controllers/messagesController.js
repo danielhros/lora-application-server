@@ -97,20 +97,15 @@ const allMessages = async (req, res) => {
 }
 
 const messageDetail = async (req, res) => {
-    const message = await MessagesView.findOne({ where: { id: req.params.id } });
-    if(message) {
-        let result = null;
-        let type = "";
-        if(message.type === 1) {
-            result = await UplinkMessages.findByPk(message.id);
-            type = "Uplink";
-        }
-        else {
-            result = await DownlinkMessages.findByPk(message.id);
-            type = "Downlink";
-        }
-        res.json({...result.dataValues, type: type});
+    if(req.params.type == 0) {
+        let result = await UplinkMessages.findByPk(req.params.id);
+        res.json({...result.dataValues, type: "Uplink"});
     }
+    else {
+        let result = await DownlinkMessages.findByPk(req.params.id);
+        res.json({...result.dataValues, type: "Downlink"});
+    }
+    
 }
 
 

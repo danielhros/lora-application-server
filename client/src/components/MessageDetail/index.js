@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MessageDetail = ({id}) => {
+const MessageDetail = ({id, type}) => {
   const classes = useStyles();
   const accessToken = localStorage.getItem("accessToken");
   const [open, setOpen] = React.useState(false);
@@ -37,7 +37,7 @@ const MessageDetail = ({id}) => {
   };
 
   function getDetail() {
-        fetch(BASE_URL + MESSAGE_DETAIL + "/" + id, {
+        fetch(BASE_URL + MESSAGE_DETAIL + "/" + id + "/" + type, {
             method: 'GET',
             headers: {
                 "Accept": "application/json",
@@ -51,6 +51,7 @@ const MessageDetail = ({id}) => {
             }
             else return response.json();
         }).then(result => {
+          console.log(result);
             setData(result);
         });     
     }

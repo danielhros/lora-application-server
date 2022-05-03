@@ -95,7 +95,7 @@ const MessagesTable = () => {
                 </td>
                 <td style={newStyles.tableCell}>{messages[i].type === 0 ? 'uplink' : 'downlink'}</td>
                 <td style={newStyles.tableCell}>
-                    <MessageDetail id={messages[i].id} />
+                    <MessageDetail id={messages[i].id} type={messages[i].type} />
                 </td>
             </tr>
         )

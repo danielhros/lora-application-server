@@ -116,6 +116,6 @@ router.get("/downlink/scheduled", auth, async (req, res) => {
 router.get('/chart-data', auth, messagesChart);
 
 router.get('/all-messages', auth, allMessages);
-router.get('/detail/:id', auth, messageDetail);
+router.get('/detail/:id/:type', auth, messageDetail);
 
 module.exports = router;
