@@ -52,6 +52,12 @@ const MessagesChart = ({device_id}) => {
         return <Loading />;
     }
 
+    let max = 0;
+    data.forEach(e => {
+        if(parseInt(e.uplink) > max) {max = parseInt(e.uplink);}
+        if(parseInt(e.downlink) > max) {max = parseInt(e.downlink);}
+    });
+
     return (
         <>
             <ResponsiveContainer width="100%" height="100%">
@@ -68,7 +74,7 @@ const MessagesChart = ({device_id}) => {
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="date" />
-                    <YAxis />
+                    <YAxis type="number" domain={[0, max]}/>
                     <Tooltip contentStyle={{color: '#000'}} />
                     <Legend />
                     <Line type="monotone" dataKey="uplink" stroke="#8884d8" activeDot={{ r: 8 }} />
@@ -76,7 +82,7 @@ const MessagesChart = ({device_id}) => {
                 </LineChart>
             </ResponsiveContainer>
 
-            <select onChange={selectChange} value={past} >
+            <select onChange={selectChange} value={past} className="drop">
                 <option value="day">Last day</option>
                 <option value="week">Last week</option>
                 <option value="month">Last month</option>

@@ -10,7 +10,7 @@ const TABLE_HEAD = [
     {key: "description", value: "Description"},
 ];
 
-const SeverityTable = ({data}) => {
+const SeverityTable = ({data, page, handlePageClick}) => {
 
     const {rows} = data;
     const result = [];
@@ -29,7 +29,7 @@ const SeverityTable = ({data}) => {
     const THEAD = [];
     for(let i = 0; i< TABLE_HEAD.length; i++) {
         THEAD.push(
-            <td key={"thead - " + i} className="orderable-td">
+            <td key={"thead - " + i}>
                 {TABLE_HEAD[i].value}
             </td>
         );
@@ -50,6 +50,8 @@ const SeverityTable = ({data}) => {
                     {result}
                 </tbody>
             </table>
+
+            <Pagination count={data.pagination.pages} page={page} onChange={handlePageClick} style={{marginTop: 10}}/>
         </>
     )
 }

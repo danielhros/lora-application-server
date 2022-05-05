@@ -149,6 +149,18 @@ const messagesChart = async (req, res) => {
 
 }
 
+
+const messagesDashboard = async (req, res) => {
+    const messageView = await MessagesView.findAll({
+        limit: 10,
+        order: [
+            sequelize.literal('datetime DESC')
+        ]
+    });
+
+    res.json(messageView);
+}
+
 module.exports = {
-    allMessages, messageDetail, messagesChart
+    allMessages, messageDetail, messagesChart, messagesDashboard
 }

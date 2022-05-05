@@ -192,12 +192,12 @@ const GatewayDetail = ({
           <MessagesTable id={selected.data.id} />
           </Paper>
         </Grid>
-        {/* Sent downlink messages */}
+        {/* Sent downlink messages 
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <SentDownlinkMessages refresh={refresh} />
           </Paper>
-        </Grid>
+        </Grid>*/}
       </Grid>
     </React.Fragment>
   );

@@ -3,7 +3,7 @@ const { sequelize } = require("../db");
 const Logs = require("../models/Logs");
 const Nodes = require("../models/Nodes");
 
-const PER_PAGE = 30;
+const PER_PAGE = 15;
 
 function calcReliable(groupedLogs, countAll) {
 
@@ -54,11 +54,17 @@ const dashboardLog = async (req, res) => {
     const page = query.page ?? 1;
     let whereQuery = {};
 
+    if(query.types) {
+        whereQuery = {
+            severity: query.types,
+        }
+    }
+
     // datetime query
     if(query.dateFrom && query.dateTo) {
         whereQuery = {
             ...whereQuery, 
-            datetime: {
+            date: {
                 [Op.gte]: query.dateFrom,
                 [Op.lte]: query.dateTo,
             }
@@ -67,7 +73,7 @@ const dashboardLog = async (req, res) => {
     else if(query.dateFrom) {
         whereQuery = {
             ...whereQuery, 
-            datetime: {
+            date: {
                 [Op.gte]: query.dateFrom,
             }
         }
@@ -75,7 +81,7 @@ const dashboardLog = async (req, res) => {
     else if(query.dateTo) {
         whereQuery = {
             ...whereQuery, 
-            datetime: {
+            date: {
                 [Op.lte]: query.dateTo,
             }
         }
@@ -96,6 +102,7 @@ const dashboardLog = async (req, res) => {
             'severity', 'component',
             [sequelize.literal('COUNT(severity)'), 'total'],
         ],
+        where: whereQuery,
         group: ['severity', 'component'],
     });
 
@@ -108,6 +115,7 @@ const dashboardLog = async (req, res) => {
             [sequelize.literal('COUNT(severity) FILTER(where severity = 2)'), 'severity2'],
             [sequelize.literal('COUNT(severity) FILTER(where severity = 3)'), 'severity3'],
         ],
+        where: whereQuery,
         group: ['severity','date'],
         order: sequelize.literal('date DESC'),
     });

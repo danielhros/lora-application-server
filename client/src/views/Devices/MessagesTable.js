@@ -81,7 +81,7 @@ const MessagesTable = ({id}) => {
     const result = [];
     for(let i = 0; i < messages.length; i++) {
         result.push(
-            <tr key={'messages-tbody-key-'+i}>
+            <MessageDetail id={messages[i].id} type={messages[i].type} key={'messages-tbody-key-'+i}>
                 <td style={newStyles.tableCell}>{new Date(messages[i].datetime).toLocaleString('sk-SK', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit',
                     minute: '2-digit'})}</td>
                 <td style={newStyles.tableCell}>{messages[i].device_id}</td>
@@ -92,13 +92,10 @@ const MessagesTable = ({id}) => {
                 <td style={newStyles.tableCell}>{messages[i].gateway}</td>
                 <td style={newStyles.tableCell}>
                     {messages[i].dc_remaining} ms 
-                    <LinearProgress variant="determinate" value={messages[i].dc_remaining%100} style={{width:"75%"}}/>
+                    <LinearProgress variant="determinate" value={messages[i].dc_remaining%111} style={{width:"75%"}}/>
                 </td>
                 <td style={newStyles.tableCell}>{messages[i].type === 0 ? 'uplink' : 'downlink'}</td>
-                <td style={newStyles.tableCell}>
-                    <MessageDetail id={messages[i].id} />
-                </td>
-            </tr>
+            </MessageDetail>
         )
     }
 
@@ -190,7 +187,6 @@ const MessagesTable = ({id}) => {
                 <thead>
                     <tr>
                         {THEAD}
-                        <td className="orderable-td"></td>
                     </tr>
                 </thead>
                 <tbody>

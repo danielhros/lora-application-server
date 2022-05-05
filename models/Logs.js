@@ -1,6 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../db');
 
+const Nodes = require('./Nodes');
+
 const Logs = sequelize.define('logs', {
     id: {
         type: DataTypes.INTEGER,
@@ -23,7 +25,7 @@ const Logs = sequelize.define('logs', {
         type: DataTypes.STRING,
         allowNull: false,  
         references: {
-            model: 'aps', // 'fathers' refers to table name
+            model: 'nodes', // 'fathers' refers to table name
             key: 'id', // 'id' refers to column name in fathers table
          }      
     },
@@ -34,5 +36,11 @@ const Logs = sequelize.define('logs', {
 
    
 }, { timestamps: false });
+
+Logs.hasMany(Nodes, {
+    foreignKey: {
+      name: 'id'
+    }
+  });
 
 module.exports = Logs;

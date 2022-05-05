@@ -14,9 +14,9 @@ import { BASE_URL, LOGS } from "../../services/URLs";
 import Loading from "../Loading";
 
 const SEVERITY_TYPES = [
-    {id: 'sev1', value: 'Severity 1'}, 
-    {id: 'sev2', value: 'Severity 2'},
-    {id: 'sev3', value: 'Severity 3'},
+    {id: 1, value: 'Severity 1'}, 
+    {id: 2, value: 'Severity 2'},
+    {id: 3, value: 'Severity 3'},
 ];
 
 const Logs = ({ classes }) => {
@@ -24,10 +24,11 @@ const Logs = ({ classes }) => {
 
     const [data, setData] = useState(null);
     const [query, setQuery] = useState({
-        types: ['sev1', 'sev2', 'sev3'],
-        dateFrom: '',
-        dateTo: '',
+        types: [1, 2, 3],
+        dateFrom: '2021-02-02',
+        dateTo: '2021-08-02',
         text: '',
+        page: 1,
     });
 
     function getData(url) {
@@ -69,6 +70,14 @@ const Logs = ({ classes }) => {
         setQuery({...query, page: 1});
         const URL = BASE_URL + LOGS + '?' + queryString.stringify(query);
         getData(URL);
+    }
+
+    
+    const handlePageClick = (e, value) => {
+        const _query = {...query, page: value};
+        const URL = BASE_URL + LOGS + '?' + queryString.stringify(_query);
+        getData(URL);
+        setQuery(_query);
     }
 
     useEffect(() => {
@@ -123,7 +132,7 @@ const Logs = ({ classes }) => {
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={3} md={3}>
                         <Paper className={clsx(classes.paper)}>
-                            <ReliabilityChart percentage={data.reliability} />
+                            <ReliabilityChart percentage={(10 - data.reliability)*10} />
                         </Paper>
                     </Grid>
                     <Grid item xs={12} sm={9} md={9}>
@@ -135,12 +144,12 @@ const Logs = ({ classes }) => {
             </Grid>
             <Grid item xs={12} md={12}>
                 <Paper className={clsx(classes.paper)}>
-                    <SeverityChart data={data.chart} />
+                    <SeverityChart data={data.chart} types={query.types} />
                 </Paper>
             </Grid>
             <Grid item xs={12} md={12}>
                 <Paper className={clsx(classes.paper)}>
-                    <SeverityTable data={data.table} />
+                    <SeverityTable data={data.table} page={query.page} handlePageClick={handlePageClick} />
                 </Paper>
             </Grid>
         </Grid>

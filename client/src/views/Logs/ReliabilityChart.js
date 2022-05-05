@@ -6,16 +6,16 @@ const ReliabilityChart = ({percentage}) => {
 
     let pathColor = "#d6d6d6";
     if(percentage >= 0 && percentage < 25) {
-        pathColor = "#8efa70";
+        pathColor = "#fa7070";
     }
     if(percentage >= 25 && percentage < 50) {
-        pathColor = "#fade70";
-    }
-    if(percentage >= 50 && percentage < 75) {
         pathColor = "#fa9d70";
     }
-    if(percentage >= 75 && percentage < 100) {
-        pathColor = "#fa7070";
+    if(percentage >= 50 && percentage < 75) {
+        pathColor = "#fade70";
+    }
+    if(percentage >= 75 && percentage <= 100) {
+        pathColor = "#8efa70";
     }
 
     return (
@@ -25,7 +25,7 @@ const ReliabilityChart = ({percentage}) => {
             </h2>
 
             <div style={{ width: '70%', margin: "auto", padding: "20px 0",}}>
-                <CircularProgressbar value={percentage} strokeWidth={6} text={percentage}
+                <CircularProgressbar value={percentage} strokeWidth={6} text={percentage/10}
                 
                     styles={buildStyles({
                         // Text size

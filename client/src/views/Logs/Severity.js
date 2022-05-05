@@ -1,5 +1,6 @@
 import React from "react";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Grid from "@material-ui/core/Grid";
 
 
 const Severity = ({data}) => {
@@ -7,37 +8,55 @@ const Severity = ({data}) => {
     data.forEach(item => {
         const total = parseInt(item.total);
         severity[item.severity - 1].push(
-            <td key={"sev-"+item.component+item.severity}>
+            <Grid item xs={4} key={"sev-"+item.component+item.severity} className="table-block">
                 <p>{item.total + " Critical " + item.component + " value (< 60)"}</p>
                 <LinearProgress variant="determinate" value={total > 100 ? 100 : total} style={{width:"90%"}}/>
-            </td>
+            </Grid>
         )
     });
 
+    function getOrNot(arr, index) {
+        if(arr.length > index) {
+            return arr[index];
+        }
+        return <Grid item xs={4} className="table-block"></Grid>;
+    }
+
     const contentTable = [];
-    for(let i = 0; i < severity[0].length; i++) {
+
+    let max = 0;
+    for(let i = 0; i < severity.length; i++) {
+        if(max < severity[i].length) {
+            max = severity[i].length;
+        }
+    }
+
+    for(let i = 0; i < max; i++) {
         contentTable.push(
-            <tr key={"ct-"+i}>
-                {severity[0][i]}
-                {severity[1][i]}
-                {severity[2][i]}
-            </tr>
+            <Grid container spacing={3} key={"ct-"+i}>
+                {getOrNot(severity[0], i)}
+                {getOrNot(severity[1], i)}
+                {getOrNot(severity[2], i)}
+            </Grid>
         )
     }
 
     return (
-        <table style={{width: "100%"}}>
-            <thead>
-                <tr>
-                    <th>Severity lvl 1</th>
-                    <th>Severity lvl 2</th>
-                    <th>Severity lvl 3</th>
-                </tr>
-            </thead>
-            <tbody>
-                {contentTable}
-            </tbody>
-        </table>
+        <>
+            <Grid container spacing={3}>
+                <Grid item xs={4}>
+                    <div className="text-center"><b>Severity lvl 1</b></div>
+                </Grid>
+                <Grid item xs={4}>
+                    <div className="text-center"><b>Severity lvl 2</b></div>
+                </Grid>
+                <Grid item xs={4}>
+                    <div className="text-center"><b>Severity lvl 3</b></div>
+                </Grid>
+            </Grid>
+            {contentTable}
+        </>
+        
     )
 }
 

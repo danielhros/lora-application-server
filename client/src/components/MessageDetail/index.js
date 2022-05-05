@@ -21,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MessageDetail = ({id, type}) => {
+const MessageDetail = (props) => {
+  const {id} = props;
+  const {type} = props;
   const classes = useStyles();
   const accessToken = localStorage.getItem("accessToken");
   const [open, setOpen] = React.useState(false);
@@ -90,10 +92,10 @@ const MessageDetail = ({id, type}) => {
     }
 
   return (
-    <div>
-      <button type="button" className="btn" onClick={handleOpen}>
-            DETAIL
-      </button>
+    <>
+      <tr onClick={handleOpen} className="hoverable">
+        {props.children}
+      </tr>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -112,7 +114,7 @@ const MessageDetail = ({id, type}) => {
           </div>
         </Fade>
       </Modal>
-    </div>
+    </>
   );
 }
 

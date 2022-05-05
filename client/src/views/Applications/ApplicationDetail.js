@@ -19,6 +19,7 @@ import UplinkMessages from "./UplinkMessages";
 import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import SentDownlinkMessages from "./SentDownlinkMessages";
 import MessagesTable from "../Devices/MessagesTable";
+import MessagesChart from "../../components/MessagesChart";
 
 export const ApplicationDetail = ({
   refresh,
@@ -67,7 +68,7 @@ export const ApplicationDetail = ({
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Paper className={classes.paper} style={{ height: 340 }}>
-            <MyChart refresh={refresh} applicationId={selected.data.id} />
+            <MessagesChart/>
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
