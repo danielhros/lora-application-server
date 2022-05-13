@@ -7,12 +7,32 @@ const Severity = ({data}) => {
     const severity = [[],[],[]];
     data.forEach(item => {
         const total = parseInt(item.total);
+        if(item.severity == 1)
+        {
         severity[item.severity - 1].push(
             <Grid item xs={4} key={"sev-"+item.component+item.severity} className="table-block">
-                <p>{item.total + " Critical " + item.component + " value (< 60)"}</p>
+                <p>{item.total + " Critical " + item.component + " level"}</p>
                 <LinearProgress variant="determinate" value={total > 100 ? 100 : total} style={{width:"90%"}}/>
             </Grid>
         )
+        }
+        else if (item.severity == 2)
+        {
+            severity[item.severity - 1].push(
+            <Grid item xs={4} key={"sev-"+item.component+item.severity} className="table-block">
+                <p>{item.total + " Very low " + item.component + " level"}</p>
+                <LinearProgress variant="determinate" value={total > 100 ? 100 : total} style={{width:"90%"}}/>
+            </Grid>
+            )
+        }
+        else{
+            severity[item.severity - 1].push(
+            <Grid item xs={4} key={"sev-"+item.component+item.severity} className="table-block">
+                <p>{item.total + " Low " + item.component + " level"}</p>
+                <LinearProgress variant="determinate" value={total > 100 ? 100 : total} style={{width:"90%"}}/>
+            </Grid>
+            )
+        }
     });
 
     function getOrNot(arr, index) {

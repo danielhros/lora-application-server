@@ -78,7 +78,7 @@ const MessagesChart = ({device_id}) => {
                     <Tooltip contentStyle={{color: '#000'}} />
                     <Legend />
                     <Line type="monotone" dataKey="uplink" stroke="#8884d8" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="downlink" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="downlink" stroke="#FF9800" />
                 </LineChart>
             </ResponsiveContainer>
 
