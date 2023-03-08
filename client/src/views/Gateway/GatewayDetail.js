@@ -27,6 +27,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
+import MessagesTable from "./MessagesTable";
+
 
 const GatewayDetail = ({
   refresh,
@@ -187,21 +189,15 @@ const GatewayDetail = ({
         {/* Uplink messages */}
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <UplinkMessages refresh={refresh} />
+          <MessagesTable id={selected.data.id} />
           </Paper>
         </Grid>
-        {/* Scheduled downlink messages */}
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <ScheduledDownlinkMessages refresh={refresh} />
-          </Paper>
-        </Grid>
-        {/* Sent downlink messages */}
+        {/* Sent downlink messages 
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <SentDownlinkMessages refresh={refresh} />
           </Paper>
-        </Grid>
+        </Grid>*/}
       </Grid>
     </React.Fragment>
   );

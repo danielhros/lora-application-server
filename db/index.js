@@ -1,3 +1,5 @@
+const { Sequelize } = require('sequelize');
+
 const { Pool } = require("pg");
 
 const config = {
@@ -10,6 +12,9 @@ const config = {
 
 const pool = new Pool(config);
 
+const sequelize = new Sequelize(`postgres://${config.user}:${config.password}@${config.host}:${config.port}/${config.database}`);
+
 module.exports = {
   query: (text, params) => pool.query(text, params),
+  sequelize,
 };
