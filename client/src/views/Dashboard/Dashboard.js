@@ -5,11 +5,13 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
 import PDRProgress from "./PDRProgress";
+import UplinkMessages from "./UplinkMessages";
+import SentDownlinkMessages from "./SentDownlinkMessages";
+import ScheduledDownlinkMessages from "./ScheduledDownlinkMessages";
 import { globalStyles } from "../../shared/styles";
 import { withStyles } from "@material-ui/core/styles";
 import TopList from "./TopList";
 import MyMap from "./MyMap";
-import DashboardMessages from "./DashboardMessages";
 
 export const Dashboard = ({ refresh, classes }) => {
   const localClasses = useStyles();
@@ -39,7 +41,17 @@ export const Dashboard = ({ refresh, classes }) => {
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <DashboardMessages />
+            <UplinkMessages refresh={refresh} />
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <ScheduledDownlinkMessages refresh={refresh} />
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <SentDownlinkMessages refresh={refresh} />
           </Paper>
         </Grid>
       </Grid>

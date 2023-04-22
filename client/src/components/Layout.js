@@ -49,8 +49,6 @@ const Layout = ({ children, width, setRefresh }) => {
         return "All Messages";
       case "profile":
         return "Profile";
-      case "logs":
-        return "Logs";
       default:
         return "Dashboard";
     }

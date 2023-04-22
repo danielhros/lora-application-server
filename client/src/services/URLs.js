@@ -14,11 +14,3 @@ export const MESSAGES = `${API}/messages`;
 export const DASHBOARD = `${API}/dashboard`;
 export const CHART = `${API}/chart`;
 export const PDR = `${API}/pdr`;
-
-export const CHART_MESSAGES = `${API}/messages/chart-data`;
-export const ALL_MESSAGES = `${API}/messages/all-messages`;
-export const MESSAGE_DETAIL = `${API}/messages/detail`;
-export const MESSAGE_DASHBOARD = `${API}/dashboard/top-messages`;
-
-export const LOGS = `${API}/logs`;
-

@@ -1,5 +1,4 @@
 const express = require("express");
-const { messagesDashboard } = require("../controllers/messagesController");
 const router = express.Router();
 const db = require("../db");
 const auth = require("../middleware/auth");
@@ -36,7 +35,5 @@ router.get("/map", auth, async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
-router.get('/top-messages', auth, messagesDashboard);
 
 module.exports = router;
