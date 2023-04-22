@@ -3,7 +3,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import ListAltIcon from '@material-ui/icons/ListAlt';
 import AppsIcon from "@material-ui/icons/Apps";
 import ChatIcon from "@material-ui/icons/Chat";
 import SettingsInputAntennaIcon from "@material-ui/icons/SettingsInputAntenna";
@@ -134,18 +133,6 @@ const ListItems = ({ handleDrawerClose, width, logout, getPageName }) => {
               <ChatIcon />
             </ListItemIcon>
             <ListItemText primary="All Messages" />
-          </ListItem>
-          <ListItem
-            button
-            selected={actualLocation === "logs"}
-            onClick={() => {
-              changeLocation("/logs");
-            }}
-          >
-            <ListItemIcon>
-              <ListAltIcon />
-            </ListItemIcon>
-            <ListItemText primary="Logs" />
           </ListItem>
         </div>
       </List>

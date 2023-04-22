@@ -21,9 +21,6 @@ import MyVerticalChart from "./MyVerticalChart";
 
 import PDRProgress from "./PDRProgress";
 import MyChart from "./MyChart";
-import MessagesTable from "./MessagesTable";
-import MessagesChart from "../../components/MessagesChart";
-
 
 export const DevicesDetail = ({
   refresh,
@@ -72,7 +69,7 @@ export const DevicesDetail = ({
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Paper className={classes.paper} style={{ height: 340 }}>
-          <MessagesChart device_id={selected.data.id}/>
+            <MyChart refresh={refresh} deviceId={selected.data.id} />
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -116,15 +113,21 @@ export const DevicesDetail = ({
         {/* Uplink messages */}
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <MessagesTable id={selected.data.id} />
+            <UplinkMessages refresh={refresh} />
+          </Paper>
+        </Grid>
+        {/* Scheduled downlink messages */}
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <ScheduledDownlinkMessages refresh={refresh} />
           </Paper>
         </Grid>
         {/* Sent downlink messages */}
-        {/*<Grid item xs={12}>
+        <Grid item xs={12}>
           <Paper className={classes.paper}>
             <SentDownlinkMessages refresh={refresh} />
           </Paper>
-        </Grid>*/}
+        </Grid>
       </Grid>
     </React.Fragment>
   );

@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const auth = require("../middleware/auth");
-const { allMessages, messageDetail, messagesChart } = require("../controllers/messagesController");
 
 // SELECT uplink_messages.*, aps.name as gateway_name, message_types.name as message_type, nodes.name as node_name, applications.name as application_name
 // FROM uplink_messages
@@ -112,10 +111,5 @@ router.get("/downlink/scheduled", auth, async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
-router.get('/chart-data', auth, messagesChart);
-
-router.get('/all-messages', auth, allMessages);
-router.get('/detail/:id/:type', auth, messageDetail);
 
 module.exports = router;
